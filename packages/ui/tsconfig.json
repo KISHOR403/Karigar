@@ -1,0 +1,10 @@
+{
+  "extends": "@karigar/tsconfig/base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "noEmit": true
+  },
+  "include": ["src/**/*"]
+}

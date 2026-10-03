@@ -1,0 +1,611 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  CUSTOMER
+  ARTISAN
+  ADMIN
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  OUT_OF_STOCK
+}
+
+enum CustomOrderStatus {
+  PENDING
+  ACCEPTED
+  ESTIMATED
+  IN_PRODUCTION
+  COMPLETED
+  DECLINED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CRAFTING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum MediaType {
+  PORTRAIT
+  WORKSHOP
+  PROCESS
+  ARCHIVE_VIDEO
+}
+
+// ==========================================
+// User & Auth Entities
+// ==========================================
+model User {
+  id                 String               @id @default(uuid()) @db.Uuid
+  email              String               @unique
+  passwordHash       String
+  role               Role                 @default(CUSTOMER)
+  isActive           Boolean              @default(true)
+  isVerified         Boolean              @default(false)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  deletedAt          DateTime?
+
+  profile            UserProfile?
+  artisanProfile     ArtisanProfile?
+  reviews            Review[]
+  wishlists          Wishlist[]
+  follows            Follow[]
+  orders             Order[]
+  carts              Cart[]
+  customOrders       CustomOrderRequest[]
+  notifications      Notification[]
+  auditLogs          AuditLog[]
+
+  @@index([email])
+  @@index([role])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model UserProfile {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @unique @db.Uuid
+  firstName   String
+  lastName    String
+  phoneNumber String?
+  avatarUrl   String?
+  bio         String?  @db.Text
+  city        String?
+  state       String?
+  country     String   @default("India")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+}
+
+// ==========================================
+// Artisan Domain
+// ==========================================
+model ArtisanProfile {
+  id               String               @id @default(uuid()) @db.Uuid
+  userId           String               @unique @db.Uuid
+  artisanName      String
+  slug             String               @unique
+  craftName        String
+  heritageLineage  String?
+  experienceYears  Int                  @default(0)
+  tagline          String
+  bio              String               @db.Text
+  story            String               @db.Text
+  avatarUrl        String
+  coverImageUrl    String?
+  isFeatured       Boolean              @default(false)
+  followerCount    Int                  @default(0)
+  productCount     Int                  @default(0)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  deletedAt        DateTime?
+
+  user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location         ArtisanLocation?
+  verification     ArtisanVerification?
+  media            ArtisanMedia[]
+  categories       ArtisanCategory[]
+  products         Product[]
+  customOrders     CustomOrderRequest[]
+  followers        Follow[]
+
+  @@index([slug])
+  @@index([craftName])
+  @@index([isFeatured])
+  @@index([createdAt])
+  @@map("artisan_profiles")
+}
+
+model ArtisanLocation {
+  id            String         @id @default(uuid()) @db.Uuid
+  artisanId     String         @unique @db.Uuid
+  villageOrTown String
+  district      String
+  state         String
+  country       String         @default("India")
+  pincode       String?
+  latitude      Float?
+  longitude     Float?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  artisan       ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@index([state])
+  @@index([district])
+  @@map("artisan_locations")
+}
+
+model ArtisanVerification {
+  id                 String         @id @default(uuid()) @db.Uuid
+  artisanId          String         @unique @db.Uuid
+  isIdentityVerified Boolean        @default(false)
+  isMasterArtisan    Boolean        @default(false)
+  nationalAwardee    Boolean        @default(false)
+  giCertified        Boolean        @default(false)
+  verifiedAt         DateTime?
+  notes              String?        @db.Text
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  artisan            ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@map("artisan_verifications")
+}
+
+model ArtisanMedia {
+  id           String         @id @default(uuid()) @db.Uuid
+  artisanId    String         @db.Uuid
+  type         MediaType      @default(PORTRAIT)
+  url          String
+  caption      String?
+  displayOrder Int            @default(0)
+  createdAt    DateTime       @default(now())
+
+  artisan      ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@index([artisanId, displayOrder])
+  @@map("artisan_media")
+}
+
+model ArtisanCategory {
+  artisanId  String         @db.Uuid
+  categoryId String         @db.Uuid
+  createdAt  DateTime       @default(now())
+
+  artisan    ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  category   Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([artisanId, categoryId])
+  @@map("artisan_categories")
+}
+
+// ==========================================
+// Category & Taxonomy
+// ==========================================
+model Category {
+  id          String            @id @default(uuid()) @db.Uuid
+  name        String
+  slug        String            @unique
+  description String?           @db.Text
+  imageUrl    String?
+  parentId    String?           @db.Uuid
+  displayOrder Int              @default(0)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  parent      Category?         @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[]        @relation("CategoryHierarchy")
+  products    Product[]
+  artisans    ArtisanCategory[]
+
+  @@index([slug])
+  @@index([parentId])
+  @@map("categories")
+}
+
+model Tag {
+  id        String       @id @default(uuid()) @db.Uuid
+  name      String       @unique
+  slug      String       @unique
+  createdAt DateTime     @default(now())
+
+  products  ProductTag[]
+
+  @@index([slug])
+  @@map("tags")
+}
+
+// ==========================================
+// Product Domain
+// ==========================================
+model Product {
+  id                 String              @id @default(uuid()) @db.Uuid
+  artisanId          String              @db.Uuid
+  categoryId         String              @db.Uuid
+  title              String
+  slug               String              @unique
+  shortDescription   String              @db.Text
+  fullStory          String              @db.Text
+  status             ProductStatus       @default(DRAFT)
+  basePrice          Decimal             @db.Decimal(12, 2)
+  currency           String              @default("INR")
+  materials          String[]
+  dimensions         String?
+  weightGrams        Float?
+  craftTechnique     String
+  makingDurationDays Int                 @default(1)
+  careInstructions   String?             @db.Text
+  giTagCertified     Boolean             @default(false)
+  regionOfOrigin     String
+  isCustomizable     Boolean             @default(false)
+  isFeatured         Boolean             @default(false)
+  reviewCount        Int                 @default(0)
+  averageRating      Float               @default(0)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  deletedAt          DateTime?
+
+  artisan            ArtisanProfile      @relation(fields: [artisanId], references: [id], onDelete: Restrict)
+  category           Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  images             ProductImage[]
+  videos             ProductVideo[]
+  variants           ProductVariant[]
+  tags               ProductTag[]
+  collectionItems    CollectionProduct[]
+  reviews            Review[]
+  wishlists          Wishlist[]
+  cartItems          CartItem[]
+  orderItems         OrderItem[]
+
+  @@index([slug])
+  @@index([artisanId])
+  @@index([categoryId])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([createdAt])
+  @@index([basePrice])
+  @@map("products")
+}
+
+model ProductImage {
+  id           String   @id @default(uuid()) @db.Uuid
+  productId    String   @db.Uuid
+  url          String
+  altText      String
+  isPrimary    Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, displayOrder])
+  @@map("product_images")
+}
+
+model ProductVideo {
+  id           String   @id @default(uuid()) @db.Uuid
+  productId    String   @db.Uuid
+  url          String
+  thumbnailUrl String?
+  title        String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_videos")
+}
+
+model ProductVariant {
+  id             String      @id @default(uuid()) @db.Uuid
+  productId      String      @db.Uuid
+  sku            String      @unique
+  title          String
+  price          Decimal     @db.Decimal(12, 2)
+  compareAtPrice Decimal?    @db.Decimal(12, 2)
+  stockQuantity  Int         @default(0)
+  attributes     Json        @default("{}")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  product        Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems      CartItem[]
+  orderItems     OrderItem[]
+
+  @@index([productId])
+  @@index([sku])
+  @@map("product_variants")
+}
+
+model ProductTag {
+  productId String   @db.Uuid
+  tagId     String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+  @@map("product_tags")
+}
+
+// ==========================================
+// Editorial Collections
+// ==========================================
+model Collection {
+  id           String              @id @default(uuid()) @db.Uuid
+  title        String
+  slug         String              @unique
+  description  String              @db.Text
+  curatorNote  String?             @db.Text
+  heroImageUrl String
+  isEditorial  Boolean             @default(true)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  products     CollectionProduct[]
+
+  @@index([slug])
+  @@map("collections")
+}
+
+model CollectionProduct {
+  collectionId String     @db.Uuid
+  productId    String     @db.Uuid
+  displayOrder Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([collectionId, productId])
+  @@map("collection_products")
+}
+
+// ==========================================
+// Social, Following, Wishlist & Reviews
+// ==========================================
+model Follow {
+  id        String         @id @default(uuid()) @db.Uuid
+  userId    String         @db.Uuid
+  artisanId String         @db.Uuid
+  createdAt DateTime       @default(now())
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  artisan   ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, artisanId])
+  @@index([artisanId])
+  @@index([userId])
+  @@map("follows")
+}
+
+model Wishlist {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  productId String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+  @@map("wishlists")
+}
+
+model Review {
+  id                 String   @id @default(uuid()) @db.Uuid
+  userId             String   @db.Uuid
+  productId          String   @db.Uuid
+  rating             Int      @default(5)
+  title              String?
+  comment            String   @db.Text
+  isVerifiedPurchase Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([userId])
+  @@map("reviews")
+}
+
+// ==========================================
+// Cart, Orders & Commerce
+// ==========================================
+model Cart {
+  id        String     @id @default(uuid()) @db.Uuid
+  userId    String?    @db.Uuid
+  sessionId String?    @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@index([userId])
+  @@map("carts")
+}
+
+model CartItem {
+  id        String          @id @default(uuid()) @db.Uuid
+  cartId    String          @db.Uuid
+  productId String          @db.Uuid
+  variantId String?         @db.Uuid
+  quantity  Int             @default(1)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  cart      Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([cartId])
+  @@map("cart_items")
+}
+
+model Order {
+  id          String       @id @default(uuid()) @db.Uuid
+  orderNumber String       @unique
+  userId      String       @db.Uuid
+  status      OrderStatus  @default(PENDING)
+  totalAmount Decimal      @db.Decimal(12, 2)
+  currency    String       @default("INR")
+  notes       String?      @db.Text
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  items       OrderItem[]
+  payments    Payment[]
+  shipments   Shipment[]
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String          @id @default(uuid()) @db.Uuid
+  orderId   String          @db.Uuid
+  productId String          @db.Uuid
+  variantId String?         @db.Uuid
+  price     Decimal         @db.Decimal(12, 2)
+  quantity  Int             @default(1)
+
+  order     Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Payment {
+  id            String        @id @default(uuid()) @db.Uuid
+  orderId       String        @db.Uuid
+  amount        Decimal       @db.Decimal(12, 2)
+  currency      String        @default("INR")
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String
+  transactionId String?       @unique
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  order         Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("payments")
+}
+
+model Shipment {
+  id             String    @id @default(uuid()) @db.Uuid
+  orderId        String    @db.Uuid
+  courierName    String?
+  trackingNumber String?
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  order          Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("shipments")
+}
+
+// ==========================================
+// Custom Order Requests (Artisan Commissioning)
+// ==========================================
+model CustomOrderRequest {
+  id                 String            @id @default(uuid()) @db.Uuid
+  customerId         String            @db.Uuid
+  artisanId          String            @db.Uuid
+  title              String
+  details            String            @db.Text
+  referenceImages    String[]
+  estimatedBudgetMax Decimal?          @db.Decimal(12, 2)
+  requestedDeadline  DateTime?
+  status             CustomOrderStatus @default(PENDING)
+  artisanQuoteNotes  String?           @db.Text
+  quotedPrice        Decimal?          @db.Decimal(12, 2)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  customer           User              @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  artisan            ArtisanProfile    @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@index([artisanId])
+  @@index([status])
+  @@map("custom_order_requests")
+}
+
+// ==========================================
+// Notifications & System Auditing
+// ==========================================
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  title     String
+  message   String   @db.Text
+  type      String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String?  @db.Uuid
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json     @default("{}")
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
