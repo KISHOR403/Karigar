@@ -39,6 +39,7 @@ const config: Config = {
       fontFamily: {
         serif: ['var(--font-editorial)', 'Georgia', 'serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        assamese: ['var(--font-assamese)', 'Noto Serif Bengali', 'Georgia', 'serif'],
       },
       letterSpacing: {
         editorial: '0.02em',

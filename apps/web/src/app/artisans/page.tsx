@@ -24,7 +24,7 @@ export default function ArtisansIndexPage() {
 
       <div className="divide-y divide-[#E5DFD4]">
         {MOCK_ARTISANS.map((artisan, index) => (
-          <MakerPreview key={artisan.id} artisan={artisan} priority={index < 2} />
+          <MakerPreview key={artisan.id} artisan={artisan} index={index} priority={index < 2} />
         ))}
       </div>
     </div>

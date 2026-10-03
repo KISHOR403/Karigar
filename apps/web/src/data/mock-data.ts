@@ -253,7 +253,7 @@ The lightweight Chanderi weave combines gossamer silk warp with combed organic c
       },
       {
         id: 'pm-02',
-        url: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?q=80&w=1200&auto=format&fit=crop',
+        url: '/images/hero-craft-hands.jpg',
         altText: 'Macro view showing intricate hand-carved block alignment and organic indigo variation',
         isPrimary: false,
         displayOrder: 2,
@@ -309,16 +309,16 @@ The fine silk sozni embroidery along the four selvedges was completed over four 
     media: [
       {
         id: 'pm-03',
-        url: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1200&auto=format&fit=crop',
-        altText: 'Natural fawn un-dyed Kashmiri Pashmina draped over hand-carved walnut chair',
+        url: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=1200&auto=format&fit=crop',
+        altText: 'Natural fawn un-dyed Kashmiri Pashmina with hand sozni needlework',
         isPrimary: true,
         displayOrder: 1,
         mediaType: 'IMAGE',
       },
       {
         id: 'pm-04',
-        url: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=1200&auto=format&fit=crop',
-        altText: 'Extreme macro of hand sozni silk needle stitches',
+        url: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1200&auto=format&fit=crop',
+        altText: 'Detail of fine sozni craft and loom finishing',
         isPrimary: false,
         displayOrder: 2,
         mediaType: 'IMAGE',
@@ -467,7 +467,7 @@ export const MOCK_STORIES: CraftStory[] = [
 Dr. Ismail Mohammad Khatri walks between the open fermentation pits at 6:30 in the morning. Before the heat of the Rann strikes, he dips his hand into a subterranean indigo vat that has lived in continuous microbial fermentation for four years. The aroma is faintly sweet, earthy, like wet loam after the first monsoon shower.
 
 "Machine prints apply color to the surface of dead cloth," Ismail explains, rotating a freshly carved teak block between his palms. "Ajrakh penetrates the heart of the yarn. The iron paste must ferment with jaggery for twenty-one days. If you try to cut corners by even twenty-four hours, the cloth remembers, and the black fades to muddy grey."`,
-    heroImageUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?q=80&w=1600&auto=format&fit=crop',
+    heroImageUrl: '/images/story-kutch-indigo.jpg',
     readTimeMinutes: 6,
     artisanSlug: 'ismail-khatri-ajrakh',
     artisanName: 'Dr. Ismail Mohammad Khatri',

@@ -9,6 +9,8 @@ export const APP_CONFIG = {
   defaultLocale: 'en-IN',
 } as const;
 
+export const ASSAMESE_BRAND_WORD = 'কাৰিগৰ';
+
 export const CRAFT_INTENTS = [
   {
     id: 'gifting',

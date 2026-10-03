@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
+import { Playfair_Display, Plus_Jakarta_Sans, Noto_Serif_Bengali } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -14,6 +14,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
+});
+
+const notoSerifBengali = Noto_Serif_Bengali({
+  subsets: ['bengali'],
+  variable: '--font-assamese',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -43,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${plusJakarta.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${plusJakarta.variable} ${notoSerifBengali.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#191817] selection:bg-[#EBD6CE] selection:text-[#8B3C1B]">
         <Navbar />
         <main className="flex-1">{children}</main>

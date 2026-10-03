@@ -7,7 +7,7 @@ const COLLECTIONS = [
     title: 'The Living Loom: Indigo & Cashmere',
     slug: 'the-living-loom',
     curatorNote: 'Selected by Karigar curatorial council in collaboration with Shilp Guru awardees.',
-    image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/story-kutch-indigo.jpg',
     itemCount: 16,
   },
   {
