@@ -7,9 +7,9 @@ import { Search, Heart, User, Menu, X, ArrowUpRight } from 'lucide-react';
 
 const NAV_LINKS = [
   { label: 'Discover', href: '/' },
-  { label: 'Makers', href: '/artisans' },
-  { label: 'Objects', href: '/products' },
+  { label: 'Makers', href: '/makers' },
   { label: 'Craft Stories', href: '/stories' },
+  { label: 'Objects', href: '/objects' },
   { label: 'Categories', href: '/categories' },
 ];
 
@@ -75,8 +75,8 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Right Action Icons: Search | ♡ | Account */}
-          <div className="flex items-center gap-3 sm:gap-5">
+          {/* Right Action Icons: Search | Wishlist | Account */}
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
               type="button"
               onClick={() => setSearchOpen(!searchOpen)}
@@ -89,10 +89,11 @@ export function Navbar() {
 
             <Link
               href="/customer/wishlist"
-              className="p-2 text-[#4F4B45] hover:text-[#191817] transition-colors relative"
+              className="flex items-center gap-1.5 p-2 text-[#4F4B45] hover:text-[#191817] transition-colors relative"
               aria-label="View curated wishlist"
             >
               <Heart className="w-4 h-4" />
+              <span className="hidden sm:inline text-xs uppercase tracking-wider font-medium">Wishlist</span>
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#B8532F] rounded-full" />
             </Link>
 
@@ -113,7 +114,7 @@ export function Navbar() {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search by craft tradition (e.g. Ajrakh, Pashmina, Dhokra), artisan name, or state..."
+                placeholder="Search by craft tradition (e.g. Ajrakh, Pashmina, Dhokra), maker, or region..."
                 className="w-full bg-[#F4EFEA] border-none px-4 py-3 text-sm text-[#191817] placeholder-[#8F887E] focus:outline-none focus:ring-1 focus:ring-[#B8532F] rounded-sm"
                 autoFocus
               />
@@ -147,11 +148,11 @@ export function Navbar() {
 
           <div className="pt-6 border-t border-[#E5DFD4] flex flex-col space-y-3">
             <Link
-              href="/artisans"
+              href="/makers"
               onClick={() => setMobileMenuOpen(false)}
               className="text-xs uppercase tracking-wider font-medium text-[#B8532F]"
             >
-              Commission Custom Craft
+              Discover Verified Makers
             </Link>
             <Link
               href="/login"

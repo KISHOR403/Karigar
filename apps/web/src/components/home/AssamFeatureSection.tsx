@@ -41,11 +41,11 @@ export function AssamFeatureSection() {
 
             <div className="pt-2">
               <Link
-                href="/artisans?region=assam"
+                href="/regions/assam"
                 className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-[#191817] hover:text-[#B8532F] group transition-colors"
               >
                 <span className="border-b border-[#191817] group-hover:border-[#B8532F] pb-0.5 transition-colors">
-                  Discover Assamese Masters
+                  Explore Assam
                 </span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>

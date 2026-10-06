@@ -27,7 +27,7 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
           {/* Large Image Column (7 cols) */}
           <div className="lg:col-span-7">
             <Link
-              href={`/products/${heroProduct.slug}`}
+              href={`/objects/${heroProduct.slug}`}
               className="relative aspect-[16/10] sm:aspect-[16/9.5] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
             >
               {heroImage && (
@@ -60,14 +60,14 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
 
             <div className="space-y-2">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-                <Link href={`/products/${heroProduct.slug}`}>{heroProduct.title}</Link>
+                <Link href={`/objects/${heroProduct.slug}`}>{heroProduct.title}</Link>
               </h3>
 
               {heroProduct.artisan && (
                 <p className="text-xs sm:text-sm text-[#5C574F]">
                   Handcrafted by{' '}
                   <Link
-                    href={`/artisans/${heroProduct.artisan.slug}`}
+                    href={`/makers/${heroProduct.artisan.slug}`}
                     className="text-[#191817] font-semibold hover:underline"
                   >
                     {heroProduct.artisan.artisanName}
@@ -85,7 +85,7 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
 
             <div className="pt-2">
               <Link
-                href={`/products/${heroProduct.slug}`}
+                href={`/objects/${heroProduct.slug}`}
                 className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
               >
                 <span className="border-b border-[#191817] pb-0.5">View creation & provenance</span>
@@ -109,7 +109,7 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
             >
               <div>
                 <Link
-                  href={`/products/${product.slug}`}
+                  href={`/objects/${product.slug}`}
                   className="relative aspect-[16/11] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
                 >
                   {image && (
@@ -135,14 +135,14 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
                   </div>
 
                   <h4 className="font-serif text-xl sm:text-2xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-                    <Link href={`/products/${product.slug}`}>{product.title}</Link>
+                    <Link href={`/objects/${product.slug}`}>{product.title}</Link>
                   </h4>
 
                   {product.artisan && (
                     <p className="text-xs text-[#5C574F]">
                       by{' '}
                       <Link
-                        href={`/artisans/${product.artisan.slug}`}
+                        href={`/makers/${product.artisan.slug}`}
                         className="text-[#191817] font-semibold hover:underline"
                       >
                         {product.artisan.artisanName}
@@ -158,7 +158,7 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
 
               <div className="pt-4 mt-4 border-t border-[#F0EBE3]">
                 <Link
-                  href={`/products/${product.slug}`}
+                  href={`/objects/${product.slug}`}
                   className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
                 >
                   <span>Explore piece</span>
@@ -175,7 +175,7 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
           ========================================================= */}
       <div className="text-center pt-2">
         <Link
-          href="/products"
+          href="/objects"
           className="inline-flex items-center gap-2 font-serif text-lg sm:text-xl text-[#191817] hover:text-[#B8532F] border-b border-[#191817] hover:border-[#B8532F] pb-1 transition-all"
         >
           <span>Explore all objects</span>

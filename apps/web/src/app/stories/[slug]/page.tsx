@@ -65,24 +65,37 @@ export default function StoryDetailPage() {
           {currentStory.body}
         </div>
 
-        {/* Featured Artisan Callout */}
+        {/* Connected Ecosystem: Meet the Maker → & Shop This Craft → */}
         {artisan && (
-          <div className="mt-16 p-8 bg-[#FAF8F5] border border-[#E5DFD4] rounded-sm flex flex-col sm:flex-row items-center gap-6">
-            <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0 bg-[#ECE5DC]">
-              <Image src={artisan.avatarUrl} alt={artisan.artisanName} fill className="object-cover" />
+          <div className="mt-16 p-8 bg-[#FAF8F5] border border-[#E5DFD4] rounded-sm space-y-6">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0 bg-[#ECE5DC] border border-[#D5CEC2]">
+                <Image src={artisan.avatarUrl} alt={artisan.artisanName} fill className="object-cover" />
+              </div>
+              <div className="space-y-1 text-center sm:text-left flex-1">
+                <span className="text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold">
+                  The Master Behind The Craft
+                </span>
+                <h3 className="font-serif text-2xl text-[#191817]">{artisan.artisanName}</h3>
+                <p className="text-xs text-[#6F6A62]">
+                  {artisan.craftName} • {artisan.location.villageOrTown}, {artisan.location.state}
+                </p>
+                <p className="text-xs text-[#5C574F] italic pt-1">&ldquo;{artisan.tagline}&rdquo;</p>
+              </div>
             </div>
-            <div className="space-y-1 text-center sm:text-left flex-1">
-              <span className="text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold">
-                Featured Artisan
-              </span>
-              <h3 className="font-serif text-xl text-[#191817]">{artisan.artisanName}</h3>
-              <p className="text-xs text-[#6F6A62]">{artisan.craftName} • {artisan.location.villageOrTown}, {artisan.location.state}</p>
+
+            <div className="pt-4 border-t border-[#E5DFD4] flex flex-wrap items-center justify-between gap-4">
+              <Link href={`/makers/${artisan.slug}`}>
+                <Button size="md" variant="primary" className="rounded-none tracking-wider text-xs uppercase px-6">
+                  Meet the maker →
+                </Button>
+              </Link>
+              <Link href="/objects">
+                <Button size="md" variant="outline" className="rounded-none tracking-wider text-xs uppercase px-6 border-[#191817]">
+                  Shop this craft →
+                </Button>
+              </Link>
             </div>
-            <Link href={`/artisans/${artisan.slug}`}>
-              <Button size="sm" variant="outline" className="rounded-none uppercase text-xs">
-                Visit Atelier
-              </Button>
-            </Link>
           </div>
         )}
 
@@ -90,8 +103,8 @@ export default function StoryDetailPage() {
           <Link href="/stories" className="text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]">
             ← All Chronicles
           </Link>
-          <Link href="/artisans" className="text-xs uppercase tracking-wider font-semibold text-[#B8532F] hover:underline flex items-center gap-1">
-            <span>Explore Master Artisans</span>
+          <Link href="/makers" className="text-xs uppercase tracking-wider font-semibold text-[#B8532F] hover:underline flex items-center gap-1">
+            <span>Explore All Master Makers</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

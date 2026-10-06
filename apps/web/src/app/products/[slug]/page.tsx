@@ -54,7 +54,7 @@ export default function ProductDetailPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs text-[#7A746B]">
           <Link href="/" className="hover:text-[#191817]">Home</Link>
           <ChevronRight className="w-3 h-3 text-[#A8A196]" />
-          <Link href="/products" className="hover:text-[#191817]">Objects</Link>
+          <Link href="/objects" className="hover:text-[#191817]">Objects</Link>
           <ChevronRight className="w-3 h-3 text-[#A8A196]" />
           <Link href={`/categories/${currentProduct.category.slug}`} className="hover:text-[#191817]">
             {currentProduct.category.name}
@@ -106,28 +106,40 @@ export default function ProductDetailPage() {
 
           {/* 2. Product Narrative & Acquisition Panel */}
           <div className="lg:col-span-5 space-y-8">
-            {/* Maker Connection Banner */}
-            <div className="flex items-center gap-3 pb-6 border-b border-[#E5DFD4]">
-              {artisan.avatarUrl && (
-                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[#ECE5DC] shrink-0 border border-[#D5CEC2]">
-                  <Image src={artisan.avatarUrl} alt={artisan.artisanName || ''} fill className="object-cover" />
-                </div>
-              )}
-              <div className="space-y-0.5">
-                <p className="text-[11px] uppercase tracking-widest text-[#B8532F] font-semibold">
-                  Handcrafted by Master
-                </p>
-                <Link
-                  href={`/artisans/${artisan.slug}`}
-                  className="font-serif text-lg text-[#191817] hover:text-[#B8532F] transition-colors font-medium block"
-                >
-                  {artisan.artisanName}
-                </Link>
-                <div className="flex items-center gap-1 text-xs text-[#7A746B]">
-                  <MapPin className="w-3 h-3" />
-                  <span>{currentProduct.specifications.regionOfOrigin}</span>
+            {/* Maker Connection Banner: Product -> Maker Connection */}
+            <div className="flex items-center justify-between pb-6 border-b border-[#E5DFD4]">
+              <div className="flex items-center gap-3">
+                {artisan.avatarUrl && (
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[#ECE5DC] shrink-0 border border-[#D5CEC2]">
+                    <Image src={artisan.avatarUrl} alt={artisan.artisanName || ''} fill className="object-cover" />
+                  </div>
+                )}
+                <div className="space-y-0.5">
+                  <p className="text-[11px] uppercase tracking-widest text-[#B8532F] font-semibold">
+                    Made by
+                  </p>
+                  <Link
+                    href={`/makers/${artisan.slug}`}
+                    className="font-serif text-lg text-[#191817] hover:text-[#B8532F] transition-colors font-medium block"
+                  >
+                    {artisan.artisanName}
+                  </Link>
+                  <div className="flex items-center gap-1.5 text-xs text-[#7A746B]">
+                    <span>{artisan.craftName ? artisan.craftName.split('&')[0].trim() : 'Master Craft'}</span>
+                    <span>•</span>
+                    <MapPin className="w-3 h-3 text-[#8C8477]" />
+                    <span>{currentProduct.specifications.regionOfOrigin}</span>
+                  </div>
                 </div>
               </div>
+
+              <Link
+                href={`/makers/${artisan.slug}`}
+                className="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#B8532F] hover:underline shrink-0"
+              >
+                <span>Meet the maker</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             {/* Product Title & Pricing */}
@@ -226,7 +238,7 @@ export default function ProductDetailPage() {
                     </p>
                     <p className="text-[#787268]">Request modifications directly from {artisan.artisanName}</p>
                   </div>
-                  <Link href={`/artisans/${artisan.slug}`}>
+                  <Link href={`/makers/${artisan.slug}`}>
                     <Button variant="outline" size="sm" className="rounded-none text-[10px] uppercase">
                       Inquire
                     </Button>
@@ -301,7 +313,7 @@ export default function ProductDetailPage() {
             </p>
             <div className="pt-2">
               <Link
-                href={`/artisans/${artisan.slug}`}
+                href={`/makers/${artisan.slug}`}
                 className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] border-b border-[#191817] hover:border-[#B8532F] pb-1 transition-all"
               >
                 <span>Explore Full Atelier & Process Chronicles</span>
@@ -325,7 +337,7 @@ export default function ProductDetailPage() {
               </h3>
             </div>
             <Link
-              href="/products"
+              href="/objects"
               className="text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
             >
               All Objects →

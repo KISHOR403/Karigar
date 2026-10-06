@@ -16,7 +16,7 @@ export function ProductPreview({ product }: ProductPreviewProps) {
     <div className="group flex flex-col space-y-3">
       {/* Product Image Frame */}
       <Link
-        href={`/products/${product.slug}`}
+        href={`/objects/${product.slug}`}
         className="relative aspect-[3/4] overflow-hidden bg-[#EFEBE4] rounded-sm block"
       >
         {primaryImage && (
@@ -52,14 +52,14 @@ export function ProductPreview({ product }: ProductPreviewProps) {
         </div>
 
         <h4 className="font-serif text-lg text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-          <Link href={`/products/${product.slug}`}>{product.title}</Link>
+          <Link href={`/objects/${product.slug}`}>{product.title}</Link>
         </h4>
 
         {product.artisan && (
           <p className="text-xs text-[#5C574F]">
             by{' '}
             <Link
-              href={`/artisans/${product.artisan.slug}`}
+              href={`/makers/${product.artisan.slug}`}
               className="text-[#191817] font-medium hover:underline"
             >
               {product.artisan.artisanName}
