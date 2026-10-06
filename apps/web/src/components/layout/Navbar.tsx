@@ -8,9 +8,8 @@ import { Search, Heart, User, Menu, X, ArrowUpRight } from 'lucide-react';
 const NAV_LINKS = [
   { label: 'Discover', href: '/' },
   { label: 'Makers', href: '/makers' },
-  { label: 'Craft Stories', href: '/stories' },
   { label: 'Objects', href: '/objects' },
-  { label: 'Categories', href: '/categories' },
+  { label: 'Stories', href: '/stories' },
 ];
 
 export function Navbar() {
