@@ -6,7 +6,6 @@ import { ASSAMESE_BRAND_WORD } from '@karigar/config';
 import { MakerPreview } from '@/components/makers/MakerPreview';
 import { EditorialProductShowcase } from '@/components/products/EditorialProductShowcase';
 import { AssamFeatureSection } from '@/components/home/AssamFeatureSection';
-import { HandcraftedHeroArtwork } from '@/components/layout/HandcraftedHeroArtwork';
 import { Button } from '@karigar/ui';
 import { ArrowRight, Sparkles, Clock } from 'lucide-react';
 
@@ -97,8 +96,6 @@ export default function HomePage() {
           {ASSAMESE_BRAND_WORD}
         </div>
 
-        {/* Left-side Handcrafted Textile Artwork — decorative layer */}
-        <HandcraftedHeroArtwork opacity={0.7} topOffset="4%" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
