@@ -18,122 +18,169 @@ export function EditorialProductShowcase({ products }: EditorialProductShowcaseP
   const heroImage = heroProduct.media.find((m) => m.isPrimary) || heroProduct.media[0];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-      {/* 1. Large Hero Featured Object (7 cols) */}
-      <div className="lg:col-span-7 group">
-        <Link
-          href={`/products/${heroProduct.slug}`}
-          className="relative aspect-[4/5] sm:aspect-[16/13] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
-        >
-          {heroImage && (
-            <Image
-              src={heroImage.url}
-              alt={heroImage.altText || heroProduct.title}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-            />
-          )}
-          <div className="absolute top-4 left-4 bg-[#FAF8F5]/90 backdrop-blur-xs px-3 py-1 text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold">
-            Heirloom Spotlight
-          </div>
-        </Link>
-
-        <div className="mt-5 space-y-2">
-          <div className="flex items-center justify-between text-xs text-[#8C8477]">
-            <span className="uppercase tracking-widest font-medium">
-              {heroProduct.specifications.regionOfOrigin}
-            </span>
-            <span className="font-serif text-lg text-[#191817]">
-              {APP_CONFIG.currencySymbol}
-              {heroProduct.basePrice.toLocaleString('en-IN')}
-            </span>
-          </div>
-
-          <h3 className="font-serif text-2xl sm:text-3xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-            <Link href={`/products/${heroProduct.slug}`}>{heroProduct.title}</Link>
-          </h3>
-
-          {heroProduct.artisan && (
-            <p className="text-sm text-[#5C574F]">
-              Handcrafted by{' '}
-              <Link
-                href={`/artisans/${heroProduct.artisan.slug}`}
-                className="text-[#191817] font-medium hover:underline"
-              >
-                {heroProduct.artisan.artisanName}
-              </Link>
-            </p>
-          )}
-
-          <p className="text-sm text-[#6E6962] font-light leading-relaxed pt-1 line-clamp-2">
-            {heroProduct.shortDescription}
-          </p>
-
-          <div className="pt-2">
+    <div className="space-y-10 sm:space-y-12">
+      {/* =========================================================
+          1. LARGE HERO PRODUCT CARD [ Large product ]
+          ========================================================= */}
+      <div className="group border border-[#E5DFD4] bg-[#FAF8F5] p-6 sm:p-8 rounded-sm hover:border-[#191817] transition-all">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Large Image Column (7 cols) */}
+          <div className="lg:col-span-7">
             <Link
               href={`/products/${heroProduct.slug}`}
-              className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
+              className="relative aspect-[16/10] sm:aspect-[16/9.5] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
             >
-              <span>View creation & provenance</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              {heroImage && (
+                <Image
+                  src={heroImage.url}
+                  alt={heroImage.altText || heroProduct.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+              )}
+              <div className="absolute top-4 left-4 bg-[#FAF8F5]/95 backdrop-blur-xs px-3 py-1 text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold border border-[#E5DFD4]">
+                Masterpiece Spotlight
+              </div>
             </Link>
+          </div>
+
+          {/* Editorial Details Column (5 cols) */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="flex items-center justify-between text-xs text-[#8C8477] border-b border-[#E5DFD4] pb-3">
+              <span className="uppercase tracking-widest font-semibold text-[#B8532F]">
+                {heroProduct.specifications.regionOfOrigin}
+              </span>
+              <span className="font-serif text-2xl text-[#191817]">
+                {APP_CONFIG.currencySymbol}
+                {heroProduct.basePrice.toLocaleString('en-IN')}
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
+                <Link href={`/products/${heroProduct.slug}`}>{heroProduct.title}</Link>
+              </h3>
+
+              {heroProduct.artisan && (
+                <p className="text-xs sm:text-sm text-[#5C574F]">
+                  Handcrafted by{' '}
+                  <Link
+                    href={`/artisans/${heroProduct.artisan.slug}`}
+                    className="text-[#191817] font-semibold hover:underline"
+                  >
+                    {heroProduct.artisan.artisanName}
+                  </Link>
+                  {heroProduct.artisan.location?.state && (
+                    <span className="text-[#8C8477] ml-1.5">• {heroProduct.artisan.location.state}</span>
+                  )}
+                </p>
+              )}
+            </div>
+
+            <p className="text-sm text-[#6E6962] font-light leading-relaxed pt-1 line-clamp-3">
+              {heroProduct.shortDescription}
+            </p>
+
+            <div className="pt-2">
+              <Link
+                href={`/products/${heroProduct.slug}`}
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
+              >
+                <span className="border-b border-[#191817] pb-0.5">View creation & provenance</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 2. Two Smaller Supporting Objects (5 cols) */}
-      <div className="lg:col-span-5 space-y-12 lg:space-y-14">
+      {/* =========================================================
+          2. TWO SUPPORTING PRODUCTS [ product ] [ product ]
+          ========================================================= */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
         {supportingProducts.map((product) => {
           const image = product.media.find((m) => m.isPrimary) || product.media[0];
           return (
-            <div key={product.id} className="group">
-              <Link
-                href={`/products/${product.slug}`}
-                className="relative aspect-[16/10] sm:aspect-[16/11] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
-              >
-                {image && (
-                  <Image
-                    src={image.url}
-                    alt={image.altText || product.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  />
-                )}
-              </Link>
+            <article
+              key={product.id}
+              className="group border border-[#E5DFD4] bg-white p-5 sm:p-6 rounded-sm hover:border-[#191817] transition-all flex flex-col justify-between"
+            >
+              <div>
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="relative aspect-[16/11] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
+                >
+                  {image && (
+                    <Image
+                      src={image.url}
+                      alt={image.altText || product.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  )}
+                </Link>
 
-              <div className="mt-4 space-y-1.5">
-                <div className="flex items-center justify-between text-xs text-[#8C8477]">
-                  <span className="uppercase tracking-widest font-medium">
-                    {product.specifications.regionOfOrigin}
-                  </span>
-                  <span className="font-serif text-base text-[#191817]">
-                    {APP_CONFIG.currencySymbol}
-                    {product.basePrice.toLocaleString('en-IN')}
-                  </span>
-                </div>
+                <div className="mt-5 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-[#8C8477]">
+                    <span className="uppercase tracking-widest font-medium">
+                      {product.specifications.regionOfOrigin}
+                    </span>
+                    <span className="font-serif text-xl text-[#191817]">
+                      {APP_CONFIG.currencySymbol}
+                      {product.basePrice.toLocaleString('en-IN')}
+                    </span>
+                  </div>
 
-                <h4 className="font-serif text-xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-                  <Link href={`/products/${product.slug}`}>{product.title}</Link>
-                </h4>
+                  <h4 className="font-serif text-xl sm:text-2xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
+                    <Link href={`/products/${product.slug}`}>{product.title}</Link>
+                  </h4>
 
-                {product.artisan && (
-                  <p className="text-xs text-[#5C574F]">
-                    by{' '}
-                    <Link
-                      href={`/artisans/${product.artisan.slug}`}
-                      className="text-[#191817] font-medium hover:underline"
-                    >
-                      {product.artisan.artisanName}
-                    </Link>
+                  {product.artisan && (
+                    <p className="text-xs text-[#5C574F]">
+                      by{' '}
+                      <Link
+                        href={`/artisans/${product.artisan.slug}`}
+                        className="text-[#191817] font-semibold hover:underline"
+                      >
+                        {product.artisan.artisanName}
+                      </Link>
+                    </p>
+                  )}
+
+                  <p className="text-xs text-[#6E6962] font-light leading-relaxed line-clamp-2 pt-1">
+                    {product.shortDescription}
                   </p>
-                )}
+                </div>
               </div>
-            </div>
+
+              <div className="pt-4 mt-4 border-t border-[#F0EBE3]">
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
+                >
+                  <span>Explore piece</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </article>
           );
         })}
+      </div>
+
+      {/* =========================================================
+          3. EXPLORE ALL OBJECTS LINK
+          ========================================================= */}
+      <div className="text-center pt-2">
+        <Link
+          href="/products"
+          className="inline-flex items-center gap-2 font-serif text-lg sm:text-xl text-[#191817] hover:text-[#B8532F] border-b border-[#191817] hover:border-[#B8532F] pb-1 transition-all"
+        >
+          <span>Explore all objects</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
     </div>
   );

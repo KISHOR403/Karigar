@@ -9,82 +9,97 @@ import { AssamFeatureSection } from '@/components/home/AssamFeatureSection';
 import { Button } from '@karigar/ui';
 import { ArrowRight, Sparkles, Clock } from 'lucide-react';
 
-const INTENT_CATEGORIES = [
+const SHOP_BY_INTENT = [
+  {
+    id: 'home',
+    title: 'For Home',
+    tagline: 'Sanctuary & Living',
+    description: 'Tactile brassware, studio ceramics, and handwoven textiles that infuse spaces with enduring warmth.',
+    image: '/images/intent-home.jpg',
+    href: '/products?category=home',
+  },
   {
     id: 'gifting',
     title: 'For Gifting',
-    subtitle: 'Heirloom gifts with genuine maker lineage',
-    href: '/collections/curated-gifting',
-    badge: 'Curated Heritage',
+    tagline: 'Heirloom & Ceremonial',
+    description: 'Timeless creations certified with master provenance and generational craft lineage.',
     image: '/images/intent-gifting.jpg',
-    spanClass: 'lg:col-span-7 aspect-[16/11] sm:aspect-[16/10]',
+    href: '/collections',
   },
   {
-    id: 'home',
-    title: 'For Your Home',
-    subtitle: 'Tactile brassware, hand-knotted weaves, and studio ceramics',
-    href: '/collections/living-spaces',
-    badge: 'Living & Interior',
-    image: '/images/intent-home.jpg',
-    spanClass: 'lg:col-span-5 aspect-[4/5] sm:aspect-[4/4.5]',
-  },
-  {
-    id: 'celebrations',
-    title: 'For Celebrations',
-    subtitle: 'Festive silks, ceremonial brass lamps, and artisanal keepsakes',
-    href: '/collections/celebration-crafts',
-    badge: 'Festive Rituals',
-    image: '/images/intent-celebrations.jpg',
-    spanClass: 'lg:col-span-5 aspect-[4/5] sm:aspect-[4/4.5]',
-  },
-  {
-    id: 'everyday',
-    title: 'Everyday Objects',
-    subtitle: 'Terracotta dinnerware, wooden spoons, and organic cotton stoles',
-    href: '/collections/daily-ritual',
-    badge: 'Daily Craft',
+    id: 'personal',
+    title: 'For You',
+    tagline: 'Adornment & Textiles',
+    description: 'Pure Pashmina stoles, botanical Ajrakh modal silks, and intimate objects to live with daily.',
     image: '/images/intent-everyday.jpg',
-    spanClass: 'lg:col-span-7 aspect-[16/11] sm:aspect-[16/10]',
+    href: '/products?category=textiles',
+  },
+  {
+    id: 'custom',
+    title: 'Custom',
+    tagline: 'Atelier Commissions',
+    description: 'Direct collaboration with national award-winning artisans for bespoke sizes and family heirlooms.',
+    image: '/images/intent-celebrations.jpg',
+    href: '/artisans',
   },
 ];
 
-const REGIONAL_DISCOVERY = [
+const CRAFT_DISCIPLINES = [
   {
-    region: 'Assam',
-    crafts: 'Muga · Bamboo · Bell Metal',
-    slug: 'assam',
-    tagline: 'River Silk & Forest Basketry',
+    name: 'Textiles',
+    summary: 'Ajrakh resist blocks, Pashmina cashmeres, Jamdani muslins & Chanderi weaves',
+    href: '/products?category=textiles',
+    count: '24 Objects',
+    origin: 'Gujarat · Kashmir · Bengal',
   },
   {
-    region: 'Kutch',
-    crafts: 'Ajrakh · Embroidery · Weaving',
-    slug: 'kutch',
-    tagline: 'Desert Indigo & Mineral Resist',
+    name: 'Pottery',
+    summary: 'Jaipur quartz blue pottery, Kutch terracotta & Longpi black serpentine clay',
+    href: '/products?category=pottery',
+    count: '14 Objects',
+    origin: 'Rajasthan · Gujarat · Manipur',
   },
   {
-    region: 'Kashmir',
-    crafts: 'Papier-mâché · Carpet · Woodcraft',
-    slug: 'kashmir',
-    tagline: 'Himalayan Cashmere & Sozni',
+    name: 'Bamboo',
+    summary: 'Majuli river cane basketry, riverine fish traps & sacred ceremonial masks',
+    href: '/products?category=bamboo',
+    count: '12 Objects',
+    origin: 'Assam · Tripura · Meghalaya',
   },
   {
-    region: 'Rajasthan',
-    crafts: 'Block Print · Blue Pottery · Leather',
-    slug: 'rajasthan',
-    tagline: 'Quartz Clays & Natural Pigments',
+    name: 'Wood',
+    summary: 'Turned vegetable lacquerware, walnut woodcarving & teak architectural relief',
+    href: '/products?category=wood',
+    count: '16 Objects',
+    origin: 'Karnataka · Kashmir · Saharanpur',
+  },
+  {
+    name: 'Metal',
+    summary: 'Lost-wax Bastar bronze, hand-beaten bell metal urulis & Bidri silver inlay',
+    href: '/products?category=metal',
+    count: '18 Objects',
+    origin: 'Chhattisgarh · Assam · Karnataka',
+  },
+  {
+    name: 'Stone & Inlay',
+    summary: 'Agra Pietra Dura marble inlay, soapstone filigree & soft stone carving',
+    href: '/products?category=stone',
+    count: '10 Objects',
+    origin: 'Uttar Pradesh · Odisha',
   },
 ];
 
 export default function HomePage() {
-  const featuredMakers = MOCK_ARTISANS.slice(0, 4);
+  const featuredMakers = MOCK_ARTISANS.slice(0, 3);
   const featuredProducts = MOCK_PRODUCTS.slice(0, 3);
   const primaryStory = MOCK_STORIES[0];
 
   return (
-    <div className="space-y-24 sm:space-y-36 pb-24">
+    <div className="space-y-24 sm:space-y-32 pb-24">
       {/* =========================================================
-          1. HERO SECTION
-          Editorial composition with authentic hands-at-work photography
+          1. HERO
+          Discover things made by hand.
+          [ Explore Objects ]   [ Meet Makers ]
           ========================================================= */}
       <section className="relative pt-8 sm:pt-16 pb-12 overflow-hidden">
         {/* Subtle Assamese Watermark Typography */}
@@ -95,7 +110,6 @@ export default function HomePage() {
         >
           {ASSAMESE_BRAND_WORD}
         </div>
-
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -123,19 +137,20 @@ export default function HomePage() {
                 hand-carved teakwood, and centuries of collective cultural memory.
               </p>
 
+              {/* Blueprint CTA Buttons: [ Explore Objects ]   [ Meet Makers ] */}
               <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
-                <Link href="/artisans">
+                <Link href="/products">
                   <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-8">
-                    Explore Makers
+                    Explore Objects
                   </Button>
                 </Link>
-                <Link href="/products">
+                <Link href="/artisans">
                   <Button
                     variant="outline"
                     size="lg"
                     className="rounded-none tracking-wider text-xs uppercase px-8 border-[#191817]"
                   >
-                    Explore Objects
+                    Meet Makers
                   </Button>
                 </Link>
               </div>
@@ -198,14 +213,98 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================
-          2. ASSAM FEATURE SECTION
-          Contemporary editorial tribute to Assamese craft identity
+          2. SHOP BY WHAT YOU'RE LOOKING FOR
+          For Home       For Gifting       For You       Custom
           ========================================================= */}
-      <AssamFeatureSection />
+      <section className="bg-[#FAF8F5] py-16 sm:py-24 border-y border-[#E5DFD4]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              Curated Intent
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
+              Shop by What You&apos;re Looking For
+            </h2>
+            <div className="flex items-center justify-center gap-4 text-xs uppercase tracking-widest text-[#787268] font-medium pt-1">
+              <span>For Home</span>
+              <span>•</span>
+              <span>For Gifting</span>
+              <span>•</span>
+              <span>For You</span>
+              <span>•</span>
+              <span>Custom</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {SHOP_BY_INTENT.map((intent) => (
+              <Link
+                key={intent.id}
+                href={intent.href}
+                className="group relative overflow-hidden rounded-sm bg-[#EFEBE4] block aspect-[4/5] sm:aspect-[3/4.2]"
+              >
+                <Image
+                  src={intent.image}
+                  alt={intent.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent transition-opacity duration-300 group-hover:opacity-95" />
+                <div className="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2">
+                  <span className="text-[10px] uppercase tracking-widest text-[#E8A588] font-semibold">
+                    {intent.tagline}
+                  </span>
+                  <h3 className="font-serif text-2xl sm:text-3xl text-white group-hover:text-[#FBECE6] transition-colors leading-tight">
+                    {intent.title}
+                  </h3>
+                  <p className="text-xs text-[#DDD6CB] font-light line-clamp-2 leading-relaxed">
+                    {intent.description}
+                  </p>
+                  <div className="pt-2 flex items-center text-xs uppercase tracking-wider font-semibold text-white group-hover:text-[#E8A588] transition-colors">
+                    <span>Explore Collection</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* =========================================================
-          3. FEATURED MASTER ARTISANS (Alternating Editorial Chapters)
-          People First: 01, 02, 03, 04 alternating layouts, zero boxed cards
+          3. FEATURED OBJECTS
+          [ Large product ]
+          [ product ] [ product ]
+          Explore all objects →
+          ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#191817] pb-6 mb-12 gap-4">
+          <div>
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              Heirloom Craft
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
+              Featured Objects
+            </h2>
+          </div>
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
+          >
+            <span>Browse All Creations</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <EditorialProductShowcase products={featuredProducts} />
+      </section>
+
+      {/* =========================================================
+          4. MEET THE MAKERS
+          [ artisan ]
+          Their story...
+          Meet the maker →
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#191817] pb-6 mb-4 gap-4">
@@ -214,7 +313,7 @@ export default function HomePage() {
               The Keepers of Craft
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
-              Featured Master Artisans
+              Meet the Makers
             </h2>
           </div>
           <Link
@@ -239,66 +338,31 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================
-          4. EXPLORE BY INTENT
-          Editorial visual discovery: image-led, varied sizes, no card boxes
-          ========================================================= */}
-      <section className="bg-[#FAF8F5] py-16 sm:py-24 border-y border-[#E5DFD4]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-              Purpose & Occasion
-            </span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
-              Explore by Intent
-            </h2>
-            <p className="text-base text-[#6E6962] font-light leading-relaxed">
-              Find objects created for contemplative living, celebrations, and enduring daily connection.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
-            {INTENT_CATEGORIES.map((intent) => (
-              <Link
-                key={intent.id}
-                href={intent.href}
-                className={`group relative overflow-hidden rounded-sm bg-[#EFEBE4] block ${intent.spanClass}`}
-              >
-                <Image
-                  src={intent.image}
-                  alt={intent.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-95" />
-                <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end text-white space-y-2">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-widest text-[#E8A588] font-semibold">
-                    {intent.badge}
-                  </span>
-                  <h3 className="font-serif text-2xl sm:text-4xl text-white group-hover:text-[#FBECE6] transition-colors leading-tight">
-                    {intent.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#DDD6CB] font-light max-w-md line-clamp-2">
-                    {intent.subtitle}
-                  </p>
-                  <div className="pt-2 flex items-center text-xs uppercase tracking-wider font-semibold text-white group-hover:text-[#E8A588] transition-colors">
-                    <span>Explore collection</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          5. CRAFT STORIES (Immersive Editorial Break)
-          Magazine feature with dominant imagery & deep dark indigo canvas
+          5. CRAFT STORIES
+          Large visual story
+          Read the story →
           ========================================================= */}
       {primaryStory && (
         <section className="bg-[#0B1323] text-[#FAF8F5] py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between border-b border-[#22314D] pb-6 mb-12">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[#E8A588] font-semibold">
+                  Editorial Chronicle
+                </span>
+                <h2 className="font-serif text-3xl sm:text-5xl text-white mt-1">
+                  Craft Stories
+                </h2>
+              </div>
+              <Link
+                href="/stories"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#E8A588] hover:text-white transition-colors"
+              >
+                <span>All Chronicles</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
               {/* Dominant Story Imagery (7 cols) */}
               <div className="lg:col-span-7">
@@ -334,9 +398,9 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
+                  <h3 className="font-serif text-3xl sm:text-4xl text-white leading-tight">
                     {primaryStory.title}
-                  </h2>
+                  </h3>
 
                   <p className="text-base text-[#C5BFB5] font-light leading-relaxed">
                     {primaryStory.subtitle}
@@ -354,14 +418,14 @@ export default function HomePage() {
                       size="md"
                       className="rounded-none tracking-wider text-xs uppercase px-7 bg-[#FAF8F5] text-[#191817] hover:bg-white"
                     >
-                      Read Chronicle
+                      Read the story →
                     </Button>
                   </Link>
                   <Link
                     href={`/artisans/${primaryStory.artisanSlug}`}
                     className="text-xs uppercase tracking-widest font-semibold text-[#E8A588] hover:text-white transition-colors"
                   >
-                    Meet Dr. Ismail Khatri →
+                    Meet the Maker →
                   </Link>
                 </div>
               </div>
@@ -371,102 +435,122 @@ export default function HomePage() {
       )}
 
       {/* =========================================================
-          6. FEATURED OBJECTS / PRODUCTS (Asymmetric Layout)
-          1 dominant featured piece + 2 supporting pieces, clean whitespace
+          6. EXPLORE BY CRAFT
+          Textiles | Pottery | Bamboo | Wood | Metal | etc.
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#191817] pb-6 mb-12 gap-4">
+        <div className="border-b border-[#191817] pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-              Heirloom Craft
+              Taxonomy of Materials
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
-              Featured Objects
+              Explore by Craft
             </h2>
           </div>
           <Link
-            href="/products"
+            href="/categories"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
           >
-            <span>Browse All Creations</span>
+            <span>View All Categories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <EditorialProductShowcase products={featuredProducts} />
-      </section>
-
-      {/* =========================================================
-          7. REGIONAL CRAFT TRADITIONS (Visual Discovery)
-          Crisp, non-encyclopedic exploration of regional craft cultures
-          ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border-t border-[#E5DFD4] pt-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-                Geographies of Making
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#191817] mt-1">
-                Regional Craft Traditions
-              </h2>
-            </div>
-            <p className="text-xs text-[#787268] max-w-sm">
-              Distinct soil chemistries, indigenous fiber cultivars, and living techniques passed quietly in courtyard ateliers.
-            </p>
+        {/* Blueprint Craft Navigation Bar: Textiles | Pottery | Bamboo | Wood | Metal | etc. */}
+        <div className="bg-[#FAF8F5] border border-[#E5DFD4] p-4 sm:p-5 rounded-sm mb-10 overflow-x-auto">
+          <div className="flex items-center justify-between min-w-max gap-4 sm:gap-6 text-xs uppercase tracking-widest font-medium text-[#4F4B45]">
+            <Link href="/products?category=textiles" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Textiles
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/products?category=pottery" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Pottery
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/products?category=bamboo" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Bamboo
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/products?category=wood" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Wood
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/products?category=metal" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Metal
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/products?category=stone" className="hover:text-[#B8532F] transition-colors font-semibold">
+              Stone &amp; Inlay
+            </Link>
+            <span className="text-[#C5BFB5]">|</span>
+            <Link href="/categories" className="text-[#B8532F] hover:underline font-semibold">
+              Explore All →
+            </Link>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {REGIONAL_DISCOVERY.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/artisans?region=${item.slug}`}
-                className="group block border-t border-[#191817] pt-5 hover:border-[#B8532F] transition-colors"
-              >
-                <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-[#8C8477] mb-2">
-                  <span>{item.tagline}</span>
-                  <ArrowRight className="w-3 h-3 text-[#191817] group-hover:text-[#B8532F] group-hover:translate-x-1 transition-all" />
-                </div>
+        {/* Detailed Craft Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {CRAFT_DISCIPLINES.map((discipline) => (
+            <Link
+              key={discipline.name}
+              href={discipline.href}
+              className="group block p-6 sm:p-8 border border-[#E5DFD4] bg-[#FAF8F5] hover:border-[#191817] hover:bg-white transition-all rounded-sm space-y-4"
+            >
+              <div className="flex items-center justify-between text-xs">
+                <span className="uppercase tracking-widest font-semibold text-[#B8532F]">
+                  {discipline.count}
+                </span>
+                <span className="text-[#8C8477] font-mono text-[11px]">
+                  {discipline.origin}
+                </span>
+              </div>
+
+              <div>
                 <h3 className="font-serif text-2xl sm:text-3xl text-[#191817] group-hover:text-[#B8532F] transition-colors">
-                  {item.region}
+                  {discipline.name}
                 </h3>
-                <p className="text-xs text-[#5C574F] tracking-wide mt-2 font-light">
-                  {item.crafts}
+                <p className="text-xs sm:text-sm text-[#5C574F] font-light leading-relaxed mt-2">
+                  {discipline.summary}
                 </p>
-              </Link>
-            ))}
-          </div>
+              </div>
+
+              <div className="pt-2 flex items-center text-xs uppercase tracking-wider font-semibold text-[#191817] group-hover:text-[#B8532F] transition-colors">
+                <span>Explore {discipline.name}</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
       {/* =========================================================
-          8. FINAL EDITORIAL CTA / PATRONAGE
-          Quiet, dignified dialogue with living heritage
+          7. FROM ASSAM
+          Beautiful Assamese craft feature
           ========================================================= */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 text-center space-y-6">
+      <AssamFeatureSection />
+
+      {/* =========================================================
+          8. FINAL CTA
+          Discover something made by hand.
+          [ Explore Objects ]
+          ========================================================= */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center space-y-6">
         <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
           Direct Atelier Patronage
         </span>
         <h2 className="font-serif text-4xl sm:text-6xl text-[#191817] leading-tight">
-          Meet the people behind the things you love.
+          Discover something made by hand.
         </h2>
         <p className="text-base sm:text-lg text-[#6E6962] font-light max-w-xl mx-auto leading-relaxed">
-          Begin a dialogue with generational craft masters. Commission custom family heirlooms,
-          inquire into archival techniques, or support living Indian heritage directly.
+          Begin a dialogue with generational craft masters. Collect heirloom objects shaped
+          by patience, living culture, and human hands.
         </p>
-        <div className="pt-4 flex flex-wrap justify-center items-center gap-5">
-          <Link href="/artisans">
-            <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-8">
-              Explore All Artisans
-            </Button>
-          </Link>
-          <Link href="/artisans">
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-none tracking-wider text-xs uppercase px-8 border-[#191817]"
-            >
-              Request Custom Work
+        <div className="pt-4 flex justify-center items-center">
+          <Link href="/products">
+            <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-10">
+              Explore Objects
             </Button>
           </Link>
         </div>

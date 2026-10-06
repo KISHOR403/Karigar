@@ -8,8 +8,8 @@ import { Search, Heart, User, Menu, X, ArrowUpRight } from 'lucide-react';
 const NAV_LINKS = [
   { label: 'Discover', href: '/' },
   { label: 'Makers', href: '/artisans' },
-  { label: 'Craft Stories', href: '/stories' },
   { label: 'Objects', href: '/products' },
+  { label: 'Craft Stories', href: '/stories' },
   { label: 'Categories', href: '/categories' },
 ];
 
@@ -20,9 +20,15 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E5DFD4] transition-all">
-      {/* Top micro-banner */}
-      <div className="bg-[#242220] text-[#EFEBE4] text-[11px] font-medium tracking-widest uppercase py-1.5 px-4 text-center">
-        <span>Direct atelier patronage — 100% of custom commission proceeds flow to certified Indian master artisans</span>
+      {/* Top Bar */}
+      <div className="bg-[#242220] text-[#EFEBE4] text-[11px] font-medium tracking-widest uppercase py-2 px-4 text-center">
+        <div className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
+          <span>Directly from artisans</span>
+          <span className="text-[#6E6962] font-normal">|</span>
+          <span>Authentic craft</span>
+          <span className="text-[#6E6962] font-normal">|</span>
+          <span>Custom commissions</span>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,23 +75,16 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-4 sm:gap-6">
-            <Link
-              href="/artisans"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-medium text-[#191817] hover:text-[#B8532F] transition-colors"
-            >
-              <span>Custom Commission</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
-            </Link>
-
+          {/* Right Action Icons: Search | ♡ | Account */}
+          <div className="flex items-center gap-3 sm:gap-5">
             <button
               type="button"
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-[#4F4B45] hover:text-[#191817] transition-colors"
+              className="flex items-center gap-1.5 p-2 text-[#4F4B45] hover:text-[#191817] transition-colors"
               aria-label="Search artisans and crafts"
             >
               <Search className="w-4 h-4" />
+              <span className="hidden sm:inline text-xs uppercase tracking-wider font-medium">Search</span>
             </button>
 
             <Link
@@ -94,15 +93,16 @@ export function Navbar() {
               aria-label="View curated wishlist"
             >
               <Heart className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#B8532F] rounded-full" />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#B8532F] rounded-full" />
             </Link>
 
             <Link
               href="/login"
-              className="p-2 text-[#4F4B45] hover:text-[#191817] transition-colors"
-              aria-label="Sign in to Karigar"
+              className="flex items-center gap-1.5 p-2 text-[#4F4B45] hover:text-[#191817] transition-colors"
+              aria-label="Account sign in"
             >
               <User className="w-4 h-4" />
+              <span className="hidden sm:inline text-xs uppercase tracking-wider font-medium">Account</span>
             </Link>
           </div>
         </div>
