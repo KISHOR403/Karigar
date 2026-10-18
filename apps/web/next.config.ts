@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     ],
   },
   transpilePackages: ['@karigar/ui', '@karigar/types', '@karigar/config', '@karigar/validation'],
+  devIndicators: false,
 };
 
 export default nextConfig;

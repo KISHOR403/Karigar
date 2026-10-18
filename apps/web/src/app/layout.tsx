@@ -3,6 +3,8 @@ import { Playfair_Display, Plus_Jakarta_Sans, Noto_Serif_Bengali } from 'next/fo
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { CartProvider } from '@/lib/cart-context';
+import { CartDrawer } from '@/components/cart/CartDrawer';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -52,9 +54,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${plusJakarta.variable} ${notoSerifBengali.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#191817] selection:bg-[#EBD6CE] selection:text-[#8B3C1B]">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

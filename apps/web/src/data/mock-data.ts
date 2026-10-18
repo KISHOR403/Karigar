@@ -37,16 +37,6 @@ export const MOCK_CATEGORIES: (Category & {
     spanClass: 'lg:col-span-4 aspect-[4/5]',
   },
   {
-    id: 'cat-jewellery-accessories',
-    name: 'Jewellery & Accessories',
-    slug: 'jewellery-accessories',
-    count: 24,
-    description: 'Handmade floral hair combs, freshwater pearl and seed-bead adornments, embroidered brooches, and wearable craft.',
-    descriptor: 'Beaded Floral Accents · Pearl Adornments · Embroidered Brooches',
-    image: '/images/cat-jewellery-accessories.jpg',
-    spanClass: 'lg:col-span-4 aspect-[4/5]',
-  },
-  {
     id: 'cat-crochet-fabric',
     name: 'Crochet & Fabric Crafts',
     slug: 'crochet-fabric',
@@ -54,6 +44,16 @@ export const MOCK_CATEGORIES: (Category & {
     description: 'Hand-crocheted botanical stems, pure cotton pouches, needle-felted arrangements, and textural fiber art.',
     descriptor: 'Cotton Crochet · Fiber Art · Needle-Felted Blooms',
     image: '/images/cat-crochet-fabric.jpg',
+    spanClass: 'lg:col-span-4 aspect-[4/5]',
+  },
+  {
+    id: 'cat-jewellery-accessories',
+    name: 'Jewellery & Accessories',
+    slug: 'jewellery-accessories',
+    count: 24,
+    description: 'Handmade floral hair combs, freshwater pearl and seed-bead adornments, embroidered brooches, and wearable craft.',
+    descriptor: 'Beaded Floral Accents · Pearl Adornments · Embroidered Brooches',
+    image: '/images/cat-jewellery-accessories.jpg',
     spanClass: 'lg:col-span-4 aspect-[4/5]',
   },
   {

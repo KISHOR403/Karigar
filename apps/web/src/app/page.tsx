@@ -11,10 +11,10 @@ const QUICK_DISCOVERY_CHIPS = [
   { label: 'Flowers & Bouquets', href: '/categories/flowers-bouquets' },
   { label: 'Personalized Gifts', href: '/categories/personalized-gifts' },
   { label: 'Home Decor', href: '/categories/home-decor' },
+  { label: 'Crochet & Fabric Crafts', href: '/categories/crochet-fabric' },
   { label: 'Jewellery & Accessories', href: '/categories/jewellery-accessories' },
-  { label: 'Crochet & Fabric', href: '/categories/crochet-fabric' },
-  { label: 'Traditional Crafts', href: '/categories/traditional-crafts' },
-  { label: 'All Objects', href: '/objects' },
+  { label: 'Traditional Indian Crafts', href: '/categories/traditional-crafts' },
+  { label: 'All Categories', href: '/categories' },
 ];
 
 // Regional Discovery Hub
@@ -46,7 +46,7 @@ const REGIONS_DATA = [
   },
   {
     name: 'Rajasthan',
-    slug: 'kutch',
+    slug: 'rajasthan',
     crafts: 'Handmade Crepe Florals · Miniature · Blue Pottery',
     image: '/images/prod-paper-flowers.jpg',
   },
@@ -80,17 +80,16 @@ export default function HomePage() {
       {/* =========================================================
           1. HERO — EXPANDED TO HANDMADE FLOWERS, BOUQUETS & GIFTS
           Headline: Small creations. Stories that stay.
-          Supporting text: Discover handmade flowers, thoughtful gifts and unique creations made by independent artisans across India.
-          Primary CTA: EXPLORE HANDMADE FINDS -> /categories/flowers-bouquets
-          Secondary CTA: MEET THE MAKERS -> /makers
-          Hero Image: High quality photograph of an artisan crafting a handmade flower bouquet in a warm workshop.
+          Supporting text: Handmade flowers, thoughtful gifts and distinctive creations, made by independent artisans across India.
+          Primary CTA: Shop Handmade Finds -> /categories/flowers-bouquets
+          Secondary CTA: Discover Our Crafts -> /objects
           ========================================================= */}
       <section className="relative pt-8 sm:pt-14 pb-8 overflow-hidden">
-        {/* Subtle Faded Assamese Watermark Typography */}
+        {/* Subtle Faded Assamese Watermark Typography - isolated behind content with no overlap interference */}
         <div
           aria-hidden="true"
           lang="as"
-          className="absolute -left-4 sm:-left-8 lg:-left-12 -top-6 sm:-top-10 lg:-top-14 font-assamese text-7xl sm:text-[10rem] md:text-[13rem] lg:text-[16rem] xl:text-[19rem] text-[#191817] opacity-[0.018] sm:opacity-[0.022] lg:opacity-[0.028] pointer-events-none select-none z-0 tracking-tight leading-none animate-assamese-watermark whitespace-nowrap"
+          className="absolute -left-6 sm:-left-10 lg:-left-16 -top-8 sm:-top-12 lg:-top-16 font-assamese text-7xl sm:text-[10rem] md:text-[13rem] lg:text-[16rem] xl:text-[19rem] text-[#191817] opacity-[0.018] sm:opacity-[0.022] lg:opacity-[0.025] pointer-events-none select-none -z-10 tracking-tight leading-none animate-assamese-watermark whitespace-nowrap"
         >
           {ASSAMESE_BRAND_WORD}
         </div>
@@ -104,7 +103,7 @@ export default function HomePage() {
                 <span>Handmade Flora · Creative Gifts · Living Craft</span>
               </div>
 
-              <div className="space-y-2 sm:space-y-3">
+              <div className="space-y-2 sm:space-y-3 relative z-10">
                 <span
                   lang="as"
                   className="font-assamese italic text-xl sm:text-2xl text-[#8C8477] tracking-[0.14em] block select-none animate-assamese-signature"
@@ -116,24 +115,24 @@ export default function HomePage() {
                 </h1>
               </div>
 
-              <p className="text-base sm:text-lg text-[#5C574F] font-light leading-relaxed max-w-xl">
-                Discover handmade flowers, thoughtful gifts and unique creations made by independent artisans across India.
+              <p className="text-base sm:text-lg text-[#5C574F] font-light leading-relaxed max-w-xl relative z-10">
+                Handmade flowers, thoughtful gifts and distinctive creations, made by independent artisans across India.
               </p>
 
-              {/* Requirement CTAs: Primary = EXPLORE HANDMADE FINDS, Secondary = MEET THE MAKERS */}
-              <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
-                <Link href="/categories/flowers-bouquets">
-                  <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-9 bg-[#191817] text-white hover:bg-[#33302D] shadow-sm">
-                    Explore Handmade Finds
+              {/* Requirement CTAs: Primary = Shop Handmade Finds, Secondary = Discover Our Crafts */}
+              <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6 relative z-10">
+                <Link href="/categories/flowers-bouquets" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8532F]">
+                  <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-9 bg-[#191817] text-white hover:bg-[#33302D] shadow-md font-semibold transition-all">
+                    Shop Handmade Finds
                   </Button>
                 </Link>
-                <Link href="/makers">
+                <Link href="/objects" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8532F]">
                   <Button
                     variant="outline"
                     size="lg"
-                    className="rounded-none tracking-wider text-xs uppercase px-8 border-[#191817] text-[#191817] hover:bg-[#FAF8F5]"
+                    className="rounded-none tracking-wider text-xs uppercase px-8 border-[#191817] text-[#191817] hover:bg-[#FAF8F5] transition-all"
                   >
-                    Meet the Makers
+                    Discover Our Crafts
                   </Button>
                 </Link>
               </div>
@@ -208,14 +207,17 @@ export default function HomePage() {
             <span className="text-[#C5BFB5] hidden md:inline">|</span>
           </div>
 
-          <nav className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none text-xs">
+          <nav
+            aria-label="Quick category discovery"
+            className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-2 md:pb-0 scroll-smooth touch-pan-x scrollbar-none text-xs px-0.5"
+          >
             {QUICK_DISCOVERY_CHIPS.map((chip, idx) => (
               <Link
                 key={chip.label}
                 href={chip.href}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full transition-colors ${
+                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8532F] ${
                   idx === 0
-                    ? 'bg-[#191817] text-white font-medium'
+                    ? 'bg-[#191817] text-white font-medium shadow-xs'
                     : 'bg-[#F2EDE4] text-[#4F4B45] hover:bg-[#E5DFD4] hover:text-[#191817]'
                 }`}
               >
@@ -226,9 +228,9 @@ export default function HomePage() {
 
           <Link
             href="/categories"
-            className="hidden lg:inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] shrink-0 transition-colors"
+            className="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8532F] py-1"
           >
-            <span>View all categories</span>
+            <span>All Categories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

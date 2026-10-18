@@ -44,6 +44,22 @@ const REGION_DATA: Record<
     heroImage: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1600&auto=format&fit=crop',
     crafts: ['Handspun Changthangi Pashmina', 'Silk Sozni Needlework', 'Carved Walnut Woodwork', 'Papier-mâché'],
   },
+  bengal: {
+    name: 'Kolkata & Bengal',
+    tagline: 'Botanical crochet, linen needlework and living Santiniketan fiber traditions.',
+    description:
+      'From the quiet river ateliers of Kolkata to the organic craft community of Santiniketan, Bengal artisans transform natural combed cotton, un-dyed merino wool, and handloom linen into enduring floral sculptures and textile poetry.',
+    heroImage: '/images/cat-crochet-fabric.jpg',
+    crafts: ['Botanical Cotton Crochet', 'Needle-Felted Wool Flora', 'Santiniketan Botanical Textiles', 'Kantha Linen Embroidery'],
+  },
+  rajasthan: {
+    name: 'Rajasthan',
+    tagline: 'Hand-sculpted botanical crepe paper, Sanganer deckle sheets, and miniature court art.',
+    description:
+      'Rooted in Jaipur and Sanganer\'s centuries-old papermaking and natural dye heritage, master artisans hand-contour Italian crepe and cotton rag paper into timeless botanical blooms that echo historic royal garden chronicles.',
+    heroImage: '/images/prod-paper-flowers.jpg',
+    crafts: ['Botanical Crepe Flora', 'Sanganer Handmade Rag Paper', 'Jaipur Blue Pottery', 'Hand Block Printing'],
+  },
 };
 
 export default function RegionPage() {
@@ -60,13 +76,17 @@ export default function RegionPage() {
     (m) =>
       m.location.state.toLowerCase().includes(slug) ||
       m.location.district.toLowerCase().includes(slug) ||
-      (slug === 'assam' && m.location.state === 'Assam'),
+      (slug === 'assam' && m.location.state === 'Assam') ||
+      (slug === 'bengal' && (m.location.state.includes('Bengal') || m.location.district.includes('Kolkata'))) ||
+      (slug === 'rajasthan' && m.location.state.includes('Rajasthan')),
   );
 
   const regionProducts = MOCK_PRODUCTS.filter(
     (p) =>
       p.specifications.regionOfOrigin.toLowerCase().includes(slug) ||
-      (slug === 'assam' && p.specifications.regionOfOrigin.includes('Assam')),
+      (slug === 'assam' && p.specifications.regionOfOrigin.includes('Assam')) ||
+      (slug === 'bengal' && (p.specifications.regionOfOrigin.includes('Bengal') || p.specifications.regionOfOrigin.includes('Kolkata'))) ||
+      (slug === 'rajasthan' && p.specifications.regionOfOrigin.includes('Rajasthan')),
   );
 
   return (

@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Heart, User, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Search, Heart, User, Menu, X, ArrowUpRight, ShoppingBag } from 'lucide-react';
+import { useCart } from '@/lib/cart-context';
 
 const NAV_LINKS = [
   { label: 'Discover', href: '/' },
@@ -18,6 +19,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
+  const { itemCount, setIsCartOpen } = useCart();
 
   return (
     <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E5DFD4] transition-all">
@@ -76,8 +78,8 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Right Action Icons: Search | Wishlist | Account */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          {/* Right Action Icons: Search | Wishlist | Bag | Account */}
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <button
               type="button"
               onClick={() => setSearchOpen(!searchOpen)}
@@ -95,8 +97,22 @@ export function Navbar() {
             >
               <Heart className="w-4 h-4" />
               <span className="hidden sm:inline text-xs uppercase tracking-wider font-medium">Wishlist</span>
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#B8532F] rounded-full" />
             </Link>
+
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(true)}
+              className="flex items-center gap-1.5 p-2 text-[#4F4B45] hover:text-[#191817] transition-colors relative"
+              aria-label="View shopping bag"
+            >
+              <ShoppingBag className="w-4 h-4 text-[#191817]" />
+              <span className="hidden sm:inline text-xs uppercase tracking-wider font-medium">Bag</span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#B8532F] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {itemCount}
+                </span>
+              )}
+            </button>
 
             <Link
               href="/login"
@@ -148,6 +164,17 @@ export function Navbar() {
           </nav>
 
           <div className="pt-6 border-t border-[#E5DFD4] flex flex-col space-y-3">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsCartOpen(true);
+              }}
+              className="text-xs uppercase tracking-wider font-semibold text-[#191817] flex items-center justify-between py-1 text-left"
+            >
+              <span>Shopping Bag ({itemCount})</span>
+              <ShoppingBag className="w-4 h-4 text-[#B8532F]" />
+            </button>
             <Link
               href="/makers"
               onClick={() => setMobileMenuOpen(false)}
