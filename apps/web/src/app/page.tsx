@@ -1,68 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MOCK_PRODUCTS, MOCK_STORIES } from '@/data/mock-data';
+import { MOCK_PRODUCTS, MOCK_STORIES, MOCK_CATEGORIES } from '@/data/mock-data';
 import { ASSAMESE_BRAND_WORD, APP_CONFIG } from '@karigar/config';
-import { Button } from '@karigar/ui';
+import { Button, Badge } from '@karigar/ui';
 import { ArrowRight, Sparkles, Clock, MapPin } from 'lucide-react';
 
-// Quick Discovery Navigation Chips
+// Quick Discovery Navigation Chips reflecting new priorities
 const QUICK_DISCOVERY_CHIPS = [
+  { label: 'Flowers & Bouquets', href: '/categories/flowers-bouquets' },
+  { label: 'Personalized Gifts', href: '/categories/personalized-gifts' },
+  { label: 'Home Decor', href: '/categories/home-decor' },
+  { label: 'Jewellery & Accessories', href: '/categories/jewellery-accessories' },
+  { label: 'Crochet & Fabric', href: '/categories/crochet-fabric' },
+  { label: 'Traditional Crafts', href: '/categories/traditional-crafts' },
   { label: 'All Objects', href: '/objects' },
-  { label: 'Textiles', href: '/categories/textiles-handloom' },
-  { label: 'Home', href: '/categories/home-living' },
-  { label: 'Jewellery', href: '/categories/jewellery-ornaments' },
-  { label: 'Pottery', href: '/categories/clay-ceramics' },
-  { label: 'Bamboo & Cane', href: '/categories/bamboo-cane' },
-  { label: 'Wood', href: '/categories/turned-wood-lacquer' },
-  { label: 'Metal', href: '/categories/metals-forge' },
-  { label: 'Art & Decor', href: '/categories/folk-art' },
-];
-
-// 6 Curated Craft Disciplines for Editorial Discovery
-const CRAFT_DISCIPLINES = [
-  {
-    title: 'Textiles',
-    slug: 'textiles-handloom',
-    descriptor: 'Ajrakh Blocks · Pashmina · Jamdani Muslin',
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop',
-    spanClass: 'lg:col-span-7 aspect-[16/10] sm:aspect-[16/9]',
-  },
-  {
-    title: 'Pottery',
-    slug: 'clay-ceramics',
-    descriptor: 'Jaipur Blue Quartz · Kutch Terracotta',
-    image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800&auto=format&fit=crop',
-    spanClass: 'lg:col-span-5 aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto',
-  },
-  {
-    title: 'Bamboo & Cane',
-    slug: 'bamboo-cane',
-    descriptor: 'Majuli Basketry · Riverine Fish Traps',
-    image: '/images/intent-home.jpg',
-    spanClass: 'lg:col-span-4 aspect-[4/5]',
-  },
-  {
-    title: 'Woodcraft',
-    slug: 'turned-wood-lacquer',
-    descriptor: 'Channapatna Lathe · Walnut Woodwork',
-    image: '/images/maker-channapatna-lathe.jpg',
-    spanClass: 'lg:col-span-4 aspect-[4/5]',
-  },
-  {
-    title: 'Metalwork',
-    slug: 'metals-forge',
-    descriptor: 'Bastar Lost-Wax Bronze · Sarthebari Kansa',
-    image: '/images/maker-bastar-dhokra.jpg',
-    spanClass: 'lg:col-span-4 aspect-[4/5]',
-  },
-  {
-    title: 'Jewellery',
-    slug: 'jewellery-ornaments',
-    descriptor: 'Silver Filigree · Terracotta · Brass Amulets',
-    image: '/images/intent-celebrations.jpg',
-    spanClass: 'lg:col-span-12 aspect-[16/7] sm:aspect-[21/8]',
-  },
 ];
 
 // Regional Discovery Hub
@@ -75,49 +27,63 @@ const REGIONS_DATA = [
     highlight: 'From Assam — Muga silk, bamboo craft and generations of makers.',
   },
   {
+    name: 'Kolkata & Bengal',
+    slug: 'bengal',
+    crafts: 'Botanical Crochet · Linen Embroidery · Kantha',
+    image: '/images/cat-crochet-fabric.jpg',
+  },
+  {
     name: 'Kutch',
     slug: 'kutch',
     crafts: 'Ajrakh · Bandhani · Terracotta',
     image: '/images/maker-ismail-ajrakh.jpg',
   },
   {
-    name: 'Kashmir',
+    name: 'Himalayan Foothills',
     slug: 'kashmir',
-    crafts: 'Pashmina · Sozni · Walnut Wood',
-    image: '/images/maker-kashmir-sozni.jpg',
+    crafts: 'Pressed Florals · Pashmina · Walnut Wood',
+    image: '/images/cat-personalized-gifts.jpg',
   },
   {
     name: 'Rajasthan',
     slug: 'kutch',
-    crafts: 'Blue Pottery · Miniature · Block Print',
-    image: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=800&auto=format&fit=crop',
-  },
-  {
-    name: 'West Bengal',
-    slug: 'assam',
-    crafts: 'Jamdani · Kantha · Terracotta',
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=800&auto=format&fit=crop',
+    crafts: 'Handmade Crepe Florals · Miniature · Blue Pottery',
+    image: '/images/prod-paper-flowers.jpg',
   },
 ];
 
 export default function HomePage() {
-  // Editorial featured products: 1 primary centerpiece + 3 supporting items
-  const heroProduct = MOCK_PRODUCTS[0];
-  const supportingProducts = [MOCK_PRODUCTS[1], MOCK_PRODUCTS[5], MOCK_PRODUCTS[3]].filter(Boolean);
+  // Primary Featured Handmade Finds: 6 balanced products as specified:
+  // 1. Crochet flower bouquet
+  // 2. Handmade ribbon rose bouquet
+  // 3. Fabric flower arrangement
+  // 4. Personalized handmade gift
+  // 5. Decorative floral wall art
+  // 6. Traditional handmade textile accessory
+  const featuredFinds = [
+    MOCK_PRODUCTS[0], // Crochet bouquet
+    MOCK_PRODUCTS[1], // Ribbon rose bouquet
+    MOCK_PRODUCTS[2], // Fabric flower arrangement
+    MOCK_PRODUCTS[3], // Personalized keepsake box
+    MOCK_PRODUCTS[4], // Embroidered botanical wall hoop
+    MOCK_PRODUCTS[5], // Traditional Ajrakh Chanderi stole
+  ].filter(Boolean);
 
-  // Fresh finds for "Just Discovered"
-  const justDiscoveredProducts = [MOCK_PRODUCTS[4], MOCK_PRODUCTS[2], MOCK_PRODUCTS[0]].filter(Boolean);
+  const heroSpotlightProduct = featuredFinds[0];
+  const supportingFinds = featuredFinds.slice(1);
 
+  // Story highlighting the forever blooms movement alongside master craft
   const primaryStory = MOCK_STORIES[0];
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-20">
       {/* =========================================================
-          1. HERO — IMMEDIATE PURPOSE & IDENTITY
-          Eyebrow: THE LIVING LINEAGE OF INDIAN CRAFT
-          Main Title: Discover objects made by hand.
-          Primary CTA: EXPLORE OBJECTS -> /objects
+          1. HERO — EXPANDED TO HANDMADE FLOWERS, BOUQUETS & GIFTS
+          Headline: Small creations. Stories that stay.
+          Supporting text: Discover handmade flowers, thoughtful gifts and unique creations made by independent artisans across India.
+          Primary CTA: EXPLORE HANDMADE FINDS -> /categories/flowers-bouquets
           Secondary CTA: MEET THE MAKERS -> /makers
+          Hero Image: High quality photograph of an artisan crafting a handmade flower bouquet in a warm workshop.
           ========================================================= */}
       <section className="relative pt-8 sm:pt-14 pb-8 overflow-hidden">
         {/* Subtle Faded Assamese Watermark Typography */}
@@ -135,7 +101,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 space-y-6 sm:space-y-7">
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#B8532F]" />
-                <span>The Living Lineage of Indian Craft</span>
+                <span>Handmade Flora · Creative Gifts · Living Craft</span>
               </div>
 
               <div className="space-y-2 sm:space-y-3">
@@ -146,19 +112,19 @@ export default function HomePage() {
                   {ASSAMESE_BRAND_WORD}
                 </span>
                 <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-[#191817] leading-[1.08] tracking-tight">
-                  Discover objects<br />made by hand.
+                  Small creations.<br />Stories that stay.
                 </h1>
               </div>
 
               <p className="text-base sm:text-lg text-[#5C574F] font-light leading-relaxed max-w-xl">
-                Shop authentic handmade objects from independent Indian artisans — each with a story, a place, and a maker behind it.
+                Discover handmade flowers, thoughtful gifts and unique creations made by independent artisans across India.
               </p>
 
-              {/* Requirement CTAs: Primary = EXPLORE OBJECTS, Secondary = MEET THE MAKERS */}
+              {/* Requirement CTAs: Primary = EXPLORE HANDMADE FINDS, Secondary = MEET THE MAKERS */}
               <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
-                <Link href="/objects">
+                <Link href="/categories/flowers-bouquets">
                   <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-9 bg-[#191817] text-white hover:bg-[#33302D] shadow-sm">
-                    Explore Objects
+                    Explore Handmade Finds
                   </Button>
                 </Link>
                 <Link href="/makers">
@@ -176,25 +142,25 @@ export default function HomePage() {
               <div className="pt-6 border-t border-[#E5DFD4] grid grid-cols-3 gap-6 text-xs">
                 <div>
                   <p className="font-serif text-xl sm:text-2xl text-[#191817]">100%</p>
-                  <p className="text-[#787268] mt-0.5">Handmade Lineage</p>
+                  <p className="text-[#787268] mt-0.5">Handmade by Artisans</p>
                 </div>
                 <div>
-                  <p className="font-serif text-xl sm:text-2xl text-[#191817]">GI Tagged</p>
-                  <p className="text-[#787268] mt-0.5">Origin Certified</p>
+                  <p className="font-serif text-xl sm:text-2xl text-[#191817]">Forever</p>
+                  <p className="text-[#787268] mt-0.5">Everlasting Blooms</p>
                 </div>
                 <div>
-                  <p className="font-serif text-xl sm:text-2xl text-[#191817]">Direct</p>
-                  <p className="text-[#787268] mt-0.5">Artisan Patronage</p>
+                  <p className="font-serif text-xl sm:text-2xl text-[#191817]">Bespoke</p>
+                  <p className="text-[#787268] mt-0.5">Personalized Commissions</p>
                 </div>
               </div>
             </div>
 
-            {/* Asymmetric Studio Working Visual */}
+            {/* Asymmetric Studio Working Visual - Artisan crafting floral bouquet */}
             <div className="lg:col-span-6 relative">
               <div className="relative aspect-[4/5] sm:aspect-[3/3.3] w-full rounded-sm overflow-hidden bg-[#ECE5DC] shadow-sm">
                 <Image
-                  src="/images/hero-craft-hands.jpg"
-                  alt="Master artisan hand-printing organic cotton with carved teakwood blocks in workshop"
+                  src="/images/hero-flower-artisan.jpg"
+                  alt="Independent Indian artisan in studio crafting a handmade colorful crochet flower bouquet"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -206,10 +172,10 @@ export default function HomePage() {
                     In The Studio
                   </p>
                   <p className="font-serif text-xl sm:text-2xl text-white">
-                    Master block printer at the mineral dye table
+                    Ananya Roy arranging botanical crochet wildflowers
                   </p>
                   <p className="text-xs text-[#DDD6CB] font-light">
-                    Kutch, Gujarat • Carved Teakwood & Natural Pigments
+                    Kolkata, West Bengal • Combed Organic Cotton & Botanical Dye
                   </p>
                 </div>
               </div>
@@ -218,10 +184,10 @@ export default function HomePage() {
               <div className="hidden sm:block absolute -bottom-6 -left-6 bg-[#FAF8F5] p-5 border border-[#E5DFD4] shadow-md max-w-xs space-y-1.5">
                 <p className="text-[10px] uppercase tracking-wider text-[#B8532F] font-semibold flex items-center gap-1">
                   <Sparkles className="w-3 h-3" />
-                  <span>Unhurried Making</span>
+                  <span>Forever Blooms</span>
                 </p>
                 <p className="text-xs text-[#4F4B45] leading-relaxed">
-                  Every textile and metalwork represents between 14 to 120 days of focused hand labor.
+                  Every petal, leaf, and stem is hand-worked with patience — creations that preserve memories without wilting.
                 </p>
               </div>
             </div>
@@ -230,10 +196,8 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================
-          2. QUICK DISCOVERY — COMPACT FAST LANE TO PRODUCTS
+          2. QUICK DISCOVERY — CHIPS NAVIGATION
           Title: EXPLORE
-          Clean horizontal links/chips navigation giving customers
-          an immediate 1-click route to products.
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6">
         <div className="border-y border-[#E5DFD4] py-4 sm:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -264,114 +228,130 @@ export default function HomePage() {
             href="/categories"
             className="hidden lg:inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] shrink-0 transition-colors"
           >
-            <span>View all</span>
+            <span>View all categories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </section>
 
       {/* =========================================================
-          3. FEATURED OBJECTS — COMMERCIALLY PRIMARY
-          Moved higher! Makes customer think: "I can actually shop here."
-          Title: FEATURED OBJECTS
-          Supporting text: Objects worth knowing.
-          Composition: 1 large featured product + 3 smaller supporting products.
-          Bottom CTA: EXPLORE ALL OBJECTS -> /objects
+          3. FEATURED PRODUCTS: "HANDMADE FINDS"
+          Section Title: HANDMADE FINDS
+          Supporting text: One-of-a-kind creations, made with patience and imagination.
+          Displays:
+          - Product image
+          - Product name
+          - Artisan or maker name
+          - Price in INR
+          - Availability or made-to-order status
+          - Product details link
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-b border-[#191817] pb-5 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
-              Featured Objects
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              Curated Selection
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
+              HANDMADE FINDS
             </h2>
-            <p className="text-sm text-[#787268] mt-1 font-light">
-              Objects worth knowing.
+            <p className="text-sm text-[#787268] mt-1.5 font-light">
+              One-of-a-kind creations, made with patience and imagination.
             </p>
           </div>
           <Link
-            href="/objects"
+            href="/categories/flowers-bouquets"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
           >
-            <span>Explore All Objects ({MOCK_PRODUCTS.length})</span>
+            <span>Explore Flowers & Gifts ({MOCK_PRODUCTS.length})</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* Editorial Product Grid: 1 Large Spotlight (7 cols) + 3 Supporting Items (5 cols) */}
+        {/* Editorial Product Grid: 1 Large Spotlight (7 cols) + 5 Supporting Items */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Main Large Featured Product */}
-          {heroProduct && (
+          {/* Main Large Spotlight Product */}
+          {heroSpotlightProduct && (
             <article className="lg:col-span-7 group border border-[#E5DFD4] bg-[#FAF8F5] p-6 sm:p-8 rounded-sm hover:border-[#191817] transition-all">
               <Link
-                href={`/objects/${heroProduct.slug}`}
+                href={`/objects/${heroSpotlightProduct.slug}`}
                 className="relative aspect-[16/11] sm:aspect-[16/10] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
               >
                 <Image
-                  src={heroProduct.media[0]?.url || ''}
-                  alt={heroProduct.title}
+                  src={heroSpotlightProduct.media[0]?.url || ''}
+                  alt={heroSpotlightProduct.title}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
-                <div className="absolute top-4 left-4 bg-[#FAF8F5]/95 px-3 py-1 text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold border border-[#E5DFD4]">
-                  Featured Spotlight
+                <div className="absolute top-4 left-4 flex gap-2">
+                  <span className="bg-[#FAF8F5]/95 px-3 py-1 text-[10px] uppercase tracking-widest text-[#B8532F] font-semibold border border-[#E5DFD4]">
+                    Featured Find
+                  </span>
+                  <span className="bg-[#191817]/90 text-white px-3 py-1 text-[10px] uppercase tracking-widest font-medium">
+                    {heroSpotlightProduct.specifications.productionType || 'Ready to Ship'}
+                  </span>
                 </div>
               </Link>
 
               <div className="mt-6 space-y-3">
                 <div className="flex items-center justify-between text-xs text-[#8C8477]">
                   <span className="uppercase tracking-widest font-semibold text-[#B8532F]">
-                    {heroProduct.specifications?.regionOfOrigin}
+                    {heroSpotlightProduct.category.name} • {heroSpotlightProduct.specifications?.regionOfOrigin}
                   </span>
                   <span className="font-serif text-2xl text-[#191817]">
                     {APP_CONFIG.currencySymbol}
-                    {heroProduct.basePrice.toLocaleString('en-IN')}
+                    {heroSpotlightProduct.basePrice.toLocaleString('en-IN')}
                   </span>
                 </div>
 
                 <h3 className="font-serif text-2xl sm:text-3xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-                  <Link href={`/objects/${heroProduct.slug}`}>{heroProduct.title}</Link>
+                  <Link href={`/objects/${heroSpotlightProduct.slug}`}>{heroSpotlightProduct.title}</Link>
                 </h3>
 
-                {heroProduct.artisan && (
+                {heroSpotlightProduct.artisan && (
                   <p className="text-sm text-[#5C574F]">
-                    by{' '}
+                    Made by{' '}
                     <Link
-                      href={`/makers/${heroProduct.artisan.slug}`}
+                      href={`/makers/${heroSpotlightProduct.artisan.slug}`}
                       className="text-[#191817] font-semibold hover:underline"
                     >
-                      {heroProduct.artisan.artisanName}
+                      {heroSpotlightProduct.artisan.artisanName}
                     </Link>
-                    <span className="text-[#8C8477] ml-1.5">• {heroProduct.artisan.location?.district || heroProduct.artisan.location?.state}</span>
+                    <span className="text-[#8C8477] ml-1.5">• {heroSpotlightProduct.artisan.location?.district || heroSpotlightProduct.artisan.location?.state}</span>
                   </p>
                 )}
 
                 <p className="text-sm text-[#6E6962] font-light leading-relaxed line-clamp-2">
-                  {heroProduct.shortDescription}
+                  {heroSpotlightProduct.shortDescription}
                 </p>
 
-                <div className="pt-2">
+                <div className="pt-2 flex items-center justify-between">
                   <Link
-                    href={`/objects/${heroProduct.slug}`}
+                    href={`/objects/${heroSpotlightProduct.slug}`}
                     className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
                   >
-                    <span className="border-b border-[#191817] pb-0.5">View object</span>
+                    <span className="border-b border-[#191817] pb-0.5">Product Details</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
+                  <span className="text-[11px] font-medium text-[#2E4A28] bg-[#E8F0E6] px-2.5 py-0.5 rounded-full">
+                    {heroSpotlightProduct.specifications.productionType || 'Ready to Ship'}
+                  </span>
                 </div>
               </div>
             </article>
           )}
 
-          {/* 3 Supporting Products */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            {supportingProducts.map((product) => {
+          {/* Supporting Featured Products (5 items in clean 2-column or list view) */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
+            {supportingFinds.map((product) => {
               const image = product.media[0];
+              const isMadeToOrder = product.specifications?.productionType === 'Made to Order';
               return (
                 <article
                   key={product.id}
-                  className="group border border-[#E5DFD4] bg-white p-4 sm:p-5 rounded-sm hover:border-[#191817] transition-all"
+                  className="group border border-[#E5DFD4] bg-white p-4 rounded-sm hover:border-[#191817] transition-all"
                 >
                   <div className="flex gap-4 items-start">
                     <Link
@@ -389,24 +369,24 @@ export default function HomePage() {
                       )}
                     </Link>
 
-                    <div className="space-y-1.5 flex-1 min-w-0">
+                    <div className="space-y-1 flex-1 min-w-0">
                       <div className="flex items-center justify-between text-xs text-[#8C8477]">
-                        <span className="uppercase tracking-widest text-[10px] text-[#B8532F]">
-                          {product.specifications?.regionOfOrigin}
+                        <span className="uppercase tracking-widest text-[10px] text-[#B8532F] truncate max-w-[140px]">
+                          {product.category.name}
                         </span>
-                        <span className="font-serif text-base text-[#191817]">
+                        <span className="font-serif text-base text-[#191817] shrink-0 font-medium">
                           {APP_CONFIG.currencySymbol}
                           {product.basePrice.toLocaleString('en-IN')}
                         </span>
                       </div>
 
-                      <h4 className="font-serif text-base sm:text-lg text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug line-clamp-1">
+                      <h4 className="font-serif text-base text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug line-clamp-1">
                         <Link href={`/objects/${product.slug}`}>{product.title}</Link>
                       </h4>
 
                       {product.artisan && (
                         <p className="text-xs text-[#5C574F] truncate">
-                          by{' '}
+                          Made by{' '}
                           <Link
                             href={`/makers/${product.artisan.slug}`}
                             className="text-[#191817] font-medium hover:underline"
@@ -416,12 +396,18 @@ export default function HomePage() {
                         </p>
                       )}
 
-                      <div className="pt-1">
+                      <div className="pt-2 flex items-center justify-between">
+                        <span className={`text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full ${
+                          isMadeToOrder ? 'bg-[#FDF3E7] text-[#9A5B18]' : 'bg-[#EBF3E8] text-[#2D5A27]'
+                        }`}>
+                          {product.specifications?.productionType || 'Ready to Ship'}
+                        </span>
+
                         <Link
                           href={`/objects/${product.slug}`}
                           className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
                         >
-                          <span>View object</span>
+                          <span>Details</span>
                           <ArrowRight className="w-3 h-3" />
                         </Link>
                       </div>
@@ -433,33 +419,39 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Explore all objects CTA banner */}
+        {/* View all button */}
         <div className="text-center pt-8">
           <Link
             href="/objects"
             className="inline-flex items-center gap-2 font-serif text-base sm:text-lg text-[#191817] hover:text-[#B8532F] border-b border-[#191817] hover:border-[#B8532F] pb-0.5 transition-all"
           >
-            <span>Explore all objects</span>
+            <span>Explore all handmade creations ({MOCK_PRODUCTS.length})</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
       {/* =========================================================
-          4. CRAFT DISCOVERY (EXPLORE CRAFTS)
-          Editorial craft category discovery.
-          Show only 6 important craft categories with varying visual
-          weights and whitespace (NOT 8 identical cards!).
-          Each links to /categories/[slug]
+          4. HOMEPAGE CATEGORIES — NEW 6 PRIORITY TAXONOMY
+          1. Flowers & Bouquets
+          2. Personalized Gifts
+          3. Home Decor
+          4. Jewellery & Accessories
+          5. Crochet & Fabric Crafts
+          6. Traditional Indian Crafts
+          Using beautiful, authentic, relevant product photography.
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-b border-[#191817] pb-5 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
-              Explore Crafts
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              Category Directory
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
+              Explore by Category
             </h2>
             <p className="text-sm text-[#787268] mt-1 font-light">
-              Centuries of living technique across primary disciplines.
+              From everlasting bouquets and personalized keepsakes to living artisan traditions.
             </p>
           </div>
           <Link
@@ -471,9 +463,9 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* Editorial Asymmetric Grid */}
+        {/* Editorial Asymmetric Grid of 6 Categories */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6">
-          {CRAFT_DISCIPLINES.map((cat) => (
+          {MOCK_CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
               href={`/categories/${cat.slug}`}
@@ -481,22 +473,25 @@ export default function HomePage() {
             >
               <Image
                 src={cat.image}
-                alt={cat.title}
+                alt={cat.name}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
 
               <div className="absolute inset-0 p-6 sm:p-7 flex flex-col justify-end text-white space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-[#E8A588] font-semibold">
+                  {cat.count} Handcrafted Finds
+                </span>
                 <h3 className="font-serif text-2xl sm:text-3xl text-white group-hover:text-[#FBECE6] transition-colors leading-tight">
-                  {cat.title}
+                  {cat.name}
                 </h3>
                 <p className="text-xs text-[#DDD6CB] font-light max-w-md line-clamp-1">
                   {cat.descriptor}
                 </p>
                 <div className="pt-2 flex items-center text-xs uppercase tracking-wider font-semibold text-white group-hover:text-[#E8A588] transition-colors">
-                  <span>Explore craft</span>
+                  <span>Explore category</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>
@@ -506,43 +501,40 @@ export default function HomePage() {
       </section>
 
       {/* =========================================================
-          5. EDITORIAL CRAFT STORY
-          Clearly a STORY section that supports the commerce journey.
-          Headline: The Deep Indigo Vats of Kutch
-          Short 2-3 line description.
-          CTAs: READ THE STORY -> /stories/[slug], SHOP THIS CRAFT -> /objects
+          5. EDITORIAL CRAFT STORY — THE FOREVER BLOOM
+          Narrative connecting handmade flowers with Indian artisan spirit
           ========================================================= */}
       {primaryStory && (
-        <section className="bg-[#0B1323] text-[#FAF8F5] py-16 sm:py-24">
+        <section className="bg-[#171E1A] text-[#FAF8F5] py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               {/* Large Story Visual (7 cols) */}
               <div className="lg:col-span-7">
-                <div className="group relative aspect-[16/10] sm:aspect-[16/10] w-full overflow-hidden rounded-sm bg-[#162238]">
+                <div className="group relative aspect-[16/10] sm:aspect-[16/10] w-full overflow-hidden rounded-sm bg-[#222B25]">
                   <Image
-                    src="/images/story-kutch-indigo.jpg"
+                    src={primaryStory.heroImageUrl}
                     alt={primaryStory.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                   <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-white">
                     <p className="text-[11px] uppercase tracking-widest text-[#E8A588] font-semibold">
-                      Living Archive
+                      Artisan Spotlight
                     </p>
                     <p className="font-serif text-lg text-white font-normal mt-0.5">
-                      Subterranean vats fed with camel milk & jaggery
+                      Hand-sculpted everlasting petals created with zero waste
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Story Narrative & Marketplace Actions (5 cols) */}
+              {/* Story Narrative & Actions (5 cols) */}
               <div className="lg:col-span-5 space-y-6">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#E8A588] font-semibold">
-                    <span>Craft Story</span>
+                    <span>Makers Chronicle</span>
                     <span>•</span>
                     <span className="flex items-center gap-1 font-normal text-[#C5BFB5]">
                       <Clock className="w-3.5 h-3.5" />
@@ -555,7 +547,7 @@ export default function HomePage() {
                   </h3>
 
                   <p className="text-sm sm:text-base text-[#C5BFB5] font-light leading-relaxed">
-                    In Ajrakhpur, master dyers feed subterranean microbial fermentation vats with camel milk, jaggery, and crushed Indigofera tinctoria to achieve the legendary celestial midnight blue.
+                    {primaryStory.subtitle}
                   </p>
                 </div>
 
@@ -570,10 +562,10 @@ export default function HomePage() {
                     </Button>
                   </Link>
                   <Link
-                    href="/objects"
+                    href="/categories/flowers-bouquets"
                     className="text-xs uppercase tracking-widest font-semibold text-[#E8A588] hover:text-white transition-colors"
                   >
-                    Shop this craft →
+                    Shop handmade flowers →
                   </Link>
                 </div>
               </div>
@@ -583,127 +575,25 @@ export default function HomePage() {
       )}
 
       {/* =========================================================
-          6. JUST DISCOVERED — FRESH FINDS
-          Title: JUST DISCOVERED
-          Supporting text: Fresh finds from makers across India.
-          Show 3 products. Every product communicates:
-          What it is, Who made it, Price.
-          CTA: VIEW ALL OBJECTS -> /objects
+          6. REGIONAL DISCOVERY — CELEBRATING CRAFT GEOGRAPHY
           ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-b border-[#191817] pb-5 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
-              Just Discovered
-            </h2>
-            <p className="text-sm text-[#787268] mt-1 font-light">
-              Fresh finds from makers across India.
-            </p>
-          </div>
-          <Link
-            href="/objects"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] transition-colors"
-          >
-            <span>View All Objects</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {justDiscoveredProducts.map((item) => {
-            const image = item.media[0];
-            return (
-              <article
-                key={item.id}
-                className="group border border-[#E5DFD4] bg-white p-5 rounded-sm hover:border-[#191817] transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <Link
-                    href={`/objects/${item.slug}`}
-                    className="relative aspect-[4/4.5] w-full block overflow-hidden bg-[#ECE5DC] rounded-sm"
-                  >
-                    {image && (
-                      <Image
-                        src={image.url}
-                        alt={item.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                    )}
-                    {item.specifications?.giTagCertified && (
-                      <div className="absolute top-3 left-3 bg-[#FAF8F5]/90 px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#B8532F] font-semibold border border-[#E5DFD4]">
-                        GI Certified
-                      </div>
-                    )}
-                  </Link>
-
-                  <div className="mt-4 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs text-[#8C8477]">
-                      <span className="uppercase tracking-widest text-[10px] text-[#B8532F]">
-                        {item.specifications?.regionOfOrigin}
-                      </span>
-                      <span className="font-serif text-lg text-[#191817]">
-                        {APP_CONFIG.currencySymbol}
-                        {item.basePrice.toLocaleString('en-IN')}
-                      </span>
-                    </div>
-
-                    <h4 className="font-serif text-xl text-[#191817] group-hover:text-[#B8532F] transition-colors leading-snug">
-                      <Link href={`/objects/${item.slug}`}>{item.title}</Link>
-                    </h4>
-
-                    {item.artisan && (
-                      <p className="text-xs text-[#5C574F]">
-                        by{' '}
-                        <Link
-                          href={`/makers/${item.artisan.slug}`}
-                          className="text-[#191817] font-semibold hover:underline"
-                        >
-                          {item.artisan.artisanName}
-                        </Link>
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-[#F0EBE3] flex items-center justify-between">
-                  <span className="text-[11px] text-[#8C8477]">Handmade Edition</span>
-                  <Link
-                    href={`/objects/${item.slug}`}
-                    className="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
-                  >
-                    <span>View object</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* =========================================================
-          7. REGIONAL DISCOVERY — COMBINED REGIONS & ASSAM FEATURE
-          Title: EXPLORE BY REGION
-          Shows 4–5 regions (Assam, Kutch, Kashmir, Rajasthan, West Bengal).
-          Assam is featured as an authentic discovery without duplicate
-          huge sections.
-          ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border-b border-[#191817] pb-5 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817]">
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              Regional Provenance
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] mt-1">
               Explore by Region
             </h2>
             <p className="text-sm text-[#787268] mt-1 font-light">
-              Craft geography shaped by rivers, mineral soils, and localized knowledge.
+              Craft geography shaped by rivers, regional botany, and generations of localized knowledge.
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          {/* Spotlight on Assam (5 cols) */}
+          {/* Spotlight on Assam */}
           <div className="lg:col-span-5 bg-[#FAF8F5] border border-[#E5DFD4] p-6 sm:p-7 rounded-sm space-y-5">
             <div className="relative aspect-[16/10] w-full rounded-sm overflow-hidden bg-[#ECE5DC]">
               <Image
@@ -714,7 +604,7 @@ export default function HomePage() {
                 className="object-cover"
               />
               <div className="absolute top-3 left-3 bg-[#191817] text-white px-2.5 py-0.5 text-[10px] uppercase tracking-widest font-semibold">
-                Featured Region
+                Heritage Region
               </div>
             </div>
 
@@ -739,7 +629,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* 4 Supporting Regional Links (7 cols) */}
+          {/* 4 Supporting Regional Links */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {REGIONS_DATA.slice(1).map((reg) => (
               <div
@@ -753,54 +643,31 @@ export default function HomePage() {
                       alt={reg.name}
                       fill
                       sizes="64px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform"
                     />
                   </div>
-
-                  <div className="min-w-0 space-y-0.5">
-                    <h3 className="font-serif text-xl text-[#191817] group-hover:text-[#B8532F] transition-colors">
+                  <div className="min-w-0">
+                    <h4 className="font-serif text-lg text-[#191817] group-hover:text-[#B8532F] transition-colors">
                       {reg.name}
-                    </h3>
-                    <p className="text-xs text-[#787268] truncate">
+                    </h4>
+                    <p className="text-xs text-[#7A746B] line-clamp-1 mt-0.5">
                       {reg.crafts}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#F2EDE4] flex justify-end">
+                <div className="pt-3 mt-3 border-t border-[#F0EBE3] flex justify-end">
                   <Link
                     href={`/regions/${reg.slug}`}
-                    className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
+                    className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold text-[#191817] group-hover:text-[#B8532F]"
                   >
-                    <span>Explore</span>
+                    <span>Discover</span>
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          8. FINAL CTA — ACTION ORIENTED & VISUALLY QUIET
-          Title: FIND SOMETHING WITH A STORY.
-          Supporting text: Explore handmade objects and meet the people who make them.
-          CTA: EXPLORE OBJECTS -> /objects
-          ========================================================= */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-5 border-t border-[#E5DFD4]">
-        <h2 className="font-serif text-3xl sm:text-5xl text-[#191817] leading-tight">
-          Find something with a story.
-        </h2>
-        <p className="text-sm sm:text-base text-[#6E6962] font-light max-w-lg mx-auto leading-relaxed">
-          Explore handmade objects and meet the people who make them.
-        </p>
-        <div className="pt-3 flex justify-center items-center">
-          <Link href="/objects">
-            <Button size="lg" className="rounded-none tracking-wider text-xs uppercase px-9 bg-[#191817] text-white hover:bg-[#33302D]">
-              Explore Objects
-            </Button>
-          </Link>
         </div>
       </section>
     </div>

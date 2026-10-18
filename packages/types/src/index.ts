@@ -127,6 +127,9 @@ export interface ProductSpecification {
   careInstructions?: string;
   giTagCertified?: boolean;
   regionOfOrigin: string;
+  productionType?: 'Ready to Ship' | 'Made to Order';
+  occasion?: string[];
+  colorFamily?: string;
 }
 
 export interface Product {

@@ -7,6 +7,8 @@ import { Search, Heart, User, Menu, X, ArrowUpRight } from 'lucide-react';
 
 const NAV_LINKS = [
   { label: 'Discover', href: '/' },
+  { label: 'Flowers & Gifts', href: '/categories/flowers-bouquets' },
+  { label: 'Categories', href: '/categories' },
   { label: 'Makers', href: '/makers' },
   { label: 'Objects', href: '/objects' },
   { label: 'Stories', href: '/stories' },

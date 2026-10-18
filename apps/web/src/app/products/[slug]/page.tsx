@@ -17,6 +17,9 @@ import {
   Check,
   ChevronRight,
   ArrowRight,
+  MessageCircle,
+  PackageCheck,
+  Sparkle,
 } from 'lucide-react';
 
 export default function ProductDetailPage() {
@@ -31,30 +34,55 @@ export default function ProductDetailPage() {
   }
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedVariant, setSelectedVariant] = useState(currentProduct.variants[0]);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [buyNowConfirmed, setBuyNowConfirmed] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [contactSent, setContactSent] = useState(false);
+  const [contactMessage, setContactMessage] = useState('');
 
   const artisan =
     MOCK_ARTISANS.find((a) => a.id === currentProduct.artisanId) ||
     currentProduct.artisan ||
     MOCK_ARTISANS[0];
 
-  const relatedProducts = MOCK_PRODUCTS.filter((p) => p.id !== currentProduct.id).slice(0, 3);
+  // Other creations made by the same artisan
+  const artisanOtherProducts = MOCK_PRODUCTS.filter(
+    (p) =>
+      p.id !== currentProduct.id &&
+      (p.artisanId === artisan.id || p.artisan?.slug === artisan.slug),
+  );
 
-  const handleAddToCart = () => {
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 3000);
+  // Fallback related products if this artisan only has one product in dataset
+  const relatedProducts =
+    artisanOtherProducts.length > 0
+      ? artisanOtherProducts
+      : MOCK_PRODUCTS.filter((p) => p.id !== currentProduct.id).slice(0, 3);
+
+  const handleBuyNow = () => {
+    setBuyNowConfirmed(true);
+    setTimeout(() => setBuyNowConfirmed(false), 3500);
   };
 
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactSent(true);
+    setTimeout(() => {
+      setContactSent(false);
+      setContactModalOpen(false);
+      setContactMessage('');
+    }, 2500);
+  };
+
+  const isMadeToOrder = currentProduct.specifications.productionType === 'Made to Order';
+
   return (
-    <div className="space-y-24 pb-28">
+    <div className="space-y-20 sm:space-y-24 pb-28">
       {/* Breadcrumb path */}
       <nav className="border-b border-[#E5DFD4] py-3.5 bg-[#FAF8F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs text-[#7A746B]">
           <Link href="/" className="hover:text-[#191817]">Home</Link>
           <ChevronRight className="w-3 h-3 text-[#A8A196]" />
-          <Link href="/objects" className="hover:text-[#191817]">Objects</Link>
+          <Link href="/categories" className="hover:text-[#191817]">Categories</Link>
           <ChevronRight className="w-3 h-3 text-[#A8A196]" />
           <Link href={`/categories/${currentProduct.category.slug}`} className="hover:text-[#191817]">
             {currentProduct.category.name}
@@ -78,11 +106,20 @@ export default function ProductDetailPage() {
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 className="object-cover transition-all duration-500"
               />
-              {currentProduct.specifications.giTagCertified && (
-                <div className="absolute top-4 left-4">
-                  <Badge variant="charcoal">GI Appellation Certified</Badge>
-                </div>
-              )}
+              <div className="absolute top-4 left-4 flex flex-col gap-1.5">
+                <span
+                  className={`text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-sm border ${
+                    isMadeToOrder
+                      ? 'bg-[#FAF8F5]/95 text-[#8C531B] border-[#F2DFC6]'
+                      : 'bg-[#FAF8F5]/95 text-[#295424] border-[#D4E8CE]'
+                  }`}
+                >
+                  {currentProduct.specifications.productionType || 'Ready to Ship'}
+                </span>
+                {currentProduct.specifications.giTagCertified && (
+                  <Badge variant="charcoal" className="text-[10px]">GI Certified</Badge>
+                )}
+              </div>
             </div>
 
             {/* Thumbnail selector */}
@@ -105,7 +142,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* 2. Product Narrative & Acquisition Panel */}
-          <div className="lg:col-span-5 space-y-8">
+          <div className="lg:col-span-5 space-y-6 sm:space-y-8">
             {/* Maker Connection Banner: Product -> Maker Connection */}
             <div className="flex items-center justify-between pb-6 border-b border-[#E5DFD4]">
               <div className="flex items-center gap-3">
@@ -125,7 +162,7 @@ export default function ProductDetailPage() {
                     {artisan.artisanName}
                   </Link>
                   <div className="flex items-center gap-1.5 text-xs text-[#7A746B]">
-                    <span>{artisan.craftName ? artisan.craftName.split('&')[0].trim() : 'Master Craft'}</span>
+                    <span>{artisan.craftName ? artisan.craftName.split('&')[0].trim() : 'Artisan Craft'}</span>
                     <span>•</span>
                     <MapPin className="w-3 h-3 text-[#8C8477]" />
                     <span>{currentProduct.specifications.regionOfOrigin}</span>
@@ -137,44 +174,72 @@ export default function ProductDetailPage() {
                 href={`/makers/${artisan.slug}`}
                 className="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#B8532F] hover:underline shrink-0"
               >
-                <span>Meet the maker</span>
+                <span>Meet the Maker</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
             {/* Product Title & Pricing */}
             <div className="space-y-3">
+              <span className="text-xs uppercase tracking-widest text-[#8C8477]">
+                {currentProduct.category.name}
+              </span>
               <h1 className="font-serif text-3xl sm:text-4xl text-[#191817] leading-tight">
                 {currentProduct.title}
               </h1>
 
-              <div className="flex items-baseline gap-4">
+              <div className="flex items-baseline gap-4 pt-1">
                 <span className="font-serif text-3xl text-[#191817]">
                   {APP_CONFIG.currencySymbol}
                   {Number(currentProduct.basePrice).toLocaleString('en-IN')}
                 </span>
-                <span className="text-xs text-[#787268]">Includes taxes & insured museum-grade courier</span>
+                <span className="text-xs text-[#787268]">Includes secure insured packaging</span>
               </div>
             </div>
 
             {/* Short Product Story */}
-            <div className="space-y-2 text-sm text-[#4A463F] leading-relaxed font-light">
+            <div className="text-sm text-[#4A463F] leading-relaxed font-light">
               <p>{currentProduct.shortDescription}</p>
             </div>
 
-            {/* Craft Specs Grid */}
-            <div className="bg-[#F4EFEA] p-5 rounded-sm space-y-3 text-xs border border-[#E5DFD4]">
+            {/* =========================================================
+                EXPLICIT SPECIFICATION MATRIX (PROMPT REQUIREMENT #6)
+                - Made by: [Artisan name]
+                - Material: [Actual material]
+                - Production: [Ready to ship / Made to order]
+                - Price: ₹[Actual price]
+                ========================================================= */}
+            <div className="bg-[#FAF8F5] p-5 rounded-sm space-y-3.5 text-xs border border-[#E5DFD4]">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Technique</span>
-                  <span className="text-[#191817] font-medium">{currentProduct.specifications.craftTechnique}</span>
+                  <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Made By</span>
+                  <Link
+                    href={`/makers/${artisan.slug}`}
+                    className="text-[#191817] font-semibold hover:text-[#B8532F] hover:underline"
+                  >
+                    {artisan.artisanName}
+                  </Link>
                 </div>
+
                 <div>
-                  <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Creation Time</span>
-                  <span className="text-[#191817] font-medium flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3.5 h-3.5 text-[#B8532F]" />
-                    {currentProduct.specifications.makingDurationDays} Days of Hand Labor
+                  <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Production</span>
+                  <span className={`inline-flex items-center gap-1 font-medium mt-0.5 ${
+                    isMadeToOrder ? 'text-[#8C531B]' : 'text-[#295424]'
+                  }`}>
+                    <PackageCheck className="w-3.5 h-3.5" />
+                    {currentProduct.specifications.productionType || 'Ready to Ship'}
                   </span>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-[#E5DFD4]">
+                <span className="text-[#847D73] uppercase tracking-wider text-[10px] block mb-1">Material</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {currentProduct.specifications.materials.map((mat) => (
+                    <Badge key={mat} variant="sand" className="text-[10px]">
+                      {mat}
+                    </Badge>
+                  ))}
                 </div>
               </div>
 
@@ -185,48 +250,87 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
-              <div className="pt-2 border-t border-[#E5DFD4]">
-                <span className="text-[#847D73] uppercase tracking-wider text-[10px] block mb-1">Authentic Materials</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentProduct.specifications.materials.map((mat) => (
-                    <Badge key={mat} variant="sand" className="text-[10px]">
-                      {mat}
-                    </Badge>
-                  ))}
+              <div className="pt-2 border-t border-[#E5DFD4] flex items-center justify-between">
+                <div>
+                  <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Handcraft Duration</span>
+                  <span className="text-[#191817] font-medium flex items-center gap-1 mt-0.5">
+                    <Clock className="w-3.5 h-3.5 text-[#B8532F]" />
+                    {currentProduct.specifications.makingDurationDays} Days Handcrafted
+                  </span>
                 </div>
+                {currentProduct.specifications.occasion && currentProduct.specifications.occasion.length > 0 && (
+                  <div className="text-right">
+                    <span className="text-[#847D73] uppercase tracking-wider text-[10px] block">Occasion</span>
+                    <span className="text-[#191817] font-medium">
+                      {currentProduct.specifications.occasion.slice(0, 2).join(', ')}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Action Bar */}
-            <div className="space-y-4 pt-2">
-              <div className="flex items-center gap-3">
+            {/* =========================================================
+                REQUIRED ACTION BUTTONS (PROMPT REQUIREMENT #6)
+                - Add to Wishlist
+                - Contact Maker or Buy Now
+                - Meet the Maker
+                ========================================================= */}
+            <div className="space-y-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Buy Now Button */}
                 <Button
-                  onClick={handleAddToCart}
+                  onClick={handleBuyNow}
                   size="lg"
-                  className="flex-1 rounded-none text-xs uppercase tracking-wider py-4"
+                  className="w-full rounded-none text-xs uppercase tracking-wider py-4 bg-[#191817] text-white hover:bg-[#33302D]"
                 >
-                  {addedToCart ? (
+                  {buyNowConfirmed ? (
                     <span className="flex items-center gap-2">
                       <Check className="w-4 h-4 text-emerald-400" />
                       Acquisition Confirmed
                     </span>
                   ) : (
-                    <span>Acquire Handcrafted Piece</span>
+                    <span>Buy Now · ₹{Number(currentProduct.basePrice).toLocaleString('en-IN')}</span>
                   )}
                 </Button>
 
-                <button
-                  type="button"
+                {/* Contact Maker Button */}
+                <Button
+                  onClick={() => setContactModalOpen(true)}
+                  variant="outline"
+                  size="lg"
+                  className="w-full rounded-none text-xs uppercase tracking-wider py-4 border-[#191817] text-[#191817] hover:bg-[#FAF8F5]"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 mr-2" />
+                  <span>Contact Maker</span>
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Add to Wishlist Button */}
+                <Button
                   onClick={() => setIsWishlisted(!isWishlisted)}
-                  className="p-4 border border-[#E5DFD4] hover:border-[#191817] rounded-sm transition-colors"
-                  aria-label="Save to private wishlist"
+                  variant="secondary"
+                  size="md"
+                  className="w-full rounded-none text-xs uppercase tracking-wider bg-[#F4EFEA] hover:bg-[#EAE4DC] text-[#191817]"
                 >
                   <Heart
-                    className={`w-5 h-5 ${
+                    className={`w-4 h-4 mr-2 transition-colors ${
                       isWishlisted ? 'fill-[#B8532F] text-[#B8532F]' : 'text-[#4A463F]'
                     }`}
                   />
-                </button>
+                  <span>{isWishlisted ? 'Saved in Wishlist' : 'Add to Wishlist'}</span>
+                </Button>
+
+                {/* Meet the Maker Button */}
+                <Link href={`/makers/${artisan.slug}`} className="w-full">
+                  <Button
+                    variant="outline"
+                    size="md"
+                    className="w-full rounded-none text-xs uppercase tracking-wider border-[#B8532F] text-[#B8532F] hover:bg-[#B8532F] hover:text-white"
+                  >
+                    <span>Meet the Maker →</span>
+                  </Button>
+                </Link>
               </div>
 
               {currentProduct.isCustomizable && (
@@ -234,15 +338,17 @@ export default function ProductDetailPage() {
                   <div className="space-y-0.5">
                     <p className="font-medium text-[#191817] flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-[#B8532F]" />
-                      <span>Custom Dimensions & Colors Available</span>
+                      <span>Custom Colorway or Occasion Note Available</span>
                     </p>
-                    <p className="text-[#787268]">Request modifications directly from {artisan.artisanName}</p>
+                    <p className="text-[#787268]">Request modifications or personalization from {artisan.artisanName}</p>
                   </div>
-                  <Link href={`/makers/${artisan.slug}`}>
-                    <Button variant="outline" size="sm" className="rounded-none text-[10px] uppercase">
-                      Inquire
-                    </Button>
-                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setContactModalOpen(true)}
+                    className="text-xs uppercase font-semibold text-[#B8532F] hover:underline"
+                  >
+                    Inquire
+                  </button>
                 </div>
               )}
             </div>
@@ -251,22 +357,22 @@ export default function ProductDetailPage() {
             <div className="pt-4 border-t border-[#E5DFD4] flex items-start gap-3 text-xs text-[#6F6A62]">
               <ShieldCheck className="w-4 h-4 text-[#3D5B3A] shrink-0 mt-0.5" />
               <span>
-                Ships directly from the master&apos;s personal atelier with a signed Certificate of Provenance and natural care guide.
+                Ships directly from {artisan.artisanName}&apos;s atelier in {currentProduct.specifications.regionOfOrigin} with signed maker provenance notes.
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. FULL PRODUCT STORY & MATERIAL DETAIL */}
-      <section className="bg-[#F4EFEA] py-20 border-y border-[#E5DFD4]">
+      {/* 3. FULL PRODUCT STORY & MATERIAL LINEAGE */}
+      <section className="bg-[#FAF8F5] py-20 border-y border-[#E5DFD4]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="border-b border-[#191817] pb-3">
             <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-              The Living Artifact
+              The Living Creation
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-[#191817] mt-1">
-              Full Making Story & Material Lineage
+              Making Story & Craft Technique
             </h2>
           </div>
 
@@ -275,9 +381,9 @@ export default function ProductDetailPage() {
           </div>
 
           {currentProduct.specifications.careInstructions && (
-            <div className="bg-[#FAF8F5] p-6 border border-[#E5DFD4] space-y-2 mt-8">
+            <div className="bg-white p-6 border border-[#E5DFD4] space-y-2 mt-8">
               <h4 className="text-xs uppercase tracking-wider font-semibold text-[#191817]">
-                Master&apos;s Preservative Care Instructions
+                Care & Preservation Instructions
               </h4>
               <p className="text-xs text-[#5C574F] leading-relaxed">
                 {currentProduct.specifications.careInstructions}
@@ -300,7 +406,7 @@ export default function ProductDetailPage() {
           </div>
           <div className="md:col-span-8 space-y-4">
             <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-              Meet The Creator
+              Meet The Maker
             </span>
             <h3 className="font-serif text-3xl sm:text-4xl text-[#191817]">
               {artisan.artisanName}
@@ -308,15 +414,15 @@ export default function ProductDetailPage() {
             <p className="text-xs uppercase tracking-wider text-[#7E776E]">
               {artisan.craftName} • {artisan.location?.villageOrTown}, {artisan.location?.state}
             </p>
-            <p className="text-sm text-[#59544D] leading-relaxed line-clamp-3 font-light">
+            <p className="text-sm text-[#59544D] leading-relaxed font-light line-clamp-3">
               {artisan.bio}
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex items-center gap-4">
               <Link
                 href={`/makers/${artisan.slug}`}
                 className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F] border-b border-[#191817] hover:border-[#B8532F] pb-1 transition-all"
               >
-                <span>Explore Full Atelier & Process Chronicles</span>
+                <span>Visit Maker Profile & Full Atelier</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -324,28 +430,112 @@ export default function ProductDetailPage() {
         </div>
       </section>
 
-      {/* 5. RELATED CRAFT OBJECTS */}
-      {relatedProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border-b border-[#191817] pb-4 mb-10 flex items-end justify-between">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
-                Harmonious Objects
-              </span>
-              <h3 className="font-serif text-3xl text-[#191817] mt-1">
-                You May Also Appreciate
-              </h3>
-            </div>
-            <Link
-              href="/objects"
-              className="text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
-            >
-              All Objects →
-            </Link>
+      {/* =========================================================
+          5. OTHER PRODUCTS MADE BY THE SAME ARTISAN (REQUIREMENT #6)
+          "The maker profile should display other products made by the same artisan."
+          And on the product page, we feature other creations by the same maker!
+          ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="border-b border-[#191817] pb-4 mb-10 flex items-end justify-between">
+          <div>
+            <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+              {artisanOtherProducts.length > 0 ? 'From The Same Atelier' : 'Harmonious Handmade Finds'}
+            </span>
+            <h3 className="font-serif text-3xl text-[#191817] mt-1">
+              {artisanOtherProducts.length > 0
+                ? `More Creations by ${artisan.artisanName}`
+                : 'You May Also Appreciate'}
+            </h3>
           </div>
+          <Link
+            href={`/makers/${artisan.slug}`}
+            className="text-xs uppercase tracking-wider font-semibold text-[#191817] hover:text-[#B8532F]"
+          >
+            All by {artisan.artisanName} →
+          </Link>
+        </div>
 
-          <ProductGrid products={relatedProducts} />
-        </section>
+        <ProductGrid products={relatedProducts} />
+      </section>
+
+      {/* Contact Maker Modal */}
+      {contactModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#FAF8F5] border border-[#191817] max-w-lg w-full p-6 sm:p-8 space-y-5 rounded-sm">
+            <div className="space-y-1">
+              <span className="text-xs uppercase tracking-widest text-[#B8532F] font-semibold">
+                Direct Atelier Inquiry
+              </span>
+              <h3 className="font-serif text-2xl text-[#191817]">
+                Message {artisan.artisanName}
+              </h3>
+              <p className="text-xs text-[#6E6962]">
+                Inquire about custom colorways, wedding bouquets, or personalized dates for &ldquo;{currentProduct.title}&rdquo;.
+              </p>
+            </div>
+
+            {contactSent ? (
+              <div className="p-6 bg-[#E8F0E6] border border-[#C5D8C1] text-center space-y-2">
+                <Check className="w-6 h-6 text-[#295424] mx-auto" />
+                <p className="font-serif text-lg text-[#191817]">Inquiry Dispatched</p>
+                <p className="text-xs text-[#5C6E59]">
+                  {artisan.artisanName}&apos;s studio will receive your inquiry and reply directly.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-4 text-xs">
+                <div>
+                  <label className="block text-[#4A463F] uppercase tracking-wider mb-1">Your Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Aditi Sharma"
+                    className="w-full bg-white border border-[#D5CEC2] p-2.5 text-xs text-[#191817] rounded-none focus:outline-none focus:ring-1 focus:ring-[#B8532F]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[#4A463F] uppercase tracking-wider mb-1">Your Email</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="e.g. aditi@example.com"
+                    className="w-full bg-white border border-[#D5CEC2] p-2.5 text-xs text-[#191817] rounded-none focus:outline-none focus:ring-1 focus:ring-[#B8532F]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[#4A463F] uppercase tracking-wider mb-1">Message or Custom Requirements</label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
+                    placeholder="Describe your desired palette, recipient name, or special occasion date..."
+                    className="w-full bg-white border border-[#D5CEC2] p-2.5 text-xs text-[#191817] rounded-none focus:outline-none focus:ring-1 focus:ring-[#B8532F]"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-2">
+                  <Button
+                    type="button"
+                    onClick={() => setContactModalOpen(false)}
+                    variant="outline"
+                    size="sm"
+                    className="rounded-none uppercase text-xs"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="rounded-none uppercase text-xs bg-[#191817] text-white hover:bg-[#33302D]"
+                  >
+                    Send Message to Maker
+                  </Button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

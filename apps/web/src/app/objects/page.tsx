@@ -8,9 +8,12 @@ import { Filter } from 'lucide-react';
 
 const CATEGORY_TABS = [
   { label: 'All Objects', value: 'all' },
-  { label: 'Textiles & Handloom', value: 'textiles-handloom' },
-  { label: 'Metals & Forge', value: 'metals-forge' },
-  { label: 'Turned Wood & Lacquer', value: 'turned-wood-lacquer' },
+  { label: 'Flowers & Bouquets', value: 'flowers-bouquets' },
+  { label: 'Personalized Gifts', value: 'personalized-gifts' },
+  { label: 'Home Decor', value: 'home-decor' },
+  { label: 'Jewellery & Accessories', value: 'jewellery-accessories' },
+  { label: 'Crochet & Fabric', value: 'crochet-fabric' },
+  { label: 'Traditional Crafts', value: 'traditional-crafts' },
 ];
 
 export default function ObjectsIndexPage() {

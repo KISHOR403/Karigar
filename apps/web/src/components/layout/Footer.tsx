@@ -44,11 +44,12 @@ export function Footer() {
               Discovery
             </h4>
             <ul className="space-y-2 text-sm text-[#D5CEC4]">
-              <li><Link href="/artisans" className="hover:text-white transition-colors">Master Artisans</Link></li>
+              <li><Link href="/categories/flowers-bouquets" className="hover:text-white transition-colors">Flowers & Bouquets</Link></li>
+              <li><Link href="/categories/personalized-gifts" className="hover:text-white transition-colors">Personalized Gifts</Link></li>
+              <li><Link href="/makers" className="hover:text-white transition-colors">Master Artisans</Link></li>
               <li><Link href="/stories" className="hover:text-white transition-colors">Craft Chronicles</Link></li>
-              <li><Link href="/collections" className="hover:text-white transition-colors">Curated Collections</Link></li>
-              <li><Link href="/products" className="hover:text-white transition-colors">All Objects</Link></li>
-              <li><Link href="/categories" className="hover:text-white transition-colors">Material Taxonomies</Link></li>
+              <li><Link href="/objects" className="hover:text-white transition-colors">All Objects</Link></li>
+              <li><Link href="/categories" className="hover:text-white transition-colors">All Categories</Link></li>
             </ul>
           </div>
 

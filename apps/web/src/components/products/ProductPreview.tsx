@@ -28,7 +28,20 @@ export function ProductPreview({ product }: ProductPreviewProps) {
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         )}
-        {product.specifications.giTagCertified && (
+        {product.specifications?.productionType && (
+          <div className="absolute top-3 left-3">
+            <span
+              className={`text-[9px] uppercase tracking-widest font-semibold px-2 py-0.5 rounded-sm border backdrop-blur-xs ${
+                product.specifications.productionType === 'Made to Order'
+                  ? 'bg-[#FAF8F5]/90 text-[#8C531B] border-[#F2DFC6]'
+                  : 'bg-[#FAF8F5]/90 text-[#295424] border-[#D4E8CE]'
+              }`}
+            >
+              {product.specifications.productionType}
+            </span>
+          </div>
+        )}
+        {product.specifications?.giTagCertified && !product.specifications?.productionType && (
           <div className="absolute top-3 left-3">
             <Badge variant="sand" className="text-[10px] bg-[#FAF8F5]/90 backdrop-blur-xs">
               GI Certified

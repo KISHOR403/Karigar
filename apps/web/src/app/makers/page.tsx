@@ -6,9 +6,9 @@ import Image from 'next/image';
 import { MOCK_ARTISANS } from '@/data/mock-data';
 import { Search, Filter, ArrowRight, MapPin, Award, CheckCircle2 } from 'lucide-react';
 
-const CRAFT_OPTIONS = ['All', 'Textiles', 'Metalwork', 'Woodcraft', 'Clay & Ceramics', 'Bamboo & Cane'];
-const REGION_OPTIONS = ['All', 'Gujarat', 'Kashmir', 'Chhattisgarh', 'Karnataka', 'Assam'];
-const MATERIAL_OPTIONS = ['All', 'Silk & Cotton', 'Cashmere & Wool', 'Bronze & Bell Metal', 'Natural Lacquer Wood'];
+const CRAFT_OPTIONS = ['All', 'Flowers & Bouquets', 'Personalized Gifts', 'Textiles', 'Metalwork', 'Woodcraft', 'Embroidery & Fiber'];
+const REGION_OPTIONS = ['All', 'West Bengal', 'Maharashtra', 'Uttarakhand', 'Gujarat', 'Kashmir', 'Karnataka', 'Assam', 'Chhattisgarh'];
+const MATERIAL_OPTIONS = ['All', 'Cotton Yarn & Ribbon', 'Pressed Flora & Wood', 'Silk & Handloom', 'Bronze & Bell Metal', 'Natural Lacquer Wood'];
 
 export default function MakersIndexPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,11 +31,12 @@ export default function MakersIndexPage() {
       // Craft
       const matchesCraft =
         selectedCraft === 'All' ||
-        (selectedCraft === 'Textiles' && maker.craftName.toLowerCase().includes('textile') || maker.craftName.toLowerCase().includes('silk') || maker.craftName.toLowerCase().includes('pashmina') || maker.craftName.toLowerCase().includes('ajrakh')) ||
-        (selectedCraft === 'Metalwork' && (maker.craftName.toLowerCase().includes('metal') || maker.craftName.toLowerCase().includes('dhokra') || maker.craftName.toLowerCase().includes('forge'))) ||
+        (selectedCraft === 'Flowers & Bouquets' && (maker.craftName.toLowerCase().includes('flower') || maker.craftName.toLowerCase().includes('bouquet') || maker.craftName.toLowerCase().includes('flora') || maker.craftName.toLowerCase().includes('botanical') || maker.craftName.toLowerCase().includes('ribbon'))) ||
+        (selectedCraft === 'Personalized Gifts' && (maker.craftName.toLowerCase().includes('keepsake') || maker.craftName.toLowerCase().includes('gift') || maker.craftName.toLowerCase().includes('personalized'))) ||
+        (selectedCraft === 'Textiles' && (maker.craftName.toLowerCase().includes('textile') || maker.craftName.toLowerCase().includes('silk') || maker.craftName.toLowerCase().includes('pashmina') || maker.craftName.toLowerCase().includes('ajrakh'))) ||
+        (selectedCraft === 'Metalwork' && (maker.craftName.toLowerCase().includes('metal') || maker.craftName.toLowerCase().includes('dhokra') || maker.craftName.toLowerCase().includes('forge') || maker.craftName.toLowerCase().includes('jewellery') || maker.craftName.toLowerCase().includes('bead'))) ||
         (selectedCraft === 'Woodcraft' && maker.craftName.toLowerCase().includes('wood')) ||
-        (selectedCraft === 'Clay & Ceramics' && maker.craftName.toLowerCase().includes('clay') || maker.craftName.toLowerCase().includes('pottery')) ||
-        (selectedCraft === 'Bamboo & Cane' && maker.craftName.toLowerCase().includes('bamboo'));
+        (selectedCraft === 'Embroidery & Fiber' && (maker.craftName.toLowerCase().includes('felt') || maker.craftName.toLowerCase().includes('embroid') || maker.craftName.toLowerCase().includes('crochet')));
 
       // Region
       const matchesRegion =
@@ -44,8 +45,9 @@ export default function MakersIndexPage() {
       // Material
       const matchesMaterial =
         selectedMaterial === 'All' ||
-        (selectedMaterial === 'Silk & Cotton' && (maker.craftName.toLowerCase().includes('silk') || maker.craftName.toLowerCase().includes('cotton') || maker.craftName.toLowerCase().includes('ajrakh'))) ||
-        (selectedMaterial === 'Cashmere & Wool' && maker.craftName.toLowerCase().includes('pashmina')) ||
+        (selectedMaterial === 'Cotton Yarn & Ribbon' && (maker.craftName.toLowerCase().includes('crochet') || maker.craftName.toLowerCase().includes('ribbon') || maker.craftName.toLowerCase().includes('yarn'))) ||
+        (selectedMaterial === 'Pressed Flora & Wood' && (maker.craftName.toLowerCase().includes('pressed') || maker.craftName.toLowerCase().includes('keepsake') || maker.craftName.toLowerCase().includes('wood'))) ||
+        (selectedMaterial === 'Silk & Handloom' && (maker.craftName.toLowerCase().includes('silk') || maker.craftName.toLowerCase().includes('cotton') || maker.craftName.toLowerCase().includes('ajrakh') || maker.craftName.toLowerCase().includes('pashmina'))) ||
         (selectedMaterial === 'Bronze & Bell Metal' && (maker.craftName.toLowerCase().includes('bell metal') || maker.craftName.toLowerCase().includes('dhokra') || maker.craftName.toLowerCase().includes('bronze'))) ||
         (selectedMaterial === 'Natural Lacquer Wood' && maker.craftName.toLowerCase().includes('wood'));
 

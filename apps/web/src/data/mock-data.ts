@@ -1,6 +1,309 @@
-import { ArtisanProfile, Product, CraftStory } from '@karigar/types';
+import { ArtisanProfile, Product, CraftStory, Category } from '@karigar/types';
+
+export const MOCK_CATEGORIES: (Category & {
+  count: number;
+  descriptor: string;
+  image: string;
+  spanClass?: string;
+})[] = [
+  {
+    id: 'cat-flowers-bouquets',
+    name: 'Flowers & Bouquets',
+    slug: 'flowers-bouquets',
+    count: 28,
+    description: 'Crochet wildflower bouquets, hand-folded satin ribbon roses, crepe paper botanicals, and everlasting arrangements.',
+    descriptor: 'Crochet Bouquets · Ribbon Roses · Paper Botanicals',
+    image: '/images/cat-flowers-bouquets.jpg',
+    spanClass: 'lg:col-span-7 aspect-[16/10] sm:aspect-[16/9]',
+  },
+  {
+    id: 'cat-personalized-gifts',
+    name: 'Personalized Gifts',
+    slug: 'personalized-gifts',
+    count: 22,
+    description: 'Bespoke hand-carved name gifts, anniversary keepsakes, calligraphy cards, and heirloom memory boxes.',
+    descriptor: 'Custom Keepsakes · Hand-Lettered Cards · Anniversary Mementos',
+    image: '/images/cat-personalized-gifts.jpg',
+    spanClass: 'lg:col-span-5 aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto',
+  },
+  {
+    id: 'cat-home-decor',
+    name: 'Home Decor',
+    slug: 'home-decor',
+    count: 19,
+    description: 'Botanical linen wall hoops, pressed alpine floral frames, stoneware vessels, and decorative craft objects.',
+    descriptor: 'Floral Wall Art · Pressed Botanicals · Studio Decor',
+    image: '/images/cat-home-decor.jpg',
+    spanClass: 'lg:col-span-4 aspect-[4/5]',
+  },
+  {
+    id: 'cat-jewellery-accessories',
+    name: 'Jewellery & Accessories',
+    slug: 'jewellery-accessories',
+    count: 24,
+    description: 'Handmade floral hair combs, freshwater pearl and seed-bead adornments, embroidered brooches, and wearable craft.',
+    descriptor: 'Beaded Floral Accents · Pearl Adornments · Embroidered Brooches',
+    image: '/images/cat-jewellery-accessories.jpg',
+    spanClass: 'lg:col-span-4 aspect-[4/5]',
+  },
+  {
+    id: 'cat-crochet-fabric',
+    name: 'Crochet & Fabric Crafts',
+    slug: 'crochet-fabric',
+    count: 18,
+    description: 'Hand-crocheted botanical stems, pure cotton pouches, needle-felted arrangements, and textural fiber art.',
+    descriptor: 'Cotton Crochet · Fiber Art · Needle-Felted Blooms',
+    image: '/images/cat-crochet-fabric.jpg',
+    spanClass: 'lg:col-span-4 aspect-[4/5]',
+  },
+  {
+    id: 'cat-traditional-crafts',
+    name: 'Traditional Indian Crafts',
+    slug: 'traditional-crafts',
+    count: 36,
+    description: 'Heritage handloom Ajrakh and Pashmina, Bastar lost-wax bell metal, Channapatna turned wood, and regional masterworks.',
+    descriptor: 'Ajrakh Textiles · Bastar Bronze · Channapatna Wood · Sualkuchi Silk',
+    image: '/images/cat-traditional-crafts.jpg',
+    spanClass: 'lg:col-span-12 aspect-[16/7] sm:aspect-[21/8]',
+  },
+];
 
 export const MOCK_ARTISANS: ArtisanProfile[] = [
+  {
+    id: 'art-007',
+    userId: 'usr-007',
+    artisanName: 'Ananya Roy',
+    slug: 'ananya-roy-botanical-crochet',
+    craftName: 'Hand-Crocheted Botanical Flora & Everlasting Bouquets',
+    heritageLineage: 'Studio Petal & Purl, Kolkata',
+    experienceYears: 12,
+    tagline: 'Translating fragile seasonal wildflowers into forever blooms with natural combed cotton.',
+    bio: 'Ananya combines traditional Bengali threadwork with contemporary botanical crochet. She hand-dyes organic combed cotton with plant madder and tea tannins, hand-crafting zero-waste everlasting bouquets and botanical sprigs.',
+    story: `I grew up watching my grandmother knit winter shawls in North Kolkata, but I was always captivated by the transient beauty of monsoon wildflowers that bloomed near the Hooghly riverbanks.
+    
+Each flower begins as a single strand of 100% combed cotton yarn. With a 1.5mm steel hook, I sculpt individual petals, sepals, and pistils over days. Unlike synthetic plastic flowers or cut florals that wither within days, these handcrafted bouquets preserve the joy of an anniversary, birthday, or graduation for a lifetime.`,
+    avatarUrl: '/images/hero-flower-artisan.jpg',
+    coverImageUrl: '/images/hero-flower-artisan.jpg',
+    isFeatured: true,
+    followerCount: 3120,
+    productCount: 8,
+    location: {
+      id: 'loc-007',
+      villageOrTown: 'Salt Lake',
+      district: 'Kolkata',
+      state: 'West Bengal',
+      country: 'India',
+      pincode: '700064',
+    },
+    verification: {
+      id: 'ver-007',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: false,
+      giCertified: false,
+      verifiedAt: '2023-05-10T00:00:00Z',
+      notes: 'Verified Contemporary Botanical Artisan Guild Member.',
+    },
+    media: [
+      {
+        id: 'med-09',
+        type: 'WORKSHOP',
+        url: '/images/hero-flower-artisan.jpg',
+        caption: 'Ananya hand-assembling a wildflower crochet bouquet in her Kolkata studio.',
+        displayOrder: 1,
+      },
+    ],
+    createdAt: '2023-05-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+  {
+    id: 'art-008',
+    userId: 'usr-008',
+    artisanName: 'Priya Nair & Meera Joshi',
+    slug: 'priya-meera-ribbon-atelier',
+    craftName: 'Hand-Folded French Satin & Silk Ribbon Flora',
+    heritageLineage: 'The Ribbon Bloomery Studio, Pune',
+    experienceYears: 9,
+    tagline: 'Sculpting pure silk and high-density satin into timeless, unhurried floral heirlooms.',
+    bio: 'Partner artisans Priya and Meera specialize in high-density double-faced satin ribbon flowers. Every single rose is formed by hand-pleating, precision-creasing, and heat-sealing each petal individually.',
+    story: `Ribbon floral craft requires extreme patience and surgical hand control. A single grand rose bouquet contains over 180 individually pleated petals. 
+    
+We source luxury double-faced woven satin with rich luster. Each flower is shaped with heated precision tweezers and bonded firmly with invisible hand-stitches. When held, the bouquet has a comforting weight and a luxurious, luminous gleam that catches natural light like fresh dew.`,
+    avatarUrl: '/images/prod-ribbon-roses.jpg',
+    coverImageUrl: '/images/prod-ribbon-roses.jpg',
+    isFeatured: true,
+    followerCount: 2280,
+    productCount: 6,
+    location: {
+      id: 'loc-008',
+      villageOrTown: 'Koregaon Park',
+      district: 'Pune',
+      state: 'Maharashtra',
+      country: 'India',
+      pincode: '411001',
+    },
+    verification: {
+      id: 'ver-008',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: false,
+      giCertified: false,
+      verifiedAt: '2023-07-12T00:00:00Z',
+      notes: 'Certified Master of Ribbon Floral Sculpture.',
+    },
+    createdAt: '2023-06-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+  {
+    id: 'art-009',
+    userId: 'usr-009',
+    artisanName: 'Tanvi Sharma',
+    slug: 'tanvi-sharma-pressed-botanicals',
+    craftName: 'Personalized Keepsake Gifts & Pressed Mountain Flora',
+    heritageLineage: 'Himalayan Keepsakes Atelier, Dehradun',
+    experienceYears: 8,
+    tagline: 'Preserving cherished life milestones in hand-carved wood and pressed alpine blossoms.',
+    bio: 'Tanvi hand-forages seasonal ferns, buttercups, and mountain larkspur across the Uttarakhand foothills, preserving them in bespoke hand-carved wooden keepsake boxes and personalized stationery.',
+    story: `The Himalayas change colors every two weeks. We press wild mountain blooms between untreated wooden boards lined with cotton blotting paper for 30 days under heavy river stones.
+    
+When a customer orders a personalized anniversary or wedding keepsake, we hand-carve their names or custom vow inscriptions into seasoned timber, inset the delicate pressed flora beneath museum-grade glass, and enclose a handwritten calligraphy card sealed with real beeswax.`,
+    avatarUrl: '/images/cat-personalized-gifts.jpg',
+    coverImageUrl: '/images/cat-personalized-gifts.jpg',
+    isFeatured: true,
+    followerCount: 1940,
+    productCount: 5,
+    location: {
+      id: 'loc-009',
+      villageOrTown: 'Rajpur Road',
+      district: 'Dehradun',
+      state: 'Uttarakhand',
+      country: 'India',
+      pincode: '248009',
+    },
+    verification: {
+      id: 'ver-009',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: false,
+      giCertified: false,
+      verifiedAt: '2023-09-05T00:00:00Z',
+      notes: 'Certified Artisan in Eco-Botanical Keepsakes.',
+    },
+    createdAt: '2023-08-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+  {
+    id: 'art-010',
+    userId: 'usr-010',
+    artisanName: 'Sujata Sen',
+    slug: 'sujata-sen-textile-art',
+    craftName: 'Botanical Needle-Felted Floral Decor & Embroidered Wall Art',
+    heritageLineage: 'Sutra Botanical Craft Guild, Shantiniketan',
+    experienceYears: 18,
+    tagline: 'Warm merino fiber painting and botanical embroidery celebrating nature’s poetry.',
+    bio: 'Rooted in Shantiniketan’s organic craft tradition, Sujata uses natural un-dyed wool felt and Bengal handloom linen to hand-embroider wildflower hoops and dimensional tabletop botanical vessels.',
+    story: `In Shantiniketan, nature is not a backdrop; it is the teacher. I sculpt pure wool fibers with single barbed felting needles, tangling the fibers until they take the sculptural, delicate shape of wild poppies and anemones.
+    
+Every floral wall hoop and botanical arrangement is created to bring a soothing, grounded natural presence into living spaces, free from industrial artificial materials.`,
+    avatarUrl: '/images/cat-home-decor.jpg',
+    coverImageUrl: '/images/cat-home-decor.jpg',
+    isFeatured: true,
+    followerCount: 2650,
+    productCount: 7,
+    location: {
+      id: 'loc-010',
+      villageOrTown: 'Bolpur',
+      district: 'Birbhum',
+      state: 'West Bengal',
+      country: 'India',
+      pincode: '731204',
+    },
+    verification: {
+      id: 'ver-010',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: true,
+      giCertified: false,
+      verifiedAt: '2023-03-18T00:00:00Z',
+      notes: 'Master Craftsperson in Textile Botanical Sculpture.',
+    },
+    createdAt: '2023-04-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+  {
+    id: 'art-011',
+    userId: 'usr-011',
+    artisanName: 'Kavita & Deepak Verma',
+    slug: 'kavita-deepak-botanical-paper',
+    craftName: 'Handcrafted Crepe & Sanganer Botanical Paper Flowers',
+    heritageLineage: 'Kagaz & Kalakari Studio, Jaipur',
+    experienceYears: 15,
+    tagline: 'Bespoke paper botanicals crafted with handmade deckle-edge paper and Italian crepe.',
+    bio: 'Blending Jaipur’s age-old handmade papermaking heritage with hyper-realistic floral artistry, Kavita and Deepak hand-dye and curl crepe paper petals into stunning, everlasting botanical art.',
+    story: `The art of paper flowers in Rajasthan honors the historic court botanical illustrators. We hand-paint Italian 180gsm crepe with watercolor washes, contouring each petal with warm shaping balls to mimic the natural curve of garden peonies and cosmos blossoms.
+    
+Our flowers carry the gentle charm of living garden blooms with the permanence of fine art.`,
+    avatarUrl: '/images/prod-paper-flowers.jpg',
+    coverImageUrl: '/images/prod-paper-flowers.jpg',
+    isFeatured: true,
+    followerCount: 1780,
+    productCount: 4,
+    location: {
+      id: 'loc-011',
+      villageOrTown: 'Sanganer',
+      district: 'Jaipur',
+      state: 'Rajasthan',
+      country: 'India',
+      pincode: '302029',
+    },
+    verification: {
+      id: 'ver-011',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: false,
+      giCertified: false,
+      verifiedAt: '2023-10-14T00:00:00Z',
+      notes: 'Jaipur Handmade Paper & Floral Arts Guild Member.',
+    },
+    createdAt: '2023-09-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+  {
+    id: 'art-012',
+    userId: 'usr-012',
+    artisanName: 'Rohini Murthy',
+    slug: 'rohini-murthy-artisan-jewellery',
+    craftName: 'Wearable Botanical & Hand-Beaded Artisan Jewellery',
+    heritageLineage: 'Vana Botanical Adornments Guild, Bengaluru',
+    experienceYears: 11,
+    tagline: 'Intricate freshwater pearl and micro-beaded floral adornments for mindful celebrations.',
+    bio: 'Rohini weaves fine Japanese seed beads, freshwater baroque pearls, and hand-embroidered metallic threads into delicate floral haircombs, botanical brooches, and celebratory jewelry.',
+    story: `Adornment has always celebrated blossoms in Indian culture. Instead of perishable jasmine strings, I hand-wire freshwater cultured pearls and micro glass beads into floral motifs that can be worn for weddings and kept as family heirlooms for decades.`,
+    avatarUrl: '/images/prod-beaded-flowers.jpg',
+    coverImageUrl: '/images/prod-beaded-flowers.jpg',
+    isFeatured: true,
+    followerCount: 2150,
+    productCount: 5,
+    location: {
+      id: 'loc-012',
+      villageOrTown: 'Malleswaram',
+      district: 'Bengaluru',
+      state: 'Karnataka',
+      country: 'India',
+      pincode: '560003',
+    },
+    verification: {
+      id: 'ver-012',
+      isIdentityVerified: true,
+      isMasterArtisan: true,
+      nationalAwardee: false,
+      giCertified: false,
+      verifiedAt: '2023-11-20T00:00:00Z',
+      notes: 'Master Artisan in Botanical Micro-Bead Metallurgy.',
+    },
+    createdAt: '2023-10-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
   {
     id: 'art-001',
     userId: 'usr-001',
@@ -13,9 +316,7 @@ export const MOCK_ARTISANS: ArtisanProfile[] = [
     bio: 'Born into the Khatri community of Dhamadka, Ismail Khatri revitalized ancestral natural dyeing techniques after the devastating 2001 Bhuj earthquake, founding Ajrakhpur village as an artisan sanctuary.',
     story: `The word Ajrakh originates from 'Azrak', the Arabic word for blue, as well as the Kutchi expression 'Aaj ke din rakh' (keep it for today). 
 
-Our craft does not rush. A single piece of genuine Ajrakh journeys through sixteen meticulous stages over three weeks. We wash the untreated handloom cotton in castor oil and camel dung, mordant it with harda fruit, print hand-carved teakwood blocks with katan (fermented iron rust and jaggery), and submerge the cloth into deep subterranean indigo vats maintained with living microbial cultures.
-
-When you touch genuine Ajrakh, you are not touching ink on cloth; you are feeling the mineral chemistry of Kutch riverbeds, natural alizarin root, and centuries of astronomical block carving.`,
+Our craft does not rush. A single piece of genuine Ajrakh journeys through sixteen meticulous stages over three weeks. We wash the untreated handloom cotton in castor oil and camel dung, mordant it with harda fruit, print hand-carved teakwood blocks with katan (fermented iron rust and jaggery), and submerge the cloth into deep subterranean indigo vats maintained with living microbial cultures.`,
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1600&auto=format&fit=crop',
     isFeatured: true,
@@ -38,29 +339,6 @@ When you touch genuine Ajrakh, you are not touching ink on cloth; you are feelin
       verifiedAt: '2023-01-15T00:00:00Z',
       notes: 'UNESCO Seal of Excellence & Shilp Guru Award recipient.',
     },
-    media: [
-      {
-        id: 'med-01',
-        type: 'WORKSHOP',
-        url: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Hand-carved seasoned teakwood blocks aligned with mineral mordant.',
-        displayOrder: 1,
-      },
-      {
-        id: 'med-02',
-        type: 'PROCESS',
-        url: 'https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Aeration drying along open sunlit grounds of Ajrakhpur.',
-        displayOrder: 2,
-      },
-      {
-        id: 'med-03',
-        type: 'WORKSHOP',
-        url: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Hand-ground indigo sediment vats stirred before morning dawn.',
-        displayOrder: 3,
-      },
-    ],
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
@@ -73,11 +351,9 @@ When you touch genuine Ajrakh, you are not touching ink on cloth; you are feelin
     heritageLineage: 'Fourth Generation Shawl Atelier, Downtown Srinagar',
     experienceYears: 36,
     tagline: 'Grade-A Changthangi fleece spun on traditional yender wheels.',
-    bio: 'Master weaver Bashir Ahmad works from an old stone-and-cedar courtyard near the Jhelum river, coordinating women spinners in Ladakh and master sozankars in Srinagar.',
+    bio: 'Master weaver Bashir Ahmad coordinates women spinners in Ladakh and master sozankars in Srinagar to create world-renowned feather-light Pashmina shawls.',
     story: `Genuine Pashmina begins at 14,000 feet on the Changthang plateau, where the Capra Hircus goat endures sub-zero Himalayan winters. In spring, their moulted undercoat is combed gently—never sheared.
-
-Back in the Kashmir valley, women hand-spin these delicate 12-micron fibers onto wooden spinning wheels called 'yender'. The yarn is so fragile that machine tension would instantly break it.
-
+    
 A single sozni embroidered shawl represents over 1,200 hours of continuous needlework, where single silk strands trace paisley motifs inspired by wild mountain saffron and almond blossoms.`,
     avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1600&auto=format&fit=crop',
@@ -101,15 +377,6 @@ A single sozni embroidered shawl represents over 1,200 hours of continuous needl
       verifiedAt: '2022-11-20T00:00:00Z',
       notes: 'GI Kashmir Pashmina certified with micro-laser verification mark.',
     },
-    media: [
-      {
-        id: 'med-04',
-        type: 'PROCESS',
-        url: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Spinning raw Changthangi cashmere on hand-turned wooden yender.',
-        displayOrder: 1,
-      },
-    ],
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
@@ -124,10 +391,8 @@ A single sozni embroidered shawl represents over 1,200 hours of continuous needl
     tagline: '4,000-year unbroken lost-wax bronze casting from central Indian forests.',
     bio: 'Practicing the sacred Ghadwa casting technique passed through generations in Kondagaon, translating tribal forest folklore into expressive bronze figures.',
     story: `The technique we practice has remained conceptually unchanged since the Bronze Age Dancing Girl of Harappa.
-
-We model the internal core from local termite-mound clay and river silt. Around this core, we wind hand-drawn beeswax threads through a wooden press to sculpt intricate jewelry, deer antlers, or ritual vessels.
-
-When molten recycled bell metal is poured into the sealed furnace mould, the wax melts and vaporizes—hence 'lost wax'. Every single piece is entirely singular: because the clay mould must be broken to release the bronze cast, no duplicate can ever exist.`,
+    
+We model the internal core from local termite-mound clay and river silt. Around this core, we wind hand-drawn beeswax threads to sculpt intricate figures. Because the clay mould must be broken to release the bronze cast, no duplicate can ever exist.`,
     avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1600&auto=format&fit=crop',
     isFeatured: true,
@@ -150,15 +415,6 @@ When molten recycled bell metal is poured into the sealed furnace mould, the wax
       verifiedAt: '2023-04-10T00:00:00Z',
       notes: 'GI Certified Bastar Dhokra artisan guild leader.',
     },
-    media: [
-      {
-        id: 'med-05',
-        type: 'WORKSHOP',
-        url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Bastar pit furnace fueled with dried sal wood and forest charcoal.',
-        displayOrder: 1,
-      },
-    ],
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
@@ -172,11 +428,7 @@ When molten recycled bell metal is poured into the sealed furnace mould, the wax
     experienceYears: 31,
     tagline: 'Non-toxic, ivory-wood lathed objects colored with natural shellac.',
     bio: 'Husband-and-wife artisan studio in the toy city of Karnataka, shaping sustainably harvested Wrightia tinctoria timber on manual lathes.',
-    story: `Channapatna craft was initiated two centuries ago when Persian masters were invited to train local woodcraftsmen.
-
-We only use 'Aale mara' (Ivory Wood), which is cured under natural shade for months to prevent hairline warping. The lathe revolves at high speed while we apply hand-prepared lacquer sticks blended with natural pigments: turmeric for ochre yellow, indigo for turquoise, and vermilion seeds for crimson.
-
-The heat generated by friction melts the resin evenly into the pores of wood. Finally, we burnish each piece with dried screw-pine leaves (Pandanus) until it radiates an enduring, glass-smooth sheen without a single droplet of synthetic varnish.`,
+    story: `We only use 'Aale mara' (Ivory Wood), which is cured under natural shade for months. The lathe revolves at high speed while we apply hand-prepared lacquer sticks blended with natural turmeric, indigo, and vermilion seed pigments.`,
     avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: 'https://images.unsplash.com/photo-1567653418876-5bb0e566e1c2?q=80&w=1600&auto=format&fit=crop',
     isFeatured: true,
@@ -199,15 +451,6 @@ The heat generated by friction melts the resin evenly into the pores of wood. Fi
       verifiedAt: '2023-06-18T00:00:00Z',
       notes: 'GI Certified Channapatna Toys & Craft Guild member.',
     },
-    media: [
-      {
-        id: 'med-06',
-        type: 'PROCESS',
-        url: 'https://images.unsplash.com/photo-1567653418876-5bb0e566e1c2?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Burnishing turned timber with organic screw-pine leaf.',
-        displayOrder: 1,
-      },
-    ],
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
@@ -220,10 +463,8 @@ The heat generated by friction melts the resin evenly into the pores of wood. Fi
     heritageLineage: 'Generational Sualkuchi Silk Weaving Guild',
     experienceYears: 28,
     tagline: 'Weaving wild golden cocoons blessed by the Brahmaputra mist.',
-    bio: 'Master weaver in Sualkuchi, Assam, hand-rearing endemic Antheraea assamensis silkworms and translating ancient Ahom royal geometric motifs onto floor looms.',
-    story: `Muga silk exists nowhere else in the world except the Brahmaputra valley. The silkworm feeds exclusively on aromatic Som and Soalu leaves in the open wild.
-    
-Its natural shimmer is not dyed—it is born golden and becomes more lustrous with every single wash over decades. An heirloom Muga Mekhela Chador often outlives three generations of wearers.`,
+    bio: 'Master weaver in Sualkuchi, Assam, hand-rearing endemic silkworms and translating ancient Ahom royal geometric motifs onto floor looms.',
+    story: `Muga silk exists nowhere else in the world except the Brahmaputra valley. Its natural golden shimmer is not dyed—it is born golden and becomes more lustrous with every single wash over decades.`,
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: '/images/assam-muga-weaving.jpg',
     isFeatured: true,
@@ -246,15 +487,6 @@ Its natural shimmer is not dyed—it is born golden and becomes more lustrous wi
       verifiedAt: '2023-08-20T00:00:00Z',
       notes: 'State Master Weaver & GI Tag Certified Muga Appellation.',
     },
-    media: [
-      {
-        id: 'med-07',
-        type: 'WORKSHOP',
-        url: '/images/assam-muga-weaving.jpg',
-        caption: 'Setting up the Jacquard warp on ancient hardwood floor loom in Sualkuchi.',
-        displayOrder: 1,
-      },
-    ],
     createdAt: '2023-07-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
@@ -267,10 +499,8 @@ Its natural shimmer is not dyed—it is born golden and becomes more lustrous wi
     heritageLineage: 'Sarthebari Bell Metal Artisans Cooperative',
     experienceYears: 34,
     tagline: 'Singing alloys forged by five hammers in harmonic rhythm.',
-    bio: 'Third-generation bell-metal forger in Sarthebari, casting resonant copper-tin bell metal (Kansa) cookware, prayer bells, and dining sets.',
-    story: `The forge in Sarthebari requires five master smiths striking a single glowing ingot in exact musical cadence. If one strike hesitates, the temperature drops and the alloy crystallizes unevenly.
-
-Kansa has been documented since the Charaka Samhita for its anti-microbial and digestive properties. An authentic Sarthebari plate rings with a clear pitch like a temple bell.`,
+    bio: 'Third-generation bell-metal forger in Sarthebari, casting resonant copper-tin bell metal cookware, prayer bells, and dining sets.',
+    story: `The forge in Sarthebari requires five master smiths striking a single glowing ingot in exact musical cadence. If one strike hesitates, the temperature drops and the alloy crystallizes unevenly.`,
     avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop',
     coverImageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=1600&auto=format&fit=crop',
     isFeatured: true,
@@ -293,64 +523,364 @@ Kansa has been documented since the Charaka Samhita for its anti-microbial and d
       verifiedAt: '2023-09-12T00:00:00Z',
       notes: 'GI Certified Sarthebari Bell Metal Heritage Guild.',
     },
-    media: [
-      {
-        id: 'med-08',
-        type: 'PROCESS',
-        url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=1200&auto=format&fit=crop',
-        caption: 'Beating glowing bell metal ingots with traditional iron sledges.',
-        displayOrder: 1,
-      },
-    ],
     createdAt: '2023-08-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
 ];
 
 export const MOCK_PRODUCTS: Product[] = [
+  // 1. Crochet flower bouquet (Flowers & Bouquets)
   {
-    id: 'prod-001',
-    artisanId: 'art-001',
+    id: 'prod-flw-001',
+    artisanId: 'art-007',
     artisan: MOCK_ARTISANS[0],
-    title: 'Kutch Indigo & Alizarin Chanderi Saree',
-    slug: 'kutch-indigo-alizarin-chanderi-saree',
-    shortDescription: '16-stage naturally dyed silk-cotton Chanderi saree stamped with hand-carved teak relief blocks.',
-    fullStory: `This heirloom Chanderi saree represents three weeks of deliberate craft in Ajrakhpur. Dr. Ismail Khatri applies hand-carved woodblocks using fermented iron rust paste, red alizarin root, and pure desert indigo. 
+    title: 'Handcrafted Pastel Wildflower Crochet Bouquet',
+    slug: 'handcrafted-pastel-wildflower-crochet-bouquet',
+    shortDescription: 'Delicate hand-crocheted tulips, chamomile daisies, and lavender sprigs wrapped in natural kraft paper with jute twine.',
+    fullStory: `Crafted over 18 hours of detailed needlework by Ananya Roy in Kolkata, this blooming bouquet brings forever warmth into any living space or celebration.
 
-The lightweight Chanderi weave combines gossamer silk warp with combed organic cotton weft, allowing breathability in tropical climates while radiating subtle natural luster. The geometric border reflects traditional Islamic astral stars and celestial river motifs.`,
+Each tulip bell and daisy petal is crocheted using 100% combed cotton yarn, hand-dyed with non-toxic botanical pigments. The flexible copper wire core inside each stem allows you to pose, adjust, and re-arrange the stems inside your favorite vase. It is completely zero-waste, allergy-safe, and keeps its cheerful colors forever without requiring water or sunlight.`,
     status: 'PUBLISHED',
-    basePrice: 18500,
+    basePrice: 2850,
     currency: 'INR',
     category: {
-      id: 'cat-textiles',
-      name: 'Textiles & Handloom',
-      slug: 'textiles-handloom',
+      id: 'cat-flowers-bouquets',
+      name: 'Flowers & Bouquets',
+      slug: 'flowers-bouquets',
     },
     specifications: {
-      materials: ['60% Mulberry Silk', '40% Hand-Spun Cotton', 'Natural Fermented Indigo', 'Madder Root (Alizarin)', 'Tamarind Seed Gum'],
-      dimensions: '5.5 meters length x 1.15 meters width (includes unstitched blouse piece)',
-      weightGrams: 420,
-      craftTechnique: 'Double-sided Ajrakh Resist Printing on Handloom Chanderi',
-      makingDurationDays: 21,
-      careInstructions: 'Dry clean only for first two washes. Hand wash separately in cold water with mild ph-neutral soap nuts.',
-      giTagCertified: true,
-      regionOfOrigin: 'Kutch, Gujarat',
+      materials: ['100% Combed Cotton Yarn', 'Flexible Florist Copper Core', 'Natural Kraft Wrap', 'Jute Cord'],
+      dimensions: 'Length: 38 cm, Diameter: 24 cm bouquet spread',
+      weightGrams: 320,
+      craftTechnique: 'Fine Point Micro-Crochet & Hand Botanical Assembly',
+      makingDurationDays: 3,
+      careInstructions: 'Gently dust with a soft cosmetic brush or light blow-dryer on cool setting. Keep away from prolonged dampness.',
+      giTagCertified: false,
+      regionOfOrigin: 'Kolkata, West Bengal',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Anniversary', 'Valentine\'s Day', 'Just Because'],
+      colorFamily: 'Pastel Meadow (Blush, Buttercup Yellow, Lavender)',
     },
     media: [
       {
-        id: 'pm-01',
-        url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop',
-        altText: 'Indigo and madder Chanderi Ajrakh Saree draped in natural courtyard light',
+        id: 'pm-flw-01',
+        url: '/images/prod-crochet-bouquet.jpg',
+        altText: 'Handcrafted pastel wildflower crochet bouquet tied with jute twine',
         isPrimary: true,
         displayOrder: 1,
         mediaType: 'IMAGE',
       },
       {
-        id: 'pm-02',
-        url: '/images/hero-craft-hands.jpg',
-        altText: 'Macro view showing intricate hand-carved block alignment and organic indigo variation',
+        id: 'pm-flw-01b',
+        url: '/images/cat-flowers-bouquets.jpg',
+        altText: 'Crochet and mixed botanical flowers styled in an artisan studio',
         isPrimary: false,
         displayOrder: 2,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-flw-01',
+        sku: 'FLO-CRO-PAS-01',
+        title: 'Spring Pastel Palette',
+        price: 2850,
+        stockQuantity: 8,
+        attributes: { palette: 'Pastel Meadow' },
+      },
+    ],
+    tags: ['crochet-bouquet', 'handmade-flowers', 'everlasting-flowers', 'birthday-gift', 'anniversary-gift'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 42,
+    averageRating: 5.0,
+    createdAt: '2024-01-10T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 2. Handmade ribbon rose bouquet (Flowers & Bouquets)
+  {
+    id: 'prod-flw-002',
+    artisanId: 'art-008',
+    artisan: MOCK_ARTISANS[1],
+    title: 'Dusty Rose & Champagne Satin Ribbon Bouquet',
+    slug: 'dusty-rose-champagne-satin-ribbon-bouquet',
+    shortDescription: 'Luxe hand-pleated French satin ribbon roses in blush, dusty mauve, and warm champagne with a flowing silk bow.',
+    fullStory: `Sculpted by master ribbon crafters Priya Nair & Meera Joshi in Pune, this regal arrangement contains 24 individually folded satin roses.
+
+Each rose requires forty minutes of delicate thermal pleating and hand-stitching to achieve the organic petal spiral of heirloom David Austin roses. Tied with pure silk ribbon, it serves as an unforgettable wedding bouquet, milestone anniversary gift, or luxurious permanent centerpiece.`,
+    status: 'PUBLISHED',
+    basePrice: 3950,
+    currency: 'INR',
+    category: {
+      id: 'cat-flowers-bouquets',
+      name: 'Flowers & Bouquets',
+      slug: 'flowers-bouquets',
+    },
+    specifications: {
+      materials: ['High-Density Double-Faced Satin Ribbon', 'Pure Silk Ribbon Bow', 'Reinforced Florist Stem'],
+      dimensions: 'Diameter: 22 cm, Height: 28 cm',
+      weightGrams: 410,
+      craftTechnique: 'Thermal Ribbon Pleating & Invisible Hand-Stitch Assembly',
+      makingDurationDays: 5,
+      careInstructions: 'Store in keepsake gift box when not on display. Spot clean gently with dry microfiber cloth.',
+      giTagCertified: false,
+      regionOfOrigin: 'Pune, Maharashtra',
+      productionType: 'Made to Order',
+      occasion: ['Anniversary', 'Wedding', 'Valentine\'s Day'],
+      colorFamily: 'Dusty Rose & Champagne',
+    },
+    media: [
+      {
+        id: 'pm-flw-02',
+        url: '/images/prod-ribbon-roses.jpg',
+        altText: 'Handmade satin ribbon rose bouquet with champagne and blush pink roses',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-flw-02',
+        sku: 'RIB-ROS-DUS-01',
+        title: 'Dusty Rose & Warm Champagne',
+        price: 3950,
+        stockQuantity: 5,
+        attributes: { shade: 'Blush & Champagne' },
+      },
+    ],
+    tags: ['ribbon-roses', 'handmade-bouquet', 'wedding-flowers', 'anniversary-gift', 'keepsake-bouquet'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 35,
+    averageRating: 4.9,
+    createdAt: '2024-01-15T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 3. Fabric flower arrangement (Flowers & Bouquets / Home Decor)
+  {
+    id: 'prod-flw-003',
+    artisanId: 'art-010',
+    artisan: MOCK_ARTISANS[3],
+    title: 'Warm Terracotta & Ochre Felt Botanical Arrangement',
+    slug: 'warm-terracotta-ochre-felt-botanical-arrangement',
+    shortDescription: 'Artisanal pure wool felt botanical flowers with eucalyptus sprigs and poppies, paired in a speckled studio stoneware vase.',
+    fullStory: `Sculpted by Sujata Sen in Bolpur, this warm botanical arrangement captures the autumn mood of Shantiniketan.
+
+Using 100% fine Merino wool felt colored with eco-friendly dyes, Sujata needles each petal into organic three-dimensional forms. Paired with textured felt eucalyptus branches and poppy pods, it sits elegantly on bedside tables, writing desks, and living consoles.`,
+    status: 'PUBLISHED',
+    basePrice: 2450,
+    currency: 'INR',
+    category: {
+      id: 'cat-flowers-bouquets',
+      name: 'Flowers & Bouquets',
+      slug: 'flowers-bouquets',
+    },
+    specifications: {
+      materials: ['100% Australian Merino Wool Felt', 'Cotton Covered Wire Stems', 'Hand-Thrown Ceramic Vase'],
+      dimensions: 'Height: 32 cm, Width: 20 cm (including ceramic vase)',
+      weightGrams: 550,
+      craftTechnique: 'Needle-Felting & Sculptural Textile Joinery',
+      makingDurationDays: 4,
+      careInstructions: 'Keep dry. Dust periodically with a dry soft cloth.',
+      giTagCertified: false,
+      regionOfOrigin: 'Birbhum, West Bengal',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Just Because', 'Anniversary'],
+      colorFamily: 'Earthy Terracotta & Ochre',
+    },
+    media: [
+      {
+        id: 'pm-flw-03',
+        url: '/images/prod-fabric-flowers.jpg',
+        altText: 'Handmade wool felt flowers and eucalyptus in a handmade ceramic vase',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-flw-03',
+        sku: 'FLT-BOT-TER-01',
+        title: 'Terracotta & Ochre Ensemble',
+        price: 2450,
+        stockQuantity: 6,
+        attributes: { finish: 'Includes Ceramic Stoneware Vase' },
+      },
+    ],
+    tags: ['felt-flowers', 'fabric-arrangement', 'table-decor', 'earthy-decor', 'sustainable-gift'],
+    isCustomizable: false,
+    isFeatured: true,
+    reviewCount: 29,
+    averageRating: 4.9,
+    createdAt: '2024-01-20T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 4. Personalized handmade gift (Personalized Gifts)
+  {
+    id: 'prod-gft-001',
+    artisanId: 'art-009',
+    artisan: MOCK_ARTISANS[2],
+    title: 'Personalized Hand-Carved Teakwood Keepsake Box & Botanical Card',
+    slug: 'personalized-hand-carved-teak-keepsake-box',
+    shortDescription: 'Custom-engraved seasoned teak memory box with antique brass latch, real pressed Himalayan wildflowers, and wax-sealed note.',
+    fullStory: `Hand-carved by Tanvi Sharma in Dehradun, this heirloom keepsake box is made to order for milestone celebrations.
+
+Each box is carved from sustainably sourced reclaimed teakwood, finished with organic walnut oil, and fitted with an engraved brass nameplate customized with the recipient’s names and significant date. Included inside is a deckle-edge handmade rag-paper letter pressed with alpine mountain ferns and sealed with royal red wax.`,
+    status: 'PUBLISHED',
+    basePrice: 3400,
+    currency: 'INR',
+    category: {
+      id: 'cat-personalized-gifts',
+      name: 'Personalized Gifts',
+      slug: 'personalized-gifts',
+    },
+    specifications: {
+      materials: ['Reclaimed Seasoned Teakwood', 'Hand-Cast Brass Latch', 'Pressed Himalayan Wildflowers', 'Deckle-Edge Cotton Rag Paper'],
+      dimensions: 'Length: 22 cm, Width: 15 cm, Height: 9 cm',
+      weightGrams: 780,
+      craftTechnique: 'Hand Relief Wood Carving & Botanical Herbarium Pressing',
+      makingDurationDays: 4,
+      careInstructions: 'Wipe with dry cotton cloth. Natural wood grain enriches over years.',
+      giTagCertified: false,
+      regionOfOrigin: 'Dehradun, Uttarakhand',
+      productionType: 'Made to Order',
+      occasion: ['Anniversary', 'Wedding', 'Birthday'],
+      colorFamily: 'Warm Teakwood & Golden Brass',
+    },
+    media: [
+      {
+        id: 'pm-gft-01',
+        url: '/images/cat-personalized-gifts.jpg',
+        altText: 'Hand-carved personalized wooden keepsake memory box with pressed floral card',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-gft-01',
+        sku: 'PRS-BOX-TEAK-01',
+        title: 'Custom Inscribed Edition',
+        price: 3400,
+        stockQuantity: 12,
+        attributes: { customization: 'Names & Date Hand-Inscribed' },
+      },
+    ],
+    tags: ['personalized-gift', 'keepsake-box', 'custom-name-gift', 'anniversary-gift', 'wedding-keepsake'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 48,
+    averageRating: 5.0,
+    createdAt: '2024-01-25T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 5. Decorative floral wall art (Home Decor)
+  {
+    id: 'prod-dcr-001',
+    artisanId: 'art-010',
+    artisan: MOCK_ARTISANS[3],
+    title: 'Embroidered Botanical Meadow Linen Wall Art Hoop',
+    slug: 'embroidered-botanical-meadow-linen-wall-art-hoop',
+    shortDescription: 'Detailed floral embroidery on handspun Bengal linen stretched inside a round beechwood frame with leather hanger.',
+    fullStory: `Created by Sujata Sen, this textile artwork represents over 26 hours of continuous botanical needle embroidery.
+
+Wild daisies, jasmine tendrils, and soft leaves are rendered using dyed raw silk and cotton threads on natural oatmeal linen. The beechwood frame is suspended by a supple saddle-leather cord, bringing subtle natural texture and artisanal elegance to any interior room wall.`,
+    status: 'PUBLISHED',
+    basePrice: 2600,
+    currency: 'INR',
+    category: {
+      id: 'cat-home-decor',
+      name: 'Home Decor',
+      slug: 'home-decor',
+    },
+    specifications: {
+      materials: ['Handspun Bengal Linen', 'Raw Silk & Cotton Embroidery Floss', 'Beechwood Frame', 'Saddle Leather Cord'],
+      dimensions: 'Diameter: 26 cm round frame',
+      weightGrams: 280,
+      craftTechnique: 'Fine Botanical Needle Embroidery on Handloom Linen',
+      makingDurationDays: 3,
+      careInstructions: 'Hang out of direct harsh sunlight. Dust frame lightly with feather brush.',
+      giTagCertified: false,
+      regionOfOrigin: 'Bolpur, West Bengal',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Anniversary', 'Just Because'],
+      colorFamily: 'Oatmeal & Meadow Florals',
+    },
+    media: [
+      {
+        id: 'pm-dcr-01',
+        url: '/images/cat-home-decor.jpg',
+        altText: 'Embroidered botanical linen wall hoop on warm plaster wall',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-dcr-01',
+        sku: 'DCR-EMB-HOP-01',
+        title: '26cm Meadow Blossom Hoop',
+        price: 2600,
+        stockQuantity: 7,
+        attributes: { size: '26 cm Diameter' },
+      },
+    ],
+    tags: ['wall-art', 'botanical-embroidery', 'home-decor', 'linen-hoop', 'floral-decor'],
+    isCustomizable: false,
+    isFeatured: true,
+    reviewCount: 21,
+    averageRating: 4.8,
+    createdAt: '2024-02-01T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 6. Traditional handmade textile accessory (Traditional Indian Crafts)
+  {
+    id: 'prod-trd-001',
+    artisanId: 'art-001',
+    artisan: MOCK_ARTISANS[6],
+    title: 'Kutch Indigo & Alizarin Chanderi Handloom Stole',
+    slug: 'kutch-indigo-alizarin-chanderi-saree',
+    shortDescription: '16-stage naturally dyed silk-cotton Chanderi stole stamped with hand-carved teak relief blocks in Ajrakhpur.',
+    fullStory: `This heirloom Chanderi piece represents three weeks of deliberate craft in Ajrakhpur. Dr. Ismail Khatri applies hand-carved woodblocks using fermented iron rust paste, red alizarin root, and pure desert indigo. 
+
+The lightweight Chanderi weave combines gossamer silk warp with combed organic cotton weft, allowing breathability across seasons while radiating subtle natural luster. The geometric border reflects traditional astral stars and river motifs.`,
+    status: 'PUBLISHED',
+    basePrice: 8500,
+    currency: 'INR',
+    category: {
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
+    },
+    specifications: {
+      materials: ['60% Mulberry Silk', '40% Hand-Spun Cotton', 'Natural Fermented Indigo', 'Madder Root (Alizarin)', 'Tamarind Seed Gum'],
+      dimensions: '2.5 meters length x 0.9 meters width',
+      weightGrams: 210,
+      craftTechnique: 'Double-sided Ajrakh Resist Printing on Handloom Chanderi',
+      makingDurationDays: 21,
+      careInstructions: 'Dry clean only for first two washes. Hand wash separately in cold water with mild ph-neutral soap nuts.',
+      giTagCertified: true,
+      regionOfOrigin: 'Kutch, Gujarat',
+      productionType: 'Ready to Ship',
+      occasion: ['Wedding', 'Anniversary', 'Valentine\'s Day'],
+      colorFamily: 'Midnight Indigo & Terracotta',
+    },
+    media: [
+      {
+        id: 'pm-01',
+        url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop',
+        altText: 'Indigo and madder Chanderi Ajrakh stole draped in natural courtyard light',
+        isPrimary: true,
+        displayOrder: 1,
         mediaType: 'IMAGE',
       },
     ],
@@ -359,7 +889,7 @@ The lightweight Chanderi weave combines gossamer silk warp with combed organic c
         id: 'var-01',
         sku: 'AJK-CHND-01-INDIGO',
         title: 'Midnight Indigo & Terracotta',
-        price: 18500,
+        price: 8500,
         stockQuantity: 4,
         attributes: { colorway: 'Deep Indigo / Madder Terracotta' },
       },
@@ -372,23 +902,208 @@ The lightweight Chanderi weave combines gossamer silk warp with combed organic c
     createdAt: '2023-03-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
+
+  // 7. Paper flowers (Flowers & Bouquets)
+  {
+    id: 'prod-flw-004',
+    artisanId: 'art-011',
+    artisan: MOCK_ARTISANS[4],
+    title: 'Coral Garden Peony & Cosmos Crepe Paper Botanicals',
+    slug: 'coral-garden-peony-cosmos-crepe-paper-botanicals',
+    shortDescription: 'Hyper-realistic handcrafted crepe paper peonies and delicate cosmos blooms, hand-painted with botanical watercolors.',
+    fullStory: `Sculpted in Sanganer by Kavita & Deepak Verma, this floral stem set features 180gsm premium crepe paper curved with heated metal embossing tools.
+
+Each petal displays realistic crinkles, delicate veins, and subtle color gradations. The flexible floral wire stems allow you to create customized vase arrangements that stay perpetually in full bloom.`,
+    status: 'PUBLISHED',
+    basePrice: 2200,
+    currency: 'INR',
+    category: {
+      id: 'cat-flowers-bouquets',
+      name: 'Flowers & Bouquets',
+      slug: 'flowers-bouquets',
+    },
+    specifications: {
+      materials: ['Heavy Crepe Paper (180gsm)', 'Botanical Watercolor Wash', 'Florist Stem Wire', 'Cotton Core'],
+      dimensions: 'Stem length: 36 cm each (Set of 5 stems)',
+      weightGrams: 160,
+      craftTechnique: 'Hand Petal Curling & Crepe Botanical Sculpture',
+      makingDurationDays: 3,
+      careInstructions: 'Keep dry and away from direct moisture. Dust with soft dry makeup brush.',
+      giTagCertified: false,
+      regionOfOrigin: 'Jaipur, Rajasthan',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Graduation', 'Just Because', 'Valentine\'s Day'],
+      colorFamily: 'Coral & Spring Blossom',
+    },
+    media: [
+      {
+        id: 'pm-flw-04',
+        url: '/images/prod-paper-flowers.jpg',
+        altText: 'Handcrafted coral crepe paper peonies and eucalyptus on stone slab',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-flw-04',
+        sku: 'PAP-PEO-COR-01',
+        title: '5-Stem Coral & Cosmos Set',
+        price: 2200,
+        stockQuantity: 9,
+        attributes: { set: '5 Individual Stems' },
+      },
+    ],
+    tags: ['paper-flowers', 'crepe-flowers', 'peonies', 'everlasting-flowers', 'botanical-art'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 31,
+    averageRating: 4.8,
+    createdAt: '2024-02-05T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 8. Wearable craft / Jewellery (Jewellery & Accessories)
+  {
+    id: 'prod-jwl-001',
+    artisanId: 'art-012',
+    artisan: MOCK_ARTISANS[5],
+    title: 'Freshwater Pearl & Seed Bead Floral Bridal Hairpiece',
+    slug: 'freshwater-pearl-seed-bead-floral-hairpiece',
+    shortDescription: 'Luminous freshwater baroque pearls, Japanese micro seed beads, and golden leaves hand-wired into an heirloom floral haircomb.',
+    fullStory: `Designed by Rohini Murthy in Bengaluru, this wearable floral adornment requires sixteen hours of wire-twisting and micro-bead embroidery.
+
+Real cultured freshwater pearls form the blossoming petals, framed by frosted ivory glass beads and hand-stamped brass foliage. It slips effortlessly into updos, braids, or loose waves for weddings, anniversaries, and celebratory festive occasions.`,
+    status: 'PUBLISHED',
+    basePrice: 3200,
+    currency: 'INR',
+    category: {
+      id: 'cat-jewellery-accessories',
+      name: 'Jewellery & Accessories',
+      slug: 'jewellery-accessories',
+    },
+    specifications: {
+      materials: ['Genuine Freshwater Baroque Pearls', 'Japanese Glass Seed Beads', 'Tarnish-Resistant Brass Wire', 'Gilded Haircomb Base'],
+      dimensions: 'Length: 14 cm, Width: 6 cm',
+      weightGrams: 85,
+      craftTechnique: 'Micro-Wire Wrapping & Beaded Floral Assemblage',
+      makingDurationDays: 3,
+      careInstructions: 'Store in padded jewelry box. Avoid direct perfumes or hairspray.',
+      giTagCertified: false,
+      regionOfOrigin: 'Bengaluru, Karnataka',
+      productionType: 'Made to Order',
+      occasion: ['Wedding', 'Anniversary', 'Valentine\'s Day'],
+      colorFamily: 'Pearl White & Antique Brass',
+    },
+    media: [
+      {
+        id: 'pm-jwl-01',
+        url: '/images/prod-beaded-flowers.jpg',
+        altText: 'Intricate beaded freshwater pearl floral hairpiece on natural linen',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-jwl-01',
+        sku: 'JWL-PRL-HR-01',
+        title: 'Ivory Pearl & Antique Gold Comb',
+        price: 3200,
+        stockQuantity: 4,
+        attributes: { finish: 'Antique Brass Frame' },
+      },
+    ],
+    tags: ['floral-jewellery', 'beaded-flowers', 'pearl-hairpiece', 'wedding-accessories', 'wearable-craft'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 27,
+    averageRating: 5.0,
+    createdAt: '2024-02-10T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 9. Crochet botanical bouquet (Crochet & Fabric Crafts)
+  {
+    id: 'prod-crc-001',
+    artisanId: 'art-007',
+    artisan: MOCK_ARTISANS[0],
+    title: 'Spring Garden Rose & Lavender Hand-Crocheted Stems',
+    slug: 'spring-garden-rose-lavender-crochet-stems',
+    shortDescription: 'Pastel garden roses, chamomile bells, and lavender stems hand-crocheted from fine cotton yarn with matching artisan linen pouch.',
+    fullStory: `An exquisite creation by Ananya Roy featuring eight independent botanical stems. Includes three English garden roses, two lavender spires, and three chamomile daisies.
+
+Supplied with an organic hand-loomed linen pouch and wooden crochet tags, it can be styled together or separated into single stems for miniature bud vases across your home.`,
+    status: 'PUBLISHED',
+    basePrice: 3100,
+    currency: 'INR',
+    category: {
+      id: 'cat-crochet-fabric',
+      name: 'Crochet & Fabric Crafts',
+      slug: 'crochet-fabric',
+    },
+    specifications: {
+      materials: ['100% Combed Cotton Thread', 'Galvanized Florist Stem Wire', 'Handwoven Linen Storage Pouch'],
+      dimensions: 'Stems: 34 cm length each (8 Piece Set)',
+      weightGrams: 280,
+      craftTechnique: 'Fine Point Crochet & Botanical Stem Wrapping',
+      makingDurationDays: 4,
+      careInstructions: 'Spot clean with mild damp cloth. Keep dry.',
+      giTagCertified: false,
+      regionOfOrigin: 'Kolkata, West Bengal',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Graduation', 'Just Because'],
+      colorFamily: 'Lavender, Blush & Cream',
+    },
+    media: [
+      {
+        id: 'pm-crc-01',
+        url: '/images/cat-crochet-fabric.jpg',
+        altText: 'Hand-crocheted garden rose and lavender stems with spools of thread',
+        isPrimary: true,
+        displayOrder: 1,
+        mediaType: 'IMAGE',
+      },
+    ],
+    variants: [
+      {
+        id: 'var-crc-01',
+        sku: 'CRC-ROS-LAV-01',
+        title: '8-Stem Garden Rose & Lavender Set',
+        price: 3100,
+        stockQuantity: 5,
+        attributes: { pieces: '8 Stems + Linen Pouch' },
+      },
+    ],
+    tags: ['crochet-flowers', 'fabric-craft', 'lavender-stems', 'cotton-yarn', 'artisan-decor'],
+    isCustomizable: true,
+    isFeatured: true,
+    reviewCount: 19,
+    averageRating: 4.9,
+    createdAt: '2024-02-12T00:00:00Z',
+    updatedAt: '2024-02-15T00:00:00Z',
+  },
+
+  // 10. Traditional Cashmere Pashmina (Traditional Indian Crafts)
   {
     id: 'prod-002',
     artisanId: 'art-002',
-    artisan: MOCK_ARTISANS[1],
+    artisan: MOCK_ARTISANS[7],
     title: 'Hand-Spun Natural Pashmina Shawl with Sozni Border',
     slug: 'hand-spun-natural-pashmina-shawl-sozni',
     shortDescription: 'Un-dyed Changthangi raw cashmere hand-spun on yender and bordered with fine silk sozni needlework.',
     fullStory: `Woven on traditional four-pedal wooden floor looms in Srinagar, this shawl honors the natural silver-fawn shade of winter cashmere without chemical bleaching.
 
-The fine silk sozni embroidery along the four selvedges was completed over four months by master craftsman Bashir Ahmad Bhat using an ultra-fine steel needle with half-millimeter tension. The fabric is astonishingly lightweight yet provides deep, comforting warmth.`,
+The fine silk sozni embroidery along the four selvedges was completed over four months by master craftsman Bashir Ahmad Bhat using an ultra-fine steel needle with half-millimeter tension.`,
     status: 'PUBLISHED',
     basePrice: 42000,
     currency: 'INR',
     category: {
-      id: 'cat-textiles',
-      name: 'Textiles & Handloom',
-      slug: 'textiles-handloom',
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
     },
     specifications: {
       materials: ['100% Grade-A Changthangi Cashmere (12-14 micron)', 'Raw Mulberry Silk Needle Embroidery'],
@@ -399,6 +1114,9 @@ The fine silk sozni embroidery along the four selvedges was completed over four 
       careInstructions: 'Store wrapped in pure cotton muslin with dried cedar chips or neem leaves. Professional dry clean only.',
       giTagCertified: true,
       regionOfOrigin: 'Srinagar, Kashmir',
+      productionType: 'Made to Order',
+      occasion: ['Wedding', 'Anniversary'],
+      colorFamily: 'Raw Unbleached Cashmere Fawn',
     },
     media: [
       {
@@ -407,14 +1125,6 @@ The fine silk sozni embroidery along the four selvedges was completed over four 
         altText: 'Natural fawn un-dyed Kashmiri Pashmina with hand sozni needlework',
         isPrimary: true,
         displayOrder: 1,
-        mediaType: 'IMAGE',
-      },
-      {
-        id: 'pm-04',
-        url: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1200&auto=format&fit=crop',
-        altText: 'Detail of fine sozni craft and loom finishing',
-        isPrimary: false,
-        displayOrder: 2,
         mediaType: 'IMAGE',
       },
     ],
@@ -436,23 +1146,25 @@ The fine silk sozni embroidery along the four selvedges was completed over four 
     createdAt: '2023-02-10T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
+
+  // 11. Traditional Dhokra Bronze (Traditional Indian Crafts)
   {
     id: 'prod-003',
     artisanId: 'art-003',
-    artisan: MOCK_ARTISANS[2],
+    artisan: MOCK_ARTISANS[8],
     title: 'Bastar Forest Shaman & Sun Bird Dhokra Sculpture',
     slug: 'bastar-forest-shaman-sun-bird-dhokra-sculpture',
     shortDescription: 'One-of-a-kind lost-wax solid bell metal sculpture handcrafted in the forest at Kondagaon.',
     fullStory: `Sculpted by Devnath Kashyap using bees-wax coils and lost-wax casting, this piece depicts the tribal forest guardian honoring the seasonal migration of the sun bird.
 
-Because the clay mould was destroyed during the pouring of red-hot molten bell metal, this sculpture is strictly unique; no replica exists or can ever be made. The patina is organic, created by rubbing fresh castor oil and forest ash onto warm bronze.`,
+Because the clay mould was destroyed during the pouring of red-hot molten bell metal, this sculpture is strictly unique; no replica exists or can ever be made.`,
     status: 'PUBLISHED',
     basePrice: 12800,
     currency: 'INR',
     category: {
-      id: 'cat-metals',
-      name: 'Metals & Forge',
-      slug: 'metals-forge',
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
     },
     specifications: {
       materials: ['Bell Metal (Copper-Tin Alloy)', 'Organic Bee-Wax Coil Mould', 'Forest Termite Soil Core'],
@@ -463,6 +1175,9 @@ Because the clay mould was destroyed during the pouring of red-hot molten bell m
       careInstructions: 'Wipe with dry microfiber cloth. Natural bronze patina deepens beautifully over decades.',
       giTagCertified: true,
       regionOfOrigin: 'Bastar, Chhattisgarh',
+      productionType: 'Ready to Ship',
+      occasion: ['Anniversary', 'Wedding'],
+      colorFamily: 'Antique Bronze Patina',
     },
     media: [
       {
@@ -492,23 +1207,25 @@ Because the clay mould was destroyed during the pouring of red-hot molten bell m
     createdAt: '2023-04-12T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
+
+  // 12. Channapatna Turned Wood (Traditional Indian Crafts)
   {
     id: 'prod-004',
     artisanId: 'art-004',
-    artisan: MOCK_ARTISANS[3],
-    title: 'Ivory Wood Modular Kinetic Balancing Kinetic Bird',
+    artisan: MOCK_ARTISANS[9],
+    title: 'Ivory Wood Turned Balancing Kinetic Bird',
     slug: 'channapatna-turned-wood-balancing-bird',
-    shortDescription: 'Turned Wrightia tinctoria ivory wood toy burnished with plant turmeric lacquer and screw-pine leaves.',
+    shortDescription: 'Turned Wrightia tinctoria ivory wood kinetic object burnished with plant turmeric lacquer and screw-pine leaves.',
     fullStory: `Master turner Syed Ameen crafts this kinetic balancing sculpture entirely on hand-operated wood lathes in Channapatna. 
 
-Using only natural tree resin lacquer infused with organic turmeric, indigo, and lac-dye, this piece is non-toxic, child-safe, and silky to the touch. The balance point is calibrated purely through geometric lathe physics without hidden weights.`,
+Using only natural tree resin lacquer infused with organic turmeric and indigo, this piece is non-toxic, child-safe, and silky smooth to the touch.`,
     status: 'PUBLISHED',
     basePrice: 3400,
     currency: 'INR',
     category: {
-      id: 'cat-wood',
-      name: 'Turned Wood & Lacquer',
-      slug: 'turned-wood-lacquer',
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
     },
     specifications: {
       materials: ['Wrightia tinctoria (Aale Mara Ivory Wood)', 'Natural Shellac', 'Turmeric Vegetable Dye', 'Screw-pine Leaf Polish'],
@@ -519,6 +1236,9 @@ Using only natural tree resin lacquer infused with organic turmeric, indigo, and
       careInstructions: 'Avoid direct moisture or prolonged sun. Buff gently with dry flannel cloth.',
       giTagCertified: true,
       regionOfOrigin: 'Channapatna, Karnataka',
+      productionType: 'Ready to Ship',
+      occasion: ['Birthday', 'Graduation', 'Just Because'],
+      colorFamily: 'Ochre Turmeric & Forest Green',
     },
     media: [
       {
@@ -548,23 +1268,25 @@ Using only natural tree resin lacquer infused with organic turmeric, indigo, and
     createdAt: '2023-05-15T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
+
+  // 13. Sualkuchi Muga Silk (Traditional Indian Crafts)
   {
     id: 'prod-005',
     artisanId: 'art-005',
-    artisan: MOCK_ARTISANS[4],
+    artisan: MOCK_ARTISANS[10],
     title: 'Sualkuchi Wild Muga Silk Mekhela Chador',
     slug: 'sualkuchi-wild-muga-silk-mekhela-chador',
     shortDescription: 'Naturally golden wild silkworm yarn woven with traditional kingkhap peacock and floral motifs in Sualkuchi.',
     fullStory: `Woven on ancestral wooden frame looms in Sualkuchi, this ceremonial Mekhela Chador set radiates the authentic warm-amber gleam of pure wild Muga silk.
     
-No dyes or bleaching agents touch the yarn. The intricate border and anchal features the sacred Kingkhap pattern—an ancient royal motif preserved from the Ahom dynasty court weavers. The drape is crisp yet supple, breathing comfortably across seasons.`,
+No dyes or bleaching agents touch the yarn. The intricate border and anchal features the sacred Kingkhap pattern—an ancient royal motif preserved from the Ahom dynasty court weavers.`,
     status: 'PUBLISHED',
     basePrice: 34000,
     currency: 'INR',
     category: {
-      id: 'cat-textiles',
-      name: 'Textiles & Handloom',
-      slug: 'textiles-handloom',
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
     },
     specifications: {
       materials: ['100% Endemic Wild Muga Silk (Antheraea assamensis)', 'Untreated Natural Golden Sheen', 'Fine Zari Weft Motifs'],
@@ -575,6 +1297,9 @@ No dyes or bleaching agents touch the yarn. The intricate border and anchal feat
       careInstructions: 'Dry clean only. Store wrapped in pure unbleached cotton muslin fabric.',
       giTagCertified: true,
       regionOfOrigin: 'Sualkuchi, Assam',
+      productionType: 'Ready to Ship',
+      occasion: ['Wedding', 'Anniversary'],
+      colorFamily: 'Natural Golden Amber',
     },
     media: [
       {
@@ -604,23 +1329,25 @@ No dyes or bleaching agents touch the yarn. The intricate border and anchal feat
     createdAt: '2023-09-01T00:00:00Z',
     updatedAt: '2024-02-15T00:00:00Z',
   },
+
+  // 14. Sarthebari Bell Metal (Traditional Indian Crafts)
   {
     id: 'prod-006',
     artisanId: 'art-006',
-    artisan: MOCK_ARTISANS[5],
+    artisan: MOCK_ARTISANS[11],
     title: 'Sarthebari Hand-Beaten Bell Metal (Kansa) Dining Set',
     slug: 'sarthebari-hand-beaten-bell-metal-kansa-thali-set',
     shortDescription: 'Harmonic 78:22 copper-tin bell metal thali set forged with traditional anvil hammers in Sarthebari.',
     fullStory: `Crafted from pure bronze alloy (78% copper and 22% tin) known in Ayurveda as Kansa, this dining ensemble is hammered by hand through repeated hot-forge cycles.
     
-The golden acoustic resonance of Sarthebari bell metal is renowned throughout India. The hand-hammered dimple texture on the exterior catches light gracefully, while the interior is polished mirror-smooth for daily nourishing dining.`,
+The golden acoustic resonance of Sarthebari bell metal is renowned throughout India. The hand-hammered dimple texture on the exterior catches light gracefully.`,
     status: 'PUBLISHED',
     basePrice: 8900,
     currency: 'INR',
     category: {
-      id: 'cat-metals',
-      name: 'Metals & Forge',
-      slug: 'metals-forge',
+      id: 'cat-traditional-crafts',
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
     },
     specifications: {
       materials: ['Pure Bell Metal Kansa (78% Copper, 22% Tin)', 'Charcoal Smelted', 'Natural Mustard Oil Quench'],
@@ -631,11 +1358,14 @@ The golden acoustic resonance of Sarthebari bell metal is renowned throughout In
       careInstructions: 'Wash with tamarind water, lemon, or wood ash. Avoid dishwasher or abrasive synthetic steel wool.',
       giTagCertified: true,
       regionOfOrigin: 'Sarthebari, Assam',
+      productionType: 'Ready to Ship',
+      occasion: ['Wedding', 'Anniversary', 'Birthday'],
+      colorFamily: 'Golden Bell Metal Bronze',
     },
     media: [
       {
         id: 'pm-08',
-        url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=1200&auto=format&fit=crop',
+        url: '/images/cat-traditional-crafts.jpg',
         altText: 'Hand-beaten bell metal dining set with subtle hammered reflections',
         isPrimary: true,
         displayOrder: 1,
@@ -664,15 +1394,31 @@ The golden acoustic resonance of Sarthebari bell metal is renowned throughout In
 
 export const MOCK_STORIES: CraftStory[] = [
   {
+    id: 'sty-003',
+    title: 'The Forever Bloom: Why Handmade Flowers Stay',
+    slug: 'the-forever-bloom-why-handmade-flowers-stay',
+    subtitle: 'From botanical crochet in Kolkata to satin ribbon roses in Pune, independent artisans are reshaping floral gifting across India.',
+    body: `Cut flowers are breathtaking, yet they wither in three days. In a sunlit studio in Kolkata, Ananya Roy spends twenty minutes on a single cotton petal, crocheting fine threads around thin copper wire.
+
+"When someone receives a handmade bouquet," Ananya reflects, "they know someone sat with a needle for eighteen hours thinking of every fold. It becomes an heirloom keepsake of an anniversary, a graduation, or a quiet declaration of love that never wilts."
+
+Across India, a quiet revival of handmade decorative craft is taking root: hand-folded silk ribbons, Sanganer deckle-edge paper peonies, and needle-felted botanicals that cherish patience over mass industrial production.`,
+    heroImageUrl: '/images/hero-flower-artisan.jpg',
+    readTimeMinutes: 5,
+    artisanSlug: 'ananya-roy-botanical-crochet',
+    artisanName: 'Ananya Roy',
+    region: 'Kolkata, West Bengal',
+    craftName: 'Hand-Crocheted Botanical Flora',
+    publishedAt: '2024-02-14T00:00:00Z',
+  },
+  {
     id: 'sty-001',
     title: 'The Deep Indigo Vats of Kutch',
     slug: 'the-deep-indigo-vats-of-kutch',
     subtitle: 'Why genuine 16-stage Ajrakh printing requires three full weeks, desert sun, and river mineral chemistry.',
     body: `In the arid expanses of Kutch, water is not merely a utility; it is an alchemical collaborator.
 
-Dr. Ismail Mohammad Khatri walks between the open fermentation pits at 6:30 in the morning. Before the heat of the Rann strikes, he dips his hand into a subterranean indigo vat that has lived in continuous microbial fermentation for four years. The aroma is faintly sweet, earthy, like wet loam after the first monsoon shower.
-
-"Machine prints apply color to the surface of dead cloth," Ismail explains, rotating a freshly carved teak block between his palms. "Ajrakh penetrates the heart of the yarn. The iron paste must ferment with jaggery for twenty-one days. If you try to cut corners by even twenty-four hours, the cloth remembers, and the black fades to muddy grey."`,
+Dr. Ismail Mohammad Khatri walks between the open fermentation pits at 6:30 in the morning. Before the heat of the Rann strikes, he dips his hand into a subterranean indigo vat that has lived in continuous microbial fermentation for four years. The aroma is faintly sweet, earthy, like wet loam after the first monsoon shower.`,
     heroImageUrl: '/images/story-kutch-indigo.jpg',
     readTimeMinutes: 6,
     artisanSlug: 'ismail-khatri-ajrakh',
@@ -688,9 +1434,7 @@ Dr. Ismail Mohammad Khatri walks between the open fermentation pits at 6:30 in t
     subtitle: 'In the wooden courtyards of Zainakadal, sozankars translate Persian poetry into half-millimeter silk stitches.',
     body: `Across the wooden bridges of Old Srinagar, behind lattice pinjrakari balconies, sits Bashir Ahmad Bhat. On his lap rests a cloud-soft piece of fawn-colored Changthangi cashmere.
 
-"The needle is finer than a pine needle," Bashir says in a calm, melodic tone. "You cannot listen to radio or talk loud while pulling sozni. If your breath catches, your stitch pulls unevenly."
-
-To complete one pashmina jamawar shawl, Bashir and his family spend up to eighteen months. The design is never drawn with ink; instead, it is gently perforated with charcoal dust through parchment templates carved by generational naqash artists.`,
+"The needle is finer than a pine needle," Bashir says in a calm, melodic tone. "You cannot listen to radio or talk loud while pulling sozni. If your breath catches, your stitch pulls unevenly."`,
     heroImageUrl: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1600&auto=format&fit=crop',
     readTimeMinutes: 8,
     artisanSlug: 'bashir-ahmad-pashmina',

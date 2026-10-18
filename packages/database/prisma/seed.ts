@@ -36,41 +36,65 @@ async function main() {
   await prisma.category.deleteMany();
 
   // 1. Categories
-  const textilesCat = await prisma.category.create({
+  const flowersCat = await prisma.category.create({
     data: {
-      name: 'Textiles & Handloom',
-      slug: 'textiles-handloom',
-      description: 'Hand-spun fibers, botanical indigo resist, natural dyes, and heritage looms.',
-      imageUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?q=80&w=1200&auto=format&fit=crop',
+      name: 'Flowers & Bouquets',
+      slug: 'flowers-bouquets',
+      description: 'Crochet wildflower bouquets, hand-folded satin ribbon roses, crepe paper botanicals, and everlasting arrangements.',
+      imageUrl: '/images/cat-flowers-bouquets.jpg',
     },
   });
 
-  const metalCat = await prisma.category.create({
+  const giftsCat = await prisma.category.create({
     data: {
-      name: 'Metals & Forge',
-      slug: 'metals-forge',
-      description: 'Lost-wax casting, bell metal metallurgy, and hand-beaten brassware.',
-      imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=1200&auto=format&fit=crop',
+      name: 'Personalized Gifts',
+      slug: 'personalized-gifts',
+      description: 'Bespoke hand-carved name gifts, anniversary keepsakes, calligraphy cards, and heirloom memory boxes.',
+      imageUrl: '/images/cat-personalized-gifts.jpg',
     },
   });
 
-  const ceramicCat = await prisma.category.create({
+  const homeDecorCat = await prisma.category.create({
     data: {
-      name: 'Clay & Ceramics',
-      slug: 'clay-ceramics',
-      description: 'Quartz-ground Jaipur blue pottery, terracotta urns, and studio stoneware.',
-      imageUrl: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?q=80&w=1200&auto=format&fit=crop',
+      name: 'Home Decor',
+      slug: 'home-decor',
+      description: 'Botanical linen wall hoops, pressed alpine floral frames, stoneware vessels, and decorative craft objects.',
+      imageUrl: '/images/cat-home-decor.jpg',
     },
   });
 
-  const woodCat = await prisma.category.create({
+  const jewelleryCat = await prisma.category.create({
     data: {
-      name: 'Turned Wood & Lacquer',
-      slug: 'turned-wood-lacquer',
-      description: 'Aale mara timber turned on precision manual lathes and colored with natural shellac.',
-      imageUrl: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1200&auto=format&fit=crop',
+      name: 'Jewellery & Accessories',
+      slug: 'jewellery-accessories',
+      description: 'Handmade floral hair combs, freshwater pearl and seed-bead adornments, embroidered brooches, and wearable craft.',
+      imageUrl: '/images/cat-jewellery-accessories.jpg',
     },
   });
+
+  const crochetCat = await prisma.category.create({
+    data: {
+      name: 'Crochet & Fabric Crafts',
+      slug: 'crochet-fabric',
+      description: 'Hand-crocheted botanical stems, pure cotton pouches, needle-felted arrangements, and textural fiber art.',
+      imageUrl: '/images/cat-crochet-fabric.jpg',
+    },
+  });
+
+  const traditionalCat = await prisma.category.create({
+    data: {
+      name: 'Traditional Indian Crafts',
+      slug: 'traditional-crafts',
+      description: 'Heritage handloom Ajrakh and Pashmina, Bastar lost-wax bell metal, Channapatna turned wood, and regional masterworks.',
+      imageUrl: '/images/cat-traditional-crafts.jpg',
+    },
+  });
+
+  // Legacy Category records for backward compatibility
+  const textilesCat = traditionalCat;
+  const metalCat = traditionalCat;
+  const ceramicCat = traditionalCat;
+  const woodCat = traditionalCat;
 
   // 2. Users & Artisan Profiles
   // Artisan 1: Dr. Ismail Mohammad Khatri (Ajrakhpur, Kutch)
